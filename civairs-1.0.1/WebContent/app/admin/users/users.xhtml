@@ -1,0 +1,83 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:shiro="http://shiro.apache.org/tags"
+	template="#{sessionBean.sessionTemplate}">
+
+	<ui:define name="content">
+		<h:form id="usersForm">
+			<p:growl id="mygrowl" showDetail="true" />
+
+			<div class="Container100 Responsive100 NoIndent">
+				<div class="Container100 ui-fluid">
+					<div class="Card">
+						<p:panelGrid columns="2" style="border:0px; background:none;"
+							layout="grid">
+							<div align="left">
+								<h1 class="CardBigTopic">#{msg.usersViewTitle}</h1>
+							</div>
+							<p:outputPanel>
+								<div align="right">
+
+									<p:menubar id="userCrudMenuBar"
+										style="border:0px; background:none; width:290px;">
+										<shiro:hasPermission name="user:create">
+											<p:menuitem value="#{msg.crudCreateLabel}"
+												action="#{userBean.initUserToCreate()}"
+												icon="ui-icon-newwin fa fa-bolt" ajax="false" />
+										</shiro:hasPermission>
+										<shiro:hasPermission name="user:update">
+											<p:menuitem value="#{msg.crudModifyLabel}"
+												icon="ui-icon-pencil fa fa-pencil Fs15"
+												action="#{userBean.changeUserToUpdate()}"
+												disabled="#{userBean.updateDisabled}" ajax="false" />
+										</shiro:hasPermission>
+										<shiro:hasPermission name="user:delete">
+											<p:menuitem value="#{msg.crudDeleteLabel}"
+												icon="ui-icon-close fa fa-close Fs15"
+												disabled="#{userBean.updateDisabled}"
+												action="#{userBean.deleteUser()}" ajax="false">
+												<p:confirm header="#{msg.deleteConfirmTitle}"
+													message="#{msg.deleteConfirmMessage}" icon="ui-icon-alert" />
+											</p:menuitem>
+
+
+										</shiro:hasPermission>
+									</p:menubar>
+									<p:confirmDialog global="true">
+										<p:commandButton value="#{msg.confirmYES}" type="button"
+											styleClass="ui-confirmdialog-yes" />
+										<p:commandButton value="#{msg.confirmNO}" type="button"
+											styleClass="ui-confirmdialog-no" />
+									</p:confirmDialog>
+
+								</div>
+							</p:outputPanel>
+						</p:panelGrid>
+						<div class="SeparatorFull"></div>
+
+						<p:tree id="usersTree" value="#{userBean.usersTreeRoot}"
+							var="node" selectionMode="single"
+							selection="#{userBean.selectedNode}">
+							<p:ajax event="select" update=":usersForm:userCrudMenuBar"
+								listener="#{userBean.onNodeSelect}" />
+							<p:treeNode type="role" expandedIcon="ui-icon-folder-open"
+								collapsedIcon="ui-icon-folder-collapsed">
+								<h:outputText value="#{node.roleDescription}" />
+							</p:treeNode>
+							<p:treeNode type="user">
+								<i class="icon-office-worker1 Fs20 Fnone"> </i>
+								<h:outputText
+									value="#{node.login}, #{node.firstName} #{node.lastName}" />
+							</p:treeNode>
+
+						</p:tree>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

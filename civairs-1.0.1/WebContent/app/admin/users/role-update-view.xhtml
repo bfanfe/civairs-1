@@ -1,0 +1,82 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{sessionBean.sessionTemplate}">
+
+	<ui:define name="content">
+	<h:form id="updateRoleForm">
+		<div class="Container100 Responsive100 NoIndent">
+			<div class="Container100 ui-fluid">
+				<div class="Card">
+					<p:panelGrid columns="2" style="border:0px; background:none;"
+						layout="grid">
+						<div align="left">
+							<h1 class="CardBigTopic">#{msg.roleUpdateDialogTitle}</h1>
+						</div>
+						<p:outputPanel />
+					</p:panelGrid>
+					<div class="SeparatorFull" />
+
+					<p:outputPanel id="updateRoleDetails" style="text-align:left;">
+						<p:panelGrid columns="1" layout="grid"
+							style="border:0px !important; background:none; margin-left: 12px !important; margin-right: 12px !important;"
+							styleClass="ui-panelgrid-blank">
+
+							<p:panelGrid columns="2" layout="grid"
+								style="border:0px !important; background:none;"
+								styleClass="ui-panelgrid-blank">
+
+								<p:outputLabel value="Role Id:" />
+
+								<p:inputText value="#{roleBean.roleToUpdate.roleId}"
+									readonly="true" />
+
+								<p:outputLabel value="Role Description:" />
+								<p:inputText value="#{roleBean.roleToUpdate.roleDescription}" />
+
+							</p:panelGrid>
+							<div class="Container100 Responsive100 NoIndent">
+								<div class="Container100 ui-fluid">
+									<div class="Card" style="height:350">
+										<h1 class="CardBigTopic">#{msg.rolePermissionsPicklistTitle}</h1>
+										<p:pickList id="pickList"
+											value="#{roleBean.dualListPermissions}" var="permission"
+											itemValue="#{permission}"
+											itemLabel="#{permission.permissionDescription}"
+											converter="nGPermissionConverter" showSourceControls="false"
+											showTargetControls="false" showSourceFilter="false"
+											showTargetFilter="false" responsive="true" >
+											<f:facet name="sourceCaption">#{msg.availablePermissionsLabel}</f:facet>
+											<f:facet name="targetCaption">#{msg.rolePermissionsLabel}</f:facet>
+											<p:ajax event="transfer"
+												listener="#{roleBean.onPermissionTransfer}" />
+										</p:pickList>
+									</div>
+								</div>
+							</div>
+						</p:panelGrid>
+					</p:outputPanel>
+					<div class="SeparatorFull" />
+					<p:panelGrid columns="1" layout="grid" style="border:0px">
+						<div align="right">
+							<p:panelGrid columns="2" layout="grid"
+								style="border:0px !important; background:none; width:210px; margin-left: 6px !important; margin-right: 12px !important;"
+								styleClass="ui-panelgrid-blank">
+
+								<p:commandButton id="updateRoleCancel" style="width:100px"
+									value="#{msg.buttonCancelLabel}"
+									action="#{roleBean.cancelRole}" ajax="false" />
+								<p:commandButton id="updateRoleValidate" style="width:100px"
+									value="#{msg.buttonSaveLabel}" action="#{roleBean.updateRole}" ajax="false" />
+							</p:panelGrid>
+						</div>
+					</p:panelGrid>
+				</div>
+			</div>
+		</div>
+
+	</h:form>
+	</ui:define>
+</ui:composition>

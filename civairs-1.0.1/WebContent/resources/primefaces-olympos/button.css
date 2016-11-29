@@ -1,0 +1,102 @@
+/* button colors */
+.GreenButton .ui-button-text {
+  background-color: #05c436;
+  border-color: #0ca533;
+}
+.GreenButton.ui-state-hover .ui-button-text {
+  background-color: #05E63F;
+}
+.GreenButton.ui-state-active .ui-button-text {
+  background-color: #0ca533;
+}
+.RedButton .ui-button-text {
+  background-color: #e2033d;
+  border-color: #bd0a39;
+}
+.RedButton.ui-state-hover .ui-button-text {
+  background-color: #FD235C;
+}
+.RedButton.ui-state-active .ui-button-text {
+  background-color: #bd0a39;
+}
+.AquaButton .ui-button-text {
+  background-color: #0084b4;
+  border-color: #087298;
+}
+.AquaButton.ui-state-hover .ui-button-text {
+  background-color: #03A8E4;
+}
+.AquaButton.ui-state-active .ui-button-text {
+  background-color: #087298;
+}
+.NavyButton .ui-button-text {
+  background-color: #1f3b59;
+  border-color: #21374f;
+}
+.NavyButton.ui-state-hover .ui-button-text {
+  background-color: #3C6592;
+}
+.NavyButton.ui-state-active .ui-button-text {
+  background-color: #21374f;
+}
+.OrangeButton .ui-button-text {
+  background-color: #ff9f1a;
+  border-color: #d4871d;
+}
+.OrangeButton.ui-state-hover .ui-button-text {
+  background-color: #FDAE42;
+}
+.OrangeButton.ui-state-active .ui-button-text {
+  background-color: #d4871d;
+}
+.GrayButton .ui-button-text {
+  background-color: #ECEFF1;
+  color: #525252;
+  border-color: #CCCFD2;
+}
+.GrayButton.ui-state-hover .ui-button-text {
+  background-color: #F5FBFF !important;
+}
+.GrayButton.ui-state-active .ui-button-text {
+  background-color: #CCCFD2 !important;
+}
+.PinkButton .ui-button-text {
+  background-color: #FF4081;
+  border-color: #DA2A66;
+}
+.PinkButton.ui-state-hover .ui-button-text {
+  background-color: #FD6297 !important;
+}
+.PinkButton.ui-state-active .ui-button-text {
+  background-color: #DA2A66 !important;
+}
+.PurpleButton .ui-button-text {
+  background-color: #bf00ed;
+  border-color: #a108c6;
+}
+.PurpleButton.ui-state-hover .ui-button-text {
+  background-color: #D838FF !important;
+}
+.PurpleButton.ui-state-active .ui-button-text {
+  background-color: #a108c6 !important;
+}
+.YellowButton .ui-button-text {
+  background-color: #f7ce03;
+  border-color: #cead0a;
+}
+.YellowButton.ui-state-hover .ui-button-text {
+  background-color: #FDDB30 !important;
+}
+.YellowButton.ui-state-active .ui-button-text {
+  background-color: #cead0a !important;
+}
+.BrownButton .ui-button-text {
+  background-color: #6D4C41;
+  border-color: #4A3129;
+}
+.BrownButton.ui-state-hover .ui-button-text {
+  background-color: #906A5D !important;
+}
+.BrownButton.ui-state-active .ui-button-text {
+  background-color: #4A3129 !important;
+}

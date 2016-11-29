@@ -1,0 +1,87 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{sessionBean.sessionTemplate}">
+
+	<ui:define name="content">
+		<h:form>
+			<div class="Container100 Responsive100 NoIndent">
+				<div class="Container100 ui-fluid">
+					<div class="Card">
+						<p:panelGrid columns="2" style="border:0px; background:none;"
+							layout="grid">
+							<div align="left">
+								<h1 class="CardBigTopic">#{entities.responsibleEntityCreateViewTitle}</h1>
+							</div>
+							<p:outputPanel />
+						</p:panelGrid>
+						<div class="SeparatorFull" />
+
+						<p:outputPanel style="text-align:left;">
+							<p:panelGrid columns="1" layout="grid"
+								style="border:0px !important; background:none; margin-left: 12px !important; margin-right: 12px !important;"
+								styleClass="ui-panelgrid-blank">
+
+								<p:panelGrid columns="2" layout="grid"
+									style="border:0px !important; background:none;"
+									styleClass="ui-panelgrid-blank">
+
+									
+									<p:outputLabel value="#{entities.responsibleEntityName}" />
+									<p:inputText value="#{responsibleEntityBean.responsibleEntityToCreate.name}" />
+
+								</p:panelGrid>
+								<p:panelGrid columns="2" layout="grid"
+									style="border:0px !important; background:none;"
+									styleClass="ui-panelgrid-blank">
+
+									<p:outputLabel value="#{entities.responsibleEntityAddress} :" />
+									<p:inputText value="#{responsibleEntityBean.responsibleEntityToCreate.address}" />
+
+									<p:outputLabel value="#{entities.responsibleEntityPhone} :" />
+									<p:inputText value="#{responsibleEntityBean.responsibleEntityToCreate.phone}" />
+
+								</p:panelGrid>
+								<p:panelGrid columns="2" layout="grid"
+									style="border:0px !important; background:none;"
+									styleClass="ui-panelgrid-blank">
+
+									<p:outputLabel value="#{entities.responsibleEntityEmail} :" />
+									<p:inputText value="#{responsibleEntityBean.responsibleEntityToCreate.email}" />
+
+									<p:outputLabel value="#{entities.responsibleEntityType} :" />
+									<p:selectOneMenu value="#{responsibleEntityBean.selectedResponsibleEntityType}"
+										var="varenum" converter="responsibleEntityTypeConverter">
+										<f:selectItems value="#{responsibleEntityBean.responsibleEntityTypes}" var="enums"
+											itemLabel="#{enums.value}" itemValue="#{enums}"  />
+										<p:column>#{varenum.value}</p:column>
+									</p:selectOneMenu>
+
+								</p:panelGrid>
+							</p:panelGrid>
+						</p:outputPanel>
+						<div class="SeparatorFull" />
+						<p:panelGrid columns="1" layout="grid" style="border:0px">
+							<div align="right">
+								<p:panelGrid columns="2" layout="grid"
+									style="border:0px !important; background:none; width:210px; margin-left: 6px !important; margin-right: 12px !important;"
+									styleClass="ui-panelgrid-blank">
+
+									<p:commandButton style="width:100px"
+										value="#{msg.buttonCancelLabel}"
+										action="#{responsibleEntityBean.backToResponsibleEntitiesView}" ajax="false" />
+									<p:commandButton style="width:100px"
+										value="#{msg.buttonSaveLabel}" action="#{responsibleEntityBean.insertResponsibleEntity}"
+										ajax="false" />
+								</p:panelGrid>
+							</div>
+						</p:panelGrid>
+					</div>
+				</div>
+			</div>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

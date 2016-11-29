@@ -1,0 +1,18 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:po="http://primefaces.org/olympos"
+	xmlns:shiro="http://shiro.apache.org/tags">
+	<h:form id="menuform">
+		<po:menu>
+			<p:menuitem value="#{menus.mainMenuResponsibleEntitiesLabel}" icon="icon-male238" action="#{sessionBean.loadViewResponsibleEntities}" ajax="false" />
+			<p:submenu label="#{menus.mainMenuRolesUsersLabel}">
+				<p:menuitem value="#{menus.mainMenuRolesLabel}" icon="icon-male238" action="#{sessionBean.loadViewRoles}" ajax="false" />
+
+				<p:menuitem value="#{menus.mainMenuUsersLabel}" icon="icon-office-worker1" action="#{sessionBean.loadViewUsers}" ajax="false" />
+			</p:submenu>
+		</po:menu>
+	</h:form>
+</ui:composition>
