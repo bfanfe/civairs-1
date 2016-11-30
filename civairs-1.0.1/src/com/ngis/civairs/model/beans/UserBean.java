@@ -22,9 +22,11 @@ import com.ngis.civairs.model.beans.SessionBean;
 import com.ngis.civairs.model.constants.NGConstants;
 import com.ngis.civairs.model.entities.NGRole;
 import com.ngis.civairs.model.entities.NGUser;
+import com.ngis.civairs.model.entities.occurence.ResponsibleEntity;
 import com.ngis.civairs.model.services.NGMessageService;
 import com.ngis.civairs.model.services.NGRoleService;
 import com.ngis.civairs.model.services.NGUserService;
+import com.ngis.civairs.model.services.occurence.ResponsibleEntityService;
 import com.ngis.civairs.model.tools.DigestEncriptor;
 
 @ManagedBean
@@ -49,6 +51,8 @@ public class UserBean implements Serializable {
 	@ManagedProperty("#{nGUserService}")
 	private NGUserService userService;
 	
+	@ManagedProperty("#{responsibleEntityService}")
+	private ResponsibleEntityService responsibleEntityService;
 	
 	/*
 	 * The following are attributes of roleBean
@@ -119,6 +123,12 @@ public class UserBean implements Serializable {
 			if (selectedNode.getType().equals("user")) {
 				try {
 					userToUpdate = (NGUser) selectedNode.getData();
+					
+					//change userToUpdate responsibleEntity instance
+					String id = userToUpdate.getResponsibleEntity().getId();
+					if(id != null){
+						userToUpdate.setResponsibleEntity(responsibleEntityService.getResponsibleEntitiesMap().get(id));
+					}
 
 					// set pikList roles
 					sourceRoles = NGRoleService.copyList(roleService.getRoles());
@@ -500,6 +510,23 @@ public class UserBean implements Serializable {
 		this.confirmPasswd = confirmPasswd;
 	}
 	
-	
+	public List<ResponsibleEntity> getResponsibleEntities() {
+		return responsibleEntityService.getResponsibleEntities();
+	}
 
+
+	public void setResponsibleEntities(List<ResponsibleEntity> responsibleEntities) {
+		responsibleEntityService.setResponsibleEntities(responsibleEntities);
+	}
+
+	public ResponsibleEntityService getResponsibleEntityService() {
+		return responsibleEntityService;
+	}
+
+	public void setResponsibleEntityService(ResponsibleEntityService responsibleEntityService) {
+		this.responsibleEntityService = responsibleEntityService;
+	}
+
+	
+	
 }

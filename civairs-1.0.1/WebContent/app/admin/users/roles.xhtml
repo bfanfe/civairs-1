@@ -32,7 +32,7 @@
 						</p:panelGrid>
 						<div class="SeparatorFull"></div>
 						<p:accordionPanel id="rolesAccordion" multiple="false"
-							value="#{roleBean.roles}" var="role">
+							value="#{roleBean.roles}" var="role" activeIndex="#{roleBean.activeRoleIndex}">
 							<p:tab title="#{role.roleId}">
 								<p:panelGrid columns="1" cellpadding="10"
 									style="border:0px !important; background:none;"

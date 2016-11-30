@@ -42,6 +42,7 @@ public class RoleBean {
 	/*
 	 * The following are attributes of roleBean
 	 */
+	private int activeRoleIndex = 0;
 	private List<NGRole> roles;
 	private List<NGPermission> sourcePermissions;
 	private List<NGPermission> targetPermissions;
@@ -305,6 +306,14 @@ public class RoleBean {
 
 	public void setDualListPermissions(DualListModel<NGPermission> dualListPermissions) {
 		this.dualListPermissions = dualListPermissions;
+	}
+
+	public int getActiveRoleIndex() {
+		return activeRoleIndex;
+	}
+
+	public void setActiveRoleIndex(int activeRoleIndex) {
+		this.activeRoleIndex = activeRoleIndex;
 	}
 
 	

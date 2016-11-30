@@ -22,9 +22,11 @@ public class ResponsibleEntityService {
 	
 	private List<ResponsibleEntity> responsibleEntities;
 	
-	private List<ResponsibleEntityType> responsibleEntityTipes;
+	private List<ResponsibleEntityType> responsibleEntityTypes;
 	
 	private Map<String, ResponsibleEntityType> responsibleEntityTypesMap;
+	
+	private Map<String, ResponsibleEntity> responsibleEntitiesMap;
 
 	@EJB
 	private ResponsibleEntityDAO dao;
@@ -33,20 +35,24 @@ public class ResponsibleEntityService {
 	private void init(){
 		loadResponsibleEntities();
 		
-		responsibleEntityTipes = new ArrayList<ResponsibleEntityType>();
+		responsibleEntityTypes = new ArrayList<ResponsibleEntityType>();
 		for(EnumResponsibleEntityType enumVal : EnumResponsibleEntityType.values()){
-			responsibleEntityTipes.add(new ResponsibleEntityType(enumVal.getId(), enumVal.getValue()));
+			responsibleEntityTypes.add(new ResponsibleEntityType(enumVal.getId(), enumVal.getValue()));
 		}
 		
 		responsibleEntityTypesMap = new HashMap<String, ResponsibleEntityType>();
-		for(int i=0; i<responsibleEntityTipes.size(); i++ ){
-			responsibleEntityTypesMap.put(responsibleEntityTipes.get(i).getId(), responsibleEntityTipes.get(i));
+		for(int i=0; i<responsibleEntityTypes.size(); i++ ){
+			responsibleEntityTypesMap.put(responsibleEntityTypes.get(i).getId(), responsibleEntityTypes.get(i));
 		}
 	}
 	
 	
 	public void loadResponsibleEntities(){
-		responsibleEntities = dao.selectAll();	
+		responsibleEntities = dao.selectAll();
+		responsibleEntitiesMap = new HashMap<String, ResponsibleEntity>();
+		for(int i=0; i<responsibleEntities.size(); i++ ){
+			responsibleEntitiesMap.put(responsibleEntities.get(i).getId(), responsibleEntities.get(i));
+		}
 	}
 
 
@@ -62,13 +68,13 @@ public class ResponsibleEntityService {
 	
 	
 	
-	public List<ResponsibleEntityType> getResponsibleEntityTipes() {
-		return responsibleEntityTipes;
+	public List<ResponsibleEntityType> getResponsibleEntityTypes() {
+		return responsibleEntityTypes;
 	}
 
 
-	public void setResponsibleEntityTipes(List<ResponsibleEntityType> responsibleEntityTipes) {
-		this.responsibleEntityTipes = responsibleEntityTipes;
+	public void setResponsibleEntityTypes(List<ResponsibleEntityType> responsibleEntityTipes) {
+		this.responsibleEntityTypes = responsibleEntityTipes;
 	}
 
 
@@ -79,6 +85,18 @@ public class ResponsibleEntityService {
 
 	public void setResponsibleEntityTypesMap(Map<String, ResponsibleEntityType> responsibleEntityTypesMap) {
 		this.responsibleEntityTypesMap = responsibleEntityTypesMap;
+	}
+	
+	
+
+
+	public Map<String, ResponsibleEntity> getResponsibleEntitiesMap() {
+		return responsibleEntitiesMap;
+	}
+
+
+	public void setResponsibleEntitiesMap(Map<String, ResponsibleEntity> responsibleEntitiesMap) {
+		this.responsibleEntitiesMap = responsibleEntitiesMap;
 	}
 
 

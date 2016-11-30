@@ -137,7 +137,7 @@ public class ResponsibleEntityBean {
 	}
 
 	public List<ResponsibleEntityType> getResponsibleEntityTypes() {
-		return responsibleEntityService.getResponsibleEntityTipes();
+		return responsibleEntityService.getResponsibleEntityTypes();
 	}
 
 	public ResponsibleEntityType getSelectedResponsibleEntityType() {
@@ -145,7 +145,7 @@ public class ResponsibleEntityBean {
 	}
 
 	public void setResponsibleEntityTypes(List<ResponsibleEntityType> responsibleEntityTypes) {
-		responsibleEntityService.setResponsibleEntityTipes(responsibleEntityTypes);
+		responsibleEntityService.setResponsibleEntityTypes(responsibleEntityTypes);
 	}
 
 	public void setSelectedResponsibleEntityType(ResponsibleEntityType selectedResponsibleEntityType) {
