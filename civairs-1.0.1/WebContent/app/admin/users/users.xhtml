@@ -17,7 +17,7 @@
 						<p:panelGrid columns="2" style="border:0px; background:none;"
 							layout="grid">
 							<div align="left">
-								<h1 class="CardBigTopic">#{msg.usersViewTitle}</h1>
+								<h1 class="CardBigTopic">#{users.usersViewTitle}</h1>
 							</div>
 							<p:outputPanel>
 								<div align="right">
@@ -68,10 +68,14 @@
 								collapsedIcon="ui-icon-folder-collapsed">
 								<h:outputText value="#{node.roleDescription}" />
 							</p:treeNode>
+							<p:treeNode type="entityR" expandedIcon="ui-icon-folder-open"
+								collapsedIcon="ui-icon-folder-collapsed">
+								<h:outputText value="#{node.name}" />
+							</p:treeNode>
 							<p:treeNode type="user">
 								<i class="icon-office-worker1 Fs20 Fnone"> </i>
 								<h:outputText
-									value="#{node.login}, #{node.firstName} #{node.lastName} @#{node.responsibleEntity.name}" />
+									value="#{node.login}, #{node.firstName} #{node.lastName}" />
 							</p:treeNode>
 
 						</p:tree>

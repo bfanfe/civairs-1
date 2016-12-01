@@ -21,5 +21,9 @@
 			<base-name>com.ngis.civairs.model.resources.responsible_entities</base-name>
 			<var>entities</var> 
 		</resource-bundle>
+		<resource-bundle>
+			<base-name>com.ngis.civairs.model.resources.users</base-name>
+			<var>users</var> 
+		</resource-bundle>
 	</application>
 </faces-config>

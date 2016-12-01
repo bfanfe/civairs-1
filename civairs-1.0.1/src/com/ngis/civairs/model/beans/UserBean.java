@@ -50,10 +50,10 @@ public class UserBean implements Serializable {
 
 	@ManagedProperty("#{nGUserService}")
 	private NGUserService userService;
-	
+
 	@ManagedProperty("#{responsibleEntityService}")
 	private ResponsibleEntityService responsibleEntityService;
-	
+
 	/*
 	 * The following are attributes of roleBean
 	 */
@@ -61,7 +61,7 @@ public class UserBean implements Serializable {
 	private List<NGUser> emptyRoleUsers;
 	private NGUser userToCreate;
 	private NGUser userToUpdate;
-	
+
 	private String currentPasswd;
 	private String newPasswd;
 	private String confirmPasswd;
@@ -99,22 +99,34 @@ public class UserBean implements Serializable {
 	}
 
 	public void initUserToCreate() {
+		
+		/*
+		 * Création d'un utilisateur
+		 */
 		userToCreate = new NGUser();
-		// init user password do "welcome"
+		
+		/*
+		 * Initialisation du paramètre "resetUserPassword" à "true" 
+		 * Ce paramètre est utiliser lors de la persistence de l'utilisateur
+		 * Si sont test est vrais, le mot de passe de l'utilisateur sera mis à sa valeur 
+		 * par defaut "welcome"
+		 */
 		setResetUserPassword(true);
 		try {
+			
+			//Initialisation du mot de passe avec la valeur crypt
 			userToCreate.setPassword(DigestEncriptor.encripteSHA256("welcome"));
 		} catch (Exception e) {
 			userToCreate.setPassword("welcome");
 		}
-		
+
 		loadDualListRoles();
 
 		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
 		SessionBean session = (SessionBean) context.getSessionMap().get("sessionBean");
 		session.loadViewUserCreate();
 		// load user udate view
-		
+
 	}
 
 	public void changeUserToUpdate() {
@@ -123,10 +135,10 @@ public class UserBean implements Serializable {
 			if (selectedNode.getType().equals("user")) {
 				try {
 					userToUpdate = (NGUser) selectedNode.getData();
-					
-					//change userToUpdate responsibleEntity instance
+
+					// change userToUpdate responsibleEntity instance
 					String id = userToUpdate.getResponsibleEntity().getId();
-					if(id != null){
+					if (id != null) {
 						userToUpdate.setResponsibleEntity(responsibleEntityService.getResponsibleEntitiesMap().get(id));
 					}
 
@@ -148,13 +160,12 @@ public class UserBean implements Serializable {
 
 					}
 					dualListRoles = new DualListModel<NGRole>(sourceRoles, targetRoles);
-					
-					
+
 					// load user udate view
 					ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
 					SessionBean session = (SessionBean) context.getSessionMap().get("sessionBean");
 					session.loadViewUserUpdate();
-					
+
 				} catch (Exception e) {
 					userToUpdate = null;
 					NGMessageService.addError("Unable to select user !");
@@ -222,49 +233,49 @@ public class UserBean implements Serializable {
 		}
 
 	}
-	
-	public void changePasswd(){
+
+	public void changePasswd() {
 		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
 		SessionBean session = (SessionBean) context.getSessionMap().get("sessionBean");
 		NGUser user = session.getSessionUser();
 		String encryptedPasswd = null;
 		String msg = null;
-		if(currentPasswd != null){
+		if (currentPasswd != null) {
 			try {
 				encryptedPasswd = DigestEncriptor.encripteSHA256(currentPasswd);
 			} catch (NoSuchAlgorithmException e) {
 			}
-			
-			if(encryptedPasswd != null){
-				if(user.getPassword().equals(encryptedPasswd)){
-					if(newPasswd != null){
-						if(confirmPasswd.equals(newPasswd)){
+
+			if (encryptedPasswd != null) {
+				if (user.getPassword().equals(encryptedPasswd)) {
+					if (newPasswd != null) {
+						if (confirmPasswd.equals(newPasswd)) {
 							try {
 								user.setPassword(DigestEncriptor.encripteSHA256(newPasswd));
 								userService.updateUser(user);
 							} catch (NoSuchAlgorithmException e) {
 								msg = "Echec du changement de mot de passe !";
 							}
-						}else{
+						} else {
 							msg = "Confirmation du Nouveau Mot de passe incorrecte !";
 						}
-					}else{
+					} else {
 						msg = "Nouveau Mot de passe invalide !";
 					}
-				}else{
+				} else {
 					msg = "Mot de passe actuel incorrect !";
 				}
-			}else{
+			} else {
 				msg = "Mot de passe actuel invalide !";
 			}
 		}
-		
-		if(msg == null){
+
+		if (msg == null) {
 			NGMessageService.addInfo("Mot de passe modifié avec succès !");
-		}else{
+		} else {
 			NGMessageService.addError(msg);
 		}
-		
+
 	}
 
 	/**
@@ -320,24 +331,24 @@ public class UserBean implements Serializable {
 	public void cancelUser() {
 		goBackToUsersView();
 	}
-	
+
 	/**
 	 * deleteUser is called to remove selected user
 	 */
-	public void deleteUser(){
+	public void deleteUser() {
 		String dbResult = null;
 		if (selectedNode != null && selectedNode.getType().equals("user")) {
-			try{
+			try {
 				userToUpdate = (NGUser) selectedNode.getData();
 				dbResult = userService.deleteUser(userToUpdate);
 				roles = userService.reloadRoles();
 				populateUsersTree();
-			}catch(Exception e){
+			} catch (Exception e) {
 				dbResult = NGConstants.DB_DELETE_FAILED;
 			}
 			NGMessageService.addMessage(dbResult);
 		}
-		
+
 		goBackToUsersView();
 	}
 
@@ -345,10 +356,9 @@ public class UserBean implements Serializable {
 		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
 		SessionBean session = (SessionBean) context.getSessionMap().get("sessionBean");
 		session.loadViewUsers();
-		
+
 	}
 
-	
 	public void onNodeSelect(NodeSelectEvent event) {
 		if (event.getTreeNode() != null && event.getTreeNode().getType().equals("user")) {
 			setUpdateDisabled("false");
@@ -357,26 +367,91 @@ public class UserBean implements Serializable {
 		}
 	}
 
+	
+	/**
+	 * Cette methode construit et remplit le Tree des User
+	 * Le Tree affiche les Users en trois niveaux hiérarchiques:
+	 *  - les Role représentés par des dossier contiennent les ResponsibleEntity 
+	 *  - les ResponsibleEntity, eux-même sous forme de dossiers également, contiennent les User
+	 *  - enfin les User 
+	 */
 	public void populateUsersTree() {
-		emptyRoleUsers = userService.loadEmptyRoleUsers();
-		usersTreeRoot = new DefaultTreeNode("Root", null);
 		
-		//Add users in roles to the tree
+		/*
+		 * Certains User peuvent ne pas avoir de roles
+		 * Ces User sont récuperé ci-dessous
+		 */
+		emptyRoleUsers = userService.loadEmptyRoleUsers();
+		
+		//Creation de la racine du Tree
+		usersTreeRoot = new DefaultTreeNode("Root", null);
+
+		
+
+		// peuplement du Tree
 		if (roles != null) {
+			
+			//parcours de la liste des Role 
 			for (NGRole role : roles) {
+				
+				//Test si le Role courant contient des User
 				if (!role.getNgUsers().isEmpty()) {
+					
+					//si le Role courant contient des User, noeud est créé dans le Tree pour ce Role
 					TreeNode roleNode = new DefaultTreeNode("role", role, usersTreeRoot);
+					
+					
+					//Initialisation de la liste des ResponsibleEntity à ajouter au Role courant
+					List<ResponsibleEntity> responsibleE = new ArrayList<ResponsibleEntity>();
+					
+					//Parcours des User du Role courant
+					int userRE = 0;
 					for (NGUser user : role.getNgUsers()) {
-						@SuppressWarnings("unused")
-						TreeNode userNode = new DefaultTreeNode("user", user, roleNode);
+						
+						/*Test si le le ResponsibleEntity du User courant est déjà ajouté
+						 *  ou non à la liste des ResponsibleEntity
+						 */
+						userRE = 0;
+						for (int i = 0; i < responsibleE.size(); i++) {
+							if (user.getResponsibleEntity().getId().equals(responsibleE.get(i).getId())) {
+								userRE++;
+							}
+						}
+						
+						//Sinon ajout du ResponsibleEntity à la liste
+						if (userRE == 0)
+							responsibleE.add(user.getResponsibleEntity());
+
+					}
+					
+					
+					/*Parcours de la liste des ResponsibleEntity et création 
+					 * de leurs noeuds dans celui du Role courant
+					 */
+					for (ResponsibleEntity entityR : responsibleE) {
+						
+						//Creation du noeud du ResponsibleEntity courant
+						TreeNode entityNode = new DefaultTreeNode("entityR", entityR, roleNode);
+
+						// Parcours de la liste des User du Role courant
+						for (NGUser user : role.getNgUsers()) {
+							
+							//Test si le User courant appartient au ResponsibleEntity courant
+							if (user.getResponsibleEntity().getId().equals(entityR.getId())) {
+								
+								//Si créer son noeud dans celui du ResponsibleEntity
+								@SuppressWarnings("unused")
+								TreeNode userNode = new DefaultTreeNode("user", user, entityNode);
+							}
+						}
 					}
 				}
 			}
-		}else{
+		} else {
 			NGMessageService.addError("Empty roles !");
 		}
-		
-		// Add users with empty roles to the tree
+
+		// Créer les noeud des User qui n'ont pas de role directement sur la racine du Tree
 		for (NGUser user : emptyRoleUsers) {
 			@SuppressWarnings("unused")
 			TreeNode userNode = new DefaultTreeNode("user", user, usersTreeRoot);
@@ -482,51 +557,103 @@ public class UserBean implements Serializable {
 		return resetUserPassword;
 	}
 
+	/**
+	 * Modifie la valeur du paramètre "resetUserPassword" 
+	 * Ce paramètre est utiliser lors de la persistence de l'utilisateur
+	 * Si sont test est vrais, le mot de passe de l'utilisateur sera mis à sa valeur 
+	 * par defaut "welcome"
+	 * @param resetUserPassword
+	 */
 	public void setResetUserPassword(boolean resetUserPassword) {
 		this.resetUserPassword = resetUserPassword;
 	}
 
+	/**
+	 * Recupère la valeur du mot de passe actuel du User
+	 * @return String
+	 */
 	public String getCurrentPasswd() {
 		return currentPasswd;
 	}
 
+	
+	/**
+	 * Recupère la valeur du nouveau mot de passe du User
+	 * @return String
+	 */
 	public String getNewPasswd() {
 		return newPasswd;
 	}
 
+	
+	/**
+	 * Recupère la valeur de la confirmation du mot de passe du User
+	 * @return String
+	 */
 	public String getConfirmPasswd() {
 		return confirmPasswd;
 	}
 
+	/**
+	 * Modifie la valeur du mot de passe actuel du User
+	 * @param currentPasswd
+	 */
 	public void setCurrentPasswd(String currentPasswd) {
 		this.currentPasswd = currentPasswd;
 	}
 
+	
+	/**
+	 * Modifie la valeur du nouveau mot de passe du User
+	 * @param newPasswd
+	 */
 	public void setNewPasswd(String newPasswd) {
 		this.newPasswd = newPasswd;
 	}
 
+	
+	/**
+	 * Modifie la valeur de confirmation du mot de passe du User
+	 * @param confirmPasswd
+	 */
 	public void setConfirmPasswd(String confirmPasswd) {
 		this.confirmPasswd = confirmPasswd;
 	}
+
 	
+	/**
+	 * Récupère la liste des ResponsibleEntity
+	 * Cette liste est fournie par le service responsibleEntityService
+	 * @return List<ResponsibleEntity> 
+	 */
 	public List<ResponsibleEntity> getResponsibleEntities() {
 		return responsibleEntityService.getResponsibleEntities();
 	}
-
-
+	
+	
+	/**
+	 * Modifie la liste des ResponsibleEntity 
+	 * Cette est liste est gérée par le service responsibleEntityService
+	 * @param responsibleEntities
+	 */
 	public void setResponsibleEntities(List<ResponsibleEntity> responsibleEntities) {
 		responsibleEntityService.setResponsibleEntities(responsibleEntities);
 	}
 
+	/**
+	 * Récupère le service responsibleEntityService
+	 * @return ResponsibleEntityService
+	 */
 	public ResponsibleEntityService getResponsibleEntityService() {
 		return responsibleEntityService;
 	}
 
+	/**
+	 * Modifie le service responsibleEntityService
+	 * @param responsibleEntityService
+	 */
 	public void setResponsibleEntityService(ResponsibleEntityService responsibleEntityService) {
 		this.responsibleEntityService = responsibleEntityService;
 	}
 
-	
-	
 }

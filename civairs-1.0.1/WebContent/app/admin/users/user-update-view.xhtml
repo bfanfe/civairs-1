@@ -14,7 +14,7 @@
 					<p:panelGrid columns="2" style="border:0px; background:none;"
 						layout="grid">
 						<div align="left">
-							<h1 class="CardBigTopic">#{msg.userUpdateDialogTitle}</h1>
+							<h1 class="CardBigTopic">#{users.userUpdateDialogTitle}</h1>
 						</div>
 						<p:outputPanel />
 					</p:panelGrid>
@@ -31,12 +31,12 @@
 									style="border:0px !important; background:none;"
 									styleClass="ui-panelgrid-blank">
 
-									<p:outputLabel value="#{msg.userLoginLabel}" />
+									<p:outputLabel value="#{users.userLoginLabel}" />
 
 									<p:inputText value="#{userBean.userToUpdate.login}"
 										readonly="true" />
 
-									<p:outputLabel value="#{msg.userPasswordResetLabel}" />
+									<p:outputLabel value="#{users.userPasswordResetLabel}" />
 									<p:selectBooleanCheckbox value="#{userBean.resetUserPassword}" />
 
 								</p:panelGrid>
@@ -44,42 +44,42 @@
 									style="border:0px !important; background:none; margin-left: 6px !important; margin-right: 12px !important;"
 									styleClass="ui-panelgrid-blank">
 
-									<p:outputLabel value="#{msg.userFirstNameLabel}" />
+									<p:outputLabel value="#{users.userFirstNameLabel}" />
 
 									<p:inputText value="#{userBean.userToUpdate.firstName}" />
 
-									<p:outputLabel value="#{msg.userLastNameLabel}" />
+									<p:outputLabel value="#{users.userLastNameLabel}" />
 									<p:inputText value="#{userBean.userToUpdate.lastName}" />
 								</p:panelGrid>
 								<p:panelGrid columns="2" layout="grid"
 									style="border:0px !important; background:none; margin-left: 6px !important; margin-right: 12px !important;"
 									styleClass="ui-panelgrid-blank">
 
-									<p:outputLabel value="#{msg.userBirthDateLabel}" />
+									<p:outputLabel value="#{users.userBirthDateLabel}" />
 
 									<p:calendar value="#{userBean.userToUpdate.birthDate}" />
 
-									<p:outputLabel value="#{msg.userAdressLabel}" />
+									<p:outputLabel value="#{users.userAdressLabel}" />
 									<p:inputTextarea value="#{userBean.userToUpdate.adress}" />
 								</p:panelGrid>
 								<p:panelGrid columns="2" layout="grid"
 									style="border:0px !important; background:none; margin-left: 6px !important; margin-right: 12px !important;"
 									styleClass="ui-panelgrid-blank">
 
-									<p:outputLabel value="#{msg.userPhoneLabel}" />
+									<p:outputLabel value="#{users.userPhoneLabel}" />
 
 									<p:inputMask value="#{userBean.userToUpdate.phoneNumber}"
 										mask="(+999) 999-999-99?99" />
 
 
-									<p:outputLabel value="#{msg.userEmailLabel}" />
+									<p:outputLabel value="#{users.userEmailLabel}" />
 									<p:inputText value="#{userBean.userToUpdate.email}" />
 								</p:panelGrid>
 								<p:panelGrid columns="2" layout="grid"
 									style="border:0px !important; background:none; margin-left: 6px !important; margin-right: 12px !important;"
 									styleClass="ui-panelgrid-blank">
 
-									<p:outputLabel value="Responsible Entity" />
+									<p:outputLabel value="#{users.userResponsibleEntityLabel}" />
 
 									<p:selectOneMenu value="#{userBean.userToUpdate.responsibleEntity}"
 										var="varenum" converter="responsibleEntityConverter">
@@ -96,15 +96,15 @@
 							<div class="Container100 Responsive100 NoIndent">
 								<div class="Container100 ui-fluid">
 									<div class="Card">
-										<h1 class="CardBigTopic">#{msg.userRolesPicklistTitle}</h1>
+										<h1 class="CardBigTopic">#{users.userRolesPicklistTitle}</h1>
 										<p:pickList id="userUpdateRolesPickList"
 											value="#{userBean.dualListRoles}" var="role"
 											itemValue="#{role}" itemLabel="#{role.roleDescription}"
 											converter="nGRoleConverter" showSourceControls="false"
 											showTargetControls="false" showSourceFilter="false"
 											showTargetFilter="false" responsive="true">
-											<f:facet name="sourceCaption">#{msg.availableRolesLabel}</f:facet>
-											<f:facet name="targetCaption">#{msg.userRolesLabel}</f:facet>
+											<f:facet name="sourceCaption">#{users.availableRolesLabel}</f:facet>
+											<f:facet name="targetCaption">#{users.userRolesLabel}</f:facet>
 											<p:ajax event="transfer"
 												listener="#{userBean.onRoleTransfer}" />
 										</p:pickList>
