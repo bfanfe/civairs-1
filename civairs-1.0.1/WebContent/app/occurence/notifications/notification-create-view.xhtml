@@ -1,0 +1,105 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{sessionBean.sessionTemplate}">
+
+	<ui:define name="content">
+	<h:form id="createNotificationForm" >
+	
+		<div class="Container100 Responsive100 NoIndent">
+			<div class="Container100 ui-fluid">
+				<div class="Card">
+					<p:panelGrid columns="2" style="border:0px; background:none;"
+						layout="grid">
+						<div align="left">
+							<h1 class="CardBigTopic">#{notifications.notificationCreateViewTitle}</h1>
+							<hr />
+						</div>
+						<p:outputPanel />
+					</p:panelGrid>
+					<div class="SeparatorFull"/>
+					<p:outputPanel id="createNotificationDetails" style="text-align:left;">
+						<p:panelGrid columns="1" layout="grid"
+							style="background:none; margin-left: 6px !important; margin-right: 12px !important;"
+							styleClass="ui-panelgrid-blank">
+
+							<p:panelGrid columns="2" layout="grid"
+								style="border:0px !important; background:none; margin-left: 6px !important; margin-right: 12px !important;"
+								styleClass="ui-panelgrid-blank">
+								<p:panelGrid columns="2" layout="grid"
+									style="border:0px !important; background:none;"
+									styleClass="ui-panelgrid-blank">
+
+									<p:outputLabel value="#{notifications.notificationAircraft_IDLabel}" />
+
+									<p:inputText value="#{notificationBean.notificationToCreate.aircraft_ID}" />
+
+									<p:outputLabel value="#{notifications.notificationAircraft_TypeLabel}" />
+									<p:inputText value="#{notificationBean.notificationToCreate.aircraft_Type}" />
+
+								</p:panelGrid>
+								<p:panelGrid columns="2" layout="grid"
+									style="border:0px !important; background:none; margin-left: 6px !important; margin-right: 12px !important;"
+									styleClass="ui-panelgrid-blank">
+
+									<p:outputLabel value="#{notifications.notificationLocalDateLabel}" />
+
+									<p:calendar value="#{notificationBean.notificationToCreate.localDate}" pattern="dd/MM/yyyy" />
+
+									<p:outputLabel value="#{notifications.notificationLocalTimeLabel}" />
+									<p:calendar value="#{notificationBean.notificationToCreate.localTime}" timeOnly="true" pattern="HH:mm" timeControlType="select" />
+								</p:panelGrid>
+								<p:panelGrid columns="2" layout="grid"
+									style="border:0px !important; background:none; margin-left: 6px !important; margin-right: 12px !important;"
+									styleClass="ui-panelgrid-blank">
+
+									<p:outputLabel value="#{notifications.notificationUtcDateLabel}" />
+
+									<p:calendar value="#{notificationBean.notificationToCreate.utcDate}" pattern="dd/MM/yyyy" />
+
+									<p:outputLabel value="#{notifications.notificationUtcTimeLabel}" />
+									<p:calendar value="#{notificationBean.notificationToCreate.utcTime}" timeOnly="true" pattern="HH:mm" timeControlType="select" />
+									
+									
+								</p:panelGrid>
+								<p:panelGrid columns="2" layout="grid"
+									style="border:0px !important; background:none; margin-left: 6px !important; margin-right: 12px !important;"
+									styleClass="ui-panelgrid-blank">
+
+									<p:outputLabel value="#{notifications.notificationHeadlineLabel}" />
+									<p:inputTextarea value="#{notificationBean.notificationToCreate.headline}" />
+									
+									<p:outputLabel value="#{notifications.notificationOccurence_ClassLabel}" />
+									<p:inputText value="#{notificationBean.notificationToCreate.occurence_Class}" />
+								</p:panelGrid>
+								
+								
+
+							</p:panelGrid>
+							
+						</p:panelGrid>
+					</p:outputPanel>
+					<div class="SeparatorFull"/>
+					<p:panelGrid columns="1" layout="grid" style="border:0px">
+						<div align="right">
+							<p:panelGrid columns="2" layout="grid"
+								style="border:0px !important; background:none; width:210px; margin-left: 6px !important; margin-right: 12px !important;"
+								styleClass="ui-panelgrid-blank">
+
+								<p:commandButton id="createNotificationCancel" style="width:100px"
+									value="#{msg.buttonCancelLabel}"
+									action="#{notificationBean.cancelNotification}" ajax="false" />
+								<p:commandButton id="createNotificationValidate" style="width:100px" 
+									value="#{msg.buttonSaveLabel}" action="#{notificationBean.createNotification}" ajax="false" />
+							</p:panelGrid>
+						</div>
+					</p:panelGrid>
+				</div>
+			</div>
+		</div>
+
+	</h:form>
+	</ui:define>
+</ui:composition>

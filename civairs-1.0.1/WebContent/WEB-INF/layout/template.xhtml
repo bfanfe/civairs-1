@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html lang="#{sessionBean.sessionLocale.language}"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-
+<f:view locale="#{sessionBean.sessionLocale}">
 <h:head>
 	<f:facet name="first">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -68,5 +69,5 @@
 
 
 </h:body>
-
+</f:view>
 </html>

@@ -18,8 +18,12 @@
 			<var>menus</var> 
 		</resource-bundle>
 		<resource-bundle>
-			<base-name>com.ngis.civairs.model.resources.responsible_entities</base-name>
+			<base-name>com.ngis.civairs.model.resources.occurence.responsible_entities</base-name>
 			<var>entities</var> 
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>com.ngis.civairs.model.resources.occurence.notifications</base-name>
+			<var>notifications</var> 
 		</resource-bundle>
 		<resource-bundle>
 			<base-name>com.ngis.civairs.model.resources.users</base-name>

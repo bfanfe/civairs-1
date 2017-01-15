@@ -31,21 +31,23 @@ public class Notification implements Serializable {
 	private String headline;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="Local_Date")
-	private Date local_Date;
+	@Column(name="LocalDateD")
+	private Date localDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="Local_Time")
-	private Date local_Time;
+	@Column(name="LocalTimeT")
+	private Date localTime;
 
-	@Column(name="Occurrence_Class", length=60)
-	private String occurrence_Class;
+	@Column(name="Occurence_Class", length=60)
+	private String occurence_Class;
 
 	@Temporal(TemporalType.DATE)
-	private Date UTC_Date;
+	@Column(name="UtcDateD")
+	private Date utcDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date UTC_Time;
+	@Column(name="UtcTimeT")
+	private Date utcTime;
 
 	//bi-directional many-to-one association to Identifier
 	@ManyToOne
@@ -91,44 +93,44 @@ public class Notification implements Serializable {
 		this.headline = headline;
 	}
 
-	public Date getLocal_Date() {
-		return this.local_Date;
+	public Date getLocalDate() {
+		return this.localDate;
 	}
 
-	public void setLocal_Date(Date local_Date) {
-		this.local_Date = local_Date;
+	public void setLocalDate(Date localDate) {
+		this.localDate = localDate;
 	}
 
-	public Date getLocal_Time() {
-		return this.local_Time;
+	public Date getLocalTime() {
+		return this.localTime;
 	}
 
-	public void setLocal_Time(Date local_Time) {
-		this.local_Time = local_Time;
+	public void setLocalTime(Date localTime) {
+		this.localTime = localTime;
 	}
 
-	public String getOccurrence_Class() {
-		return this.occurrence_Class;
+	public String getOccurence_Class() {
+		return this.occurence_Class;
 	}
 
-	public void setOccurrence_Class(String occurrence_Class) {
-		this.occurrence_Class = occurrence_Class;
+	public void setOccurence_Class(String occurence_Class) {
+		this.occurence_Class = occurence_Class;
 	}
 
-	public Date getUTC_Date() {
-		return this.UTC_Date;
+	public Date getUtcDate() {
+		return this.utcDate;
 	}
 
-	public void setUTC_Date(Date UTC_Date) {
-		this.UTC_Date = UTC_Date;
+	public void setUtcDate(Date utcDate) {
+		this.utcDate = utcDate;
 	}
 
-	public Date getUTC_Time() {
-		return this.UTC_Time;
+	public Date getUtcTime() {
+		return this.utcTime;
 	}
 
-	public void setUTC_Time(Date UTC_Time) {
-		this.UTC_Time = UTC_Time;
+	public void setUtcTime(Date utcTime) {
+		this.utcTime = utcTime;
 	}
 
 	public Identifier getIdentifier() {

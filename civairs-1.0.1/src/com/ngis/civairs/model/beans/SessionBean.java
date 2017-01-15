@@ -208,7 +208,7 @@ public class SessionBean implements Serializable {
 	}
 
 	public void loadSessionLocale() {
-
+		sessionLocale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
 	}
 
 	public void loadSessionTheme() {
@@ -271,166 +271,7 @@ public class SessionBean implements Serializable {
 	 * Handle main view cotent
 	 */
 
-	/*
-	 * Personnel SLI
-	 */
 	
-
-	public void loadViewPersonnelSLI() {
-		redirectToView(NGViewService.VIEW_PERSONNEL_SLI);
-	}
-
-	public String getViewPersonnelSLI() {
-		String contextPath = FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
-		return contextPath + NGViewService.VIEW_PERSONNEL_SLI;
-	}
-
-	public void loadViewPersonnelSLIUpdate() {
-		redirectToView(NGViewService.VIEW_PERSONNEL_SLI_UPDATE);
-	}
-
-	public void loadViewPersonnelSLICreate() {
-		redirectToView(NGViewService.VIEW_PERSONNEL_SLI_CREATE);
-	}
-
-	public void loadViewFormationSLI() {
-		redirectToView(NGViewService.VIEW_FORMATION_SLI);
-	}
-	
-	public void loadViewQualificationSLI() {
-		redirectToView(NGViewService.VIEW_QUALIFICATION_SLI);
-	}
-	
-	public void loadViewStageSLI() {
-		redirectToView(NGViewService.VIEW_STAGE_SLI);
-	}
-	
-	public void loadViewPermis() {
-		redirectToView(NGViewService.VIEW_PERMIS_SLI);
-	}
-	
-	public void loadViewSigycop() {
-		redirectToView(NGViewService.VIEW_SIGYCOP_SLI);
-	}
-	
-	public void loadViewPortARI() {
-		redirectToView(NGViewService.VIEW_PORT_ARI_SLI);
-	}
-	
-	/*
-	 * Load vehicule PARC views
-	 */
-	
-	public void loadViewVehiculePARC() {
-		redirectToView(NGViewService.VIEW_VEHICULE_PARC);
-	}
-
-	public String getViewVehiculePARC() {
-		String contextPath = FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
-		return contextPath + NGViewService.VIEW_VEHICULE_PARC;
-	}
-	
-	public void loadViewVehiculePARCUpdate() {
-		redirectToView(NGViewService.VIEW_VEHICULE_PARC_UPDATE);
-	}
-
-	public void loadViewVehiculePARCCreate() {
-		redirectToView(NGViewService.VIEW_VEHICULE_PARC_CREATE);
-	}
-	
-	public void loadViewSommierPARC() {
-		redirectToView(NGViewService.VIEW_SOMMIER_PARC);
-	}
-	
-	/*
-	 * Load vehicule VSLI views
-	 */
-	
-	public void loadViewVehiculeVSLI() {
-		redirectToView(NGViewService.VIEW_VEHICULE_VSLI);
-	}
-
-	public String getViewVehiculeVSLI() {
-		String contextPath = FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
-		return contextPath + NGViewService.VIEW_VEHICULE_VSLI;
-	}
-	
-	public void loadViewVehiculeVSLIUpdate() {
-		redirectToView(NGViewService.VIEW_VEHICULE_VSLI_UPDATE);
-	}
-
-	public void loadViewVehiculeVSLICreate() {
-		redirectToView(NGViewService.VIEW_VEHICULE_VSLI_CREATE);
-	}
-	
-	public void loadViewAnomalieVSLI() {
-		redirectToView(NGViewService.VIEW_ANOMALIE_VSLI);
-	}
-	
-	public void loadViewAssuranceVSLI() {
-		redirectToView(NGViewService.VIEW_ASSURANCE_VSLI);
-	}
-	
-	public void loadViewParametreVSLI() {
-		redirectToView(NGViewService.VIEW_PARAMETRE_VSLI);
-	}
-	
-	public void loadViewVidangeVSLI() {
-		redirectToView(NGViewService.VIEW_VIDANGE_VSLI);
-	}
-	
-	public void loadViewVisiteVSLI() {
-		redirectToView(NGViewService.VIEW_VISITE_VSLI);
-	}
-	
-	/*
-	 * Load personnel ATC views
-	 */
-	
-	public void loadViewPersonnelATC() {
-		redirectToView(NGViewService.VIEW_PERSONNEL_ATC);
-	}
-
-	public String getViewPersonnelATC() {
-		String contextPath = FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
-		return contextPath + NGViewService.VIEW_PERSONNEL_ATC;
-	}
-
-	public void loadViewPersonnelATCUpdate() {
-		redirectToView(NGViewService.VIEW_PERSONNEL_ATC_UPDATE);
-	}
-
-	public void loadViewPersonnelATCCreate() {
-		redirectToView(NGViewService.VIEW_PERSONNEL_ATC_CREATE);
-	}
-
-	public void loadViewFormationATC() {
-		redirectToView(NGViewService.VIEW_FORMATION_ATC);
-	}
-	
-	public void loadViewQualificationATC() {
-		redirectToView(NGViewService.VIEW_QUALIFICATION_ATC);
-	}
-	
-	public void loadViewMedicaleATC() {
-		redirectToView(NGViewService.VIEW_MEDICALE_ATC);
-	}
-	
-	public void loadViewCompetenceATC() {
-		redirectToView(NGViewService.VIEW_COMPETENCE_ATC);
-	}
-	
-	public void loadViewAutorisationATC() {
-		redirectToView(NGViewService.VIEW_AUTORISATION_ATC);
-	}
-	
-	public void loadViewAnglaisATC() {
-		redirectToView(NGViewService.VIEW_ANGLAIS_ATC);
-	}
-	
-	public void loadViewLicenceATC() {
-		redirectToView(NGViewService.VIEW_LICENCE_ATC);
-	}
 	
 	/*
 	 * Parametre
@@ -456,6 +297,28 @@ public class SessionBean implements Serializable {
 	public void loadViewResponsibleEntityCreate() {
 		redirectToView(NGViewService.VIEW_RESPONSIBLE_ENTITY_CREATE);
 	}
+	
+	
+	/*
+	 * VIEW_NOTIFICATIONS
+	 */
+	
+	public void loadViewNotifications() {
+		redirectToView(NGViewService.VIEW_NOTIFICATIONS);
+	}
+	
+	public void loadViewNotificationsAccordion() {
+		redirectToView(NGViewService.VIEW_NOTIFICATIONS_ACCORDION);
+	}
+	
+	public void loadViewNotificationUpdate() {
+		redirectToView(NGViewService.VIEW_NOTIFICATION_UPDATE);
+	}
+	
+	public void loadViewNotificationCreate() {
+		redirectToView(NGViewService.VIEW_NOTIFICATION_CREATE);
+	}
+	
 
 	public void loadViewRoles() {
 		redirectToView(NGViewService.VIEW_ROLES);
@@ -490,10 +353,6 @@ public class SessionBean implements Serializable {
 	 */
 
 	
-
-	public void loadViewCigycop() {
-		redirectToView(NGViewService.VIEW_SIGYCOP);
-	}
 
 	public void loadDefaultView() {
 		redirectToView(NGViewService.getDefaultView());

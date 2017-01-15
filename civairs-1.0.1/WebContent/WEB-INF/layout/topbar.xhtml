@@ -33,7 +33,7 @@
                     	<p:menuitem id="om_bg_purple" action="#{sessionBean.changeTheme('Purple')}" value="#{msg.topbarColorPurpleLavel}" style="font-size:12px" styleClass="Purple" ajax="false" />
                     	<p:menuitem id="om_bg_aqua" action="#{sessionBean.changeTheme('Aqua')}" value="#{msg.topbarColorAquaLavel}" style="font-size:12px" styleClass="Aqua" ajax="false" />                 
                 	</p:submenu>
-                	<p:menuitem value="Changer Mot de passe" action="#{sessionBean.loadViewChangePasswd()}" ajax="false"/>
+                	<p:menuitem value="#{msg.changePassword}" action="#{sessionBean.loadViewChangePasswd()}" ajax="false"/>
                 	<p:menuitem value="#{msg.logoutLabel}" action="#{sessionBean.logout()}" ajax="false"/>              	
                 </p:tieredMenu>
                 <p:link id="lang-lnk" class="topbar-link Animated03 Fright"> <i  class="icon-finish3"></i></p:link>              

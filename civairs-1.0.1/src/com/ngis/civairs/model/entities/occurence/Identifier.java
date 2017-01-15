@@ -2,6 +2,8 @@ package com.ngis.civairs.model.entities.occurence;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -28,14 +30,16 @@ public class Identifier implements Serializable {
 	private ResponsibleEntity responsibleEntity;
 
 	//bi-directional many-to-one association to Notification
-	@OneToMany(mappedBy="identifier")
+	@OneToMany(mappedBy="identifier", cascade=CascadeType.PERSIST)
 	private List<Notification> notifications;
 
 	//bi-directional many-to-one association to Occurence
-	@OneToMany(mappedBy="identifier")
+	@OneToMany(mappedBy="identifier", cascade=CascadeType.PERSIST)
 	private List<Occurence> occurences;
 
 	public Identifier() {
+		notifications = new ArrayList<Notification>();
+		occurences = new ArrayList<>();
 	}
 
 	public String getId() {
