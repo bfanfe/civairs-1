@@ -18,7 +18,7 @@
 						<p:panelGrid columns="2" style="border:0px; background:none;"
 							layout="grid">
 							<div align="left">
-								<h1 class="CardBigTopic">#{notifications.notificationsTitle}</h1>
+								<h1 class="CardBigTopic">#{notifications.notificationsNewTitle}</h1>
 								<hr />
 							</div>
 							<p:outputPanel>
@@ -40,9 +40,9 @@
 
 						<p:accordionPanel id="notificationsAccordion" multiple="false"
 							activeIndex="#{notificationBean.activeNotificationIndex}" 
-							value="#{notificationBean.notifications}" var="notification">
+							value="#{notificationBean.newNotifications}" var="notification">
 							<p:tab
-								title="#{notification.reportingTime} - #{notification.identifier.responsibleEntity.name} - #{notification.aircraft_ID} - #{notification.aircraft_Type}">
+								title="#{nGDateFormatService.ddMMYYYYSlashDateformat(notification.reportingTime)} #{nGDateFormatService.hhmmTimeformat(notification.reportingTime)} - #{notification.identifier.responsibleEntity.name} - #{notification.aircraft_ID} - #{notification.aircraft_Type}">
 								<p:panelGrid columns="1" layout="grid" class="Container80 ui-fluid" style="border:0px !important; background:none;">
 								<p:panelGrid columns="1" class="Container100 ui-fluid">
 								<f:facet name="header">#{notifications.notificationEventIdentificationLabel}</f:facet>		
@@ -119,6 +119,14 @@
 														<p:menuitem value="#{msg.crudModifyLabel}"
 															action="#{notificationBean.selectNotificationToUpdate(notification.id)}"
 															ajax="false" icon="ui-icon-pencil fa fa-pencil Fs15" />
+															
+														<p:menuitem value="#{notifications.notificationActionInvestigate}"
+															action="#"
+															ajax="false" icon="icon-clipboard88 fa Fs15" />
+															
+														<p:menuitem value="#{notifications.notificationActionFile}"
+															action="#"
+															ajax="false" icon="icon-medical55 fa fa-icon-medical55 Fs15" />		
 													
 														<p:menuitem value="#{msg.crudDeleteLabel}"
 															action="#{notificationBean.selectNotificationToDelete(notification.id)}"

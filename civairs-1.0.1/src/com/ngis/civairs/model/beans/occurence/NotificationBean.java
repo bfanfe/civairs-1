@@ -1,5 +1,7 @@
 package com.ngis.civairs.model.beans.occurence;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -9,6 +11,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import com.ngis.civairs.model.beans.SessionBean;
+import com.ngis.civairs.model.constants.NGConstants;
 import com.ngis.civairs.model.entities.occurence.Identifier;
 import com.ngis.civairs.model.entities.occurence.Notification;
 import com.ngis.civairs.model.services.occurence.NotificationService;
@@ -28,7 +31,19 @@ public class NotificationBean {
 	private int activeNotificationIndex = 0;
 
 	public List<Notification> getNotifications() {
-		return notificationService.getNotifications();
+		return notificationService.getNewNotifications();
+	}
+	
+	public List<Notification> getNewNotifications() {
+		return notificationService.getNewNotifications();
+	}
+	
+	public List<Notification> getFiledNotifications() {
+		return notificationService.getFiledNotifications();
+	}
+	
+	public List<Notification> getInvestigatedNotifications() {
+		return notificationService.getInvestigatedNotifications();
 	}
 
 	public NotificationService getNotificationService() {
@@ -70,6 +85,12 @@ public class NotificationBean {
 
 		// Set Notification Id to Identifier's one
 		notificationToCreate.setId(notificationIdentifier.getId());
+		
+		//Set reportingTime
+		notificationToCreate.setReportingTime(Date.from(Instant.now()));
+		
+		//Set status to NewNotification
+		notificationToCreate.setStatus(NGConstants.NOTIFICATION_STATUS_NEW);
 
 		// Add notification to identifier
 		notificationIdentifier.addNotification(notificationToCreate);
@@ -78,7 +99,7 @@ public class NotificationBean {
 		notificationService.insertNotificationByIdentifier(notificationIdentifier);
 
 		// Back to Responsible Entities view
-		backToNotificationsView();
+		backToNewNotificationsView();
 	}
 
 	public void updateNotification() {
@@ -87,7 +108,7 @@ public class NotificationBean {
 		notificationService.updateNotification(selectedNotification);
 
 		// Back to Responsible Entities view
-		backToNotificationsView();
+		backToNewNotificationsView();
 
 	}
 
@@ -144,18 +165,18 @@ public class NotificationBean {
 		}
 		if (selectedNotification != null) {
 			notificationService.deleteNotification(selectedNotification);
-			backToNotificationsView();
+			backToNewNotificationsView();
 		}
 	}
 
 	public void cancelNotification() {
-		backToNotificationsView();
+		backToNewNotificationsView();
 	}
 
-	public void backToNotificationsView() {
+	public void backToNewNotificationsView() {
 		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
 		SessionBean session = (SessionBean) context.getSessionMap().get("sessionBean");
-		session.loadViewNotifications();
+		session.loadViewNewNotifications();
 
 	}
 
@@ -165,6 +186,27 @@ public class NotificationBean {
 
 	public void setActiveNotificationIndex(int activeNotificationIndex) {
 		this.activeNotificationIndex = activeNotificationIndex;
+	}
+	
+	public String getNewNotificationsIconColor(){
+		if(getNewNotifications()!=null){
+			if(!getNewNotifications().isEmpty()) return "Red";
+			else return "";
+		} else return "";
+	}
+	
+	public String getNewNotificationsAlerte(){
+		if(getNewNotifications()!=null){
+			if(!getNewNotifications().isEmpty()) return "ALERTE NOTIFICATIONS##NOTIFICATIONS ALERT";
+			else return "ALERTE NORMALE##NORMAL ALERT";
+		} else return "ALERTE NORMALE##NORMAL ALERT";
+	}
+	
+	public String getNewNotificationsCount(){
+		if(getNewNotifications()!=null){
+			if(getNewNotifications().size()>1) return getNewNotifications().size() +" Nouvelles Notifications##"+getNewNotifications().size() +" New Notifications";
+			else return getNewNotifications().size() +" Nouvelle Notification##"+getNewNotifications().size() +" New Notification";
+		} else return getNewNotifications().size() +" Nouvelle Notification##"+getNewNotifications().size() +" New Notification";
 	}
 
 }

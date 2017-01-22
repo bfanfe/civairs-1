@@ -18,41 +18,18 @@
 						<p:panelGrid columns="2" style="border:0px; background:none;"
 							layout="grid">
 							<div align="left">
-								<h1 class="CardBigTopic">#{notifications.notificationsTitle}</h1>
+								<h1 class="CardBigTopic">#{notifications.notificationsFiledTitle}</h1>
 							<hr />
 							</div>
 							<p:outputPanel>
-								<div align="right">
-
-								<p:menubar id="notificationCrudMenuBar"
-									style="border:0px; background:none; width:290px;">
-									<p:menuitem value="#{msg.crudCreateLabel}"
-											icon="ui-icon-newwin fa fa-bolt"
-											action="#{notificationBean.initNotificationToCreate}" ajax="false" />
-										<p:menuitem value="#{msg.crudModifyLabel}"
-											icon="ui-icon-pencil fa fa-pencil Fs15"
-											action="#{notificationBean.initNotificationToUpdate}" ajax="false" />
-									<p:menuitem value="#{msg.crudDeleteLabel}"
-											icon="ui-icon-close fa fa-close Fs15"
-											action="#{notificationBean.deleteNotification}" ajax="false">
-											<p:confirm header="#{msg.deleteConfirmTitle}"
-													message="#{msg.deleteConfirmMessage}" icon="ui-icon-alert" />
-									</p:menuitem>
-								</p:menubar>
-								<p:confirmDialog global="true">
-										<p:commandButton value="#{msg.confirmYES}" type="button"
-											styleClass="ui-confirmdialog-yes" />
-										<p:commandButton value="#{msg.confirmNO}" type="button"
-											styleClass="ui-confirmdialog-no" />
-									</p:confirmDialog>
-							</div>
+								
 						</p:outputPanel>
 					</p:panelGrid>
 					<div class="SeparatorFull" />
 
 
 					<p:dataTable id="notificationDataTable" var="notification"
-						value="#{notificationBean.notifications}"
+						value="#{notificationBean.filedNotifications}"
 						selectionMode="single" rowKey="#{notification.id}" sortBy="#{notification.reportingTime}"
 						selection="#{notificationBean.selectedNotification}"
 						paginator="false" scrollable="true" scrollHeight="400"
@@ -77,27 +54,21 @@
 							<h:outputText value="#{notification.aircraft_Type}" />
 						</p:column>
 						<p:column headerText="#{notifications.notificationLocalDateLabel}">
-							<p:calendar value="#{notification.localDate}" pattern="dd/MM/yyyy" readonly="true" showOn="none" />
+							<h:outputText value="#{nGDateFormatService.ddMMYYYYSlashDateformat(notification.localDate)}"/>
 						</p:column>
 						<p:column headerText="#{notifications.notificationLocalTimeLabel}">
-							<p:calendar value="#{notification.localTime}" timeOnly="true" pattern="HH:mm" readonly="true" showOn="none"/>
+							<h:outputText value="#{nGDateFormatService.hhmmTimeformat(notification.localTime)}"/>
 						</p:column>
 						<p:column headerText="#{notifications.notificationUtcDateLabel}">
-							<p:calendar value="#{notification.utcDate}" pattern="dd/MM/yyyy" readonly="true" showOn="none"/>
+							<h:outputText value="#{nGDateFormatService.ddMMYYYYSlashDateformat(notification.utcDate)}"/>
 						</p:column>
 						<p:column headerText="#{notifications.notificationUtcTimeLabel}">
-							<p:calendar value="#{notification.utcTime}" timeOnly="true" pattern="HH:mm" readonly="true" showOn="none"/>
+							<h:outputText value="#{nGDateFormatService.hhmmTimeformat(notification.utcTime)}"/>
 						</p:column>
 					</p:dataTable>
 
 					<div class="SeparatorFull" />
-					<p:contextMenu overlay="true" for="notificationDataTable">
-
-						<p:menuitem value="#{notifications.notificationTableMenuCreate}" action="#{notificationBean.initNotificationToCreate}" ajax="false" />
-						<p:menuitem value="#{notifications.notificationTableMenuUpdate}" action="#{notificationBean.updateNotification}" ajax="false" />
-						<p:menuitem value="#{notifications.notificationTableMenuDelete}" action="#{notificationBean.deleteNotification}" ajax="false" />
-						
-					</p:contextMenu>
+					
 				</div>
 				
 			</div>

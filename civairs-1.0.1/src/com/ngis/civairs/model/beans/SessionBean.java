@@ -303,8 +303,22 @@ public class SessionBean implements Serializable {
 	 * VIEW_NOTIFICATIONS
 	 */
 	
-	public void loadViewNotifications() {
-		redirectToView(NGViewService.VIEW_NOTIFICATIONS);
+	public void loadViewNewNotifications() {
+		redirectToView(NGViewService.VIEW_NOTIFICATIONS_NEW);
+	}
+	
+	public String getViewNewNotifications() {
+		String contextPath = FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
+		
+		return contextPath + NGViewService.VIEW_NOTIFICATIONS_NEW;
+	}
+	
+	public void loadViewInvestigatedNotifications() {
+		redirectToView(NGViewService.VIEW_NOTIFICATIONS_INVESTIGATED);
+	}
+	
+	public void loadViewFiledNotifications() {
+		redirectToView(NGViewService.VIEW_NOTIFICATIONS_FILED);
 	}
 	
 	public void loadViewNotificationsAccordion() {

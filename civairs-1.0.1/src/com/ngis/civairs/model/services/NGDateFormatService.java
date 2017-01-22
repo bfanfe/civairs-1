@@ -10,7 +10,7 @@ import javax.faces.bean.ManagedBean;
 public class NGDateFormatService {
 
 	@SuppressWarnings("deprecation")
-	public static String ddMMYYYYDateformat(Date date){
+	public String ddMMYYYYDateformat(Date date){
 		
 		String sDate = "";
 		if(date != null){
@@ -34,7 +34,7 @@ public class NGDateFormatService {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public static String ddMMYYYYSlashDateformat(Date date){
+	public String ddMMYYYYSlashDateformat(Date date){
 		
 		String sDate = "";
 		if(date != null){
@@ -58,7 +58,30 @@ public class NGDateFormatService {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public static String retraiteSlashDateformat(Date dateNaissance){
+	public String hhmmTimeformat(Date date){
+		
+		String sDate = "";
+		if(date != null){
+			//add date
+			if(date.getHours()< 10) {
+				sDate += "0"+date.getHours();
+			}else{
+				sDate += ""+date.getHours();
+			}
+			//add month
+			if(date.getMinutes()< 10) {
+				sDate += ":0"+date.getMinutes();
+			}else{
+				sDate += ":"+date.getMinutes();
+			}
+			
+		}
+		
+		return sDate;
+	}
+	
+	@SuppressWarnings("deprecation")
+	public String retraiteSlashDateformat(Date dateNaissance, int ageRetraite){
 		
 		String sDate = "";
 		if(dateNaissance != null){
@@ -66,7 +89,7 @@ public class NGDateFormatService {
 			Date retraite = new Date();
 			retraite.setDate(31);
 			retraite.setMonth(11);
-			retraite.setYear(dateNaissance.getYear()+60);
+			retraite.setYear(dateNaissance.getYear()+ageRetraite);
 			//add date
 			
 			//add year
@@ -77,7 +100,7 @@ public class NGDateFormatService {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public static String retraiteDateformat(Date dateNaissance){
+	public String retraiteDateformat(Date dateNaissance, int ageRetraite){
 		
 		String sDate = "";
 		if(dateNaissance != null){
@@ -85,7 +108,7 @@ public class NGDateFormatService {
 			Date retraite = new Date();
 			retraite.setDate(31);
 			retraite.setMonth(11);
-			retraite.setYear(dateNaissance.getYear()+60);
+			retraite.setYear(dateNaissance.getYear()+ageRetraite);
 			//add date
 			
 			//add year

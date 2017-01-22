@@ -8,14 +8,14 @@
 
 
 	<ul class="layout-tab-submenu" id="layout-alertes">
-		<li><a>TABLEAU DE BORD</a>
+		<li><a>#{msg.tabMenuItemDashboardCapital}</a>
 			<ul>
 				<div class="EmptyBox10"/>
 
-					<li><a href="#" class="menulink">
-							<i class="icon-bell60 " /> <span class="Fs10 DispBlock">Text</span>
+					<li><a href="#{sessionBean.viewNewNotifications}" class="menulink">
+							<i class="icon-turn20 #{notificationBean.newNotificationsIconColor}" /> <span class="Fs10 DispBlock">#{nGInternatinalizationService.toLocaleVersion(notificationBean.newNotificationsAlerte)}</span>
 							<div class="EmptyBox5" /> <span
-							class="DispBlock Fs14 FontLatoRegular">TEXT: #{sessionBean.latitudeID}</span> <span
+							class="DispBlock Fs14 FontLatoregular #{notificationBean.newNotificationsIconColor}">#{nGInternatinalizationService.toLocaleVersion(notificationBean.newNotificationsCount)}</span> <span
 							class="DispBlock FontLatoLight "></span>
 					</a></li>
 

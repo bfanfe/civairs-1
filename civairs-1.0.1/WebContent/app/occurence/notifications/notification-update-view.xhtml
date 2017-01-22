@@ -63,22 +63,18 @@
 									<p:calendar value="#{notificationBean.selectedNotification.utcTime}" timeOnly="true" pattern="HH:mm" timeControlType="select" />
 									
 									
-								</p:panelGrid>
-								<p:panelGrid columns="2" layout="grid"
-									style="border:0px !important; background:none; margin-left: 6px !important; margin-right: 12px !important;"
+								</p:panelGrid>							
+								
+
+							</p:panelGrid>
+							<p:panelGrid columns="1" layout="grid"
+									style="border:0px !important; background:none; margin-left: 12px !important; margin-right: 24px !important;"
 									styleClass="ui-panelgrid-blank">
 
 									<p:outputLabel value="#{notifications.notificationHeadlineLabel}" />
 									<p:inputTextarea value="#{notificationBean.selectedNotification.headline}" />
 									
-									<p:outputLabel value="#{notifications.notificationOccurence_ClassLabel}" />
-									<p:inputText value="#{notificationBean.selectedNotification.occurence_Class}" />
 								</p:panelGrid>
-								
-								
-
-							</p:panelGrid>
-							
 						</p:panelGrid>
 					</p:outputPanel>
 					<div class="SeparatorFull"/>

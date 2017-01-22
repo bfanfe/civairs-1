@@ -72,9 +72,15 @@ public class NotificationDAO {
 
 	@SuppressWarnings("unchecked")
 
-	public List<Notification> selectAll() {
+	public List<Notification> selectAll(String status) {
 		// TODO Auto-generated method stub Notification.findAll
-		return em.createNamedQuery("Notification.findAll").getResultList();
+		return em.createNamedQuery("Notification.findAll").setParameter("status", status).getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Notification> selectAllByEntity(String status, String entityId) {
+		// TODO Auto-generated method stub Notification.findAll
+		return em.createNamedQuery("Notification.findAllByEntity").setParameter("status", status).setParameter("entityId", entityId).getResultList();
 	}
 
 	public Notification selectById(String iD) {

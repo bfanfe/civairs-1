@@ -12,7 +12,10 @@ import java.util.List;
  */
 @Entity
 @Table(name="Notification")
-@NamedQuery(name="Notification.findAll", query="SELECT n FROM Notification n")
+@NamedQueries(value = { 
+		@NamedQuery(name="Notification.findAll", query="SELECT n FROM Notification n WHERE n.status=:status"), 
+		@NamedQuery(name="Notification.findAllByEntity", query="SELECT n FROM Notification n WHERE n.status=:status AND n.identifier.responsibleEntity.id=:entityId") 
+		})
 public class Notification implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -25,6 +28,12 @@ public class Notification implements Serializable {
 
 	@Column(name="Aircraft_Type", length=60)
 	private String aircraft_Type;
+	
+	@Column(name="Aircraft2_ID", length=60)
+	private String aircraft2_ID;
+
+	@Column(name="Aircraft2_Type", length=60)
+	private String aircraft2_Type;
 
 	@Lob
 	@Column(name="Headline")
@@ -48,6 +57,13 @@ public class Notification implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="UtcTimeT")
 	private Date utcTime;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="Reporting_Time")
+	private Date reportingTime;
+	
+	@Column(name="Status", length=60)
+	private String status;
 
 	//bi-directional many-to-one association to Identifier
 	@ManyToOne
@@ -148,5 +164,39 @@ public class Notification implements Serializable {
 	public void setOccurences(List<Occurence> occurences) {
 		this.occurences = occurences;
 	}
+
+	public Date getReportingTime() {
+		return reportingTime;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setReportingTime(Date reportingTime) {
+		this.reportingTime = reportingTime;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getAircraft2_ID() {
+		return aircraft2_ID;
+	}
+
+	public String getAircraft2_Type() {
+		return aircraft2_Type;
+	}
+
+	public void setAircraft2_ID(String aircraft2_ID) {
+		this.aircraft2_ID = aircraft2_ID;
+	}
+
+	public void setAircraft2_Type(String aircraft2_Type) {
+		this.aircraft2_Type = aircraft2_Type;
+	}
+	
+	
 
 }

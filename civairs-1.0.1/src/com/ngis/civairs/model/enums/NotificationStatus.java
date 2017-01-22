@@ -2,16 +2,13 @@ package com.ngis.civairs.model.enums;
 
 import java.io.Serializable;
 
-public class ResponsibleEntityType implements Serializable{
-
-	/**
-	 * 
-	 */
+public class NotificationStatus  implements Serializable{
+	
 	private static final long serialVersionUID = 1L;
 	private String id;
 	private String value;
 
-	public ResponsibleEntityType(String id, String value) {
+	public NotificationStatus(String id, String value) {
 		super();
 		this.id = id;
 		this.value = value;
@@ -32,5 +29,5 @@ public class ResponsibleEntityType implements Serializable{
 	public void setValue(String value) {
 		this.value = value;
 	}
-	
+
 }

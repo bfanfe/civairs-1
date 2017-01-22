@@ -9,13 +9,15 @@
 		<po:menu>
 			
 			<p:submenu label="#{menus.mainMenuEntitiesUsersLabel}">
-				<p:menuitem value=" #{menus.mainMenuResponsibleEntitiesLabel}" icon="icon-planet23" action="#{sessionBean.loadViewResponsibleEntities}" ajax="false" />
-				<p:menuitem value="#{menus.mainMenuRolesLabel}" icon="icon-male238" action="#{sessionBean.loadViewRoles}" ajax="false" />
-				<p:menuitem value="#{menus.mainMenuUsersLabel}" icon="icon-office-worker1" action="#{sessionBean.loadViewUsers}" ajax="false" />
+				<p:menuitem value=" #{menus.mainMenuResponsibleEntitiesLabel}" icon="icon-planet23 Blue" action="#{sessionBean.loadViewResponsibleEntities}" ajax="false" />
+				<p:menuitem value="#{menus.mainMenuRolesLabel}" icon="icon-male238 White" action="#{sessionBean.loadViewRoles}" ajax="false" />
+				<p:menuitem value="#{menus.mainMenuUsersLabel}" icon="icon-office-worker1 White" action="#{sessionBean.loadViewUsers}" ajax="false" />
 			</p:submenu>
 			<p:submenu label="#{menus.mainMenuOccurencesNotificationsLabel}">
-				<p:menuitem value=" #{menus.mainMenuNotificationsLabel}" icon="icon-planet23" action="#{sessionBean.loadViewNotifications}" ajax="false" />
-				<p:menuitem value="Notifications Accordion" icon="icon-planet23" action="#{sessionBean.loadViewNotificationsAccordion}" ajax="false" />
+				
+				<p:menuitem value="#{menus.mainMenuNotificationsNewLabel}" icon="icon-turn20 Red" action="#{sessionBean.loadViewNewNotifications}" ajax="false" />
+				<p:menuitem value="#{menus.mainMenuNotificationsInvestigatedLabel}" icon="icon-bell60 Green" action="#{sessionBean.loadViewInvestigatedNotifications}" ajax="false" />
+				<p:menuitem value="#{menus.mainMenuNotificationsFiledLabel}" icon="icon-bell60 White" action="#{sessionBean.loadViewFiledNotifications}" ajax="false" />
 				
 			</p:submenu>
 		</po:menu>

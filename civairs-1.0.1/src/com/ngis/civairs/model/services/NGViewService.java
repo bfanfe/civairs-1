@@ -52,6 +52,9 @@ public class NGViewService implements Serializable {
 	// view VIEW_NOTIFICATIONS
 
 	public static final String VIEW_NOTIFICATIONS = "/app/occurence/notifications/notifications.xhtml";
+	public static final String VIEW_NOTIFICATIONS_NEW = "/app/occurence/notifications/notifications-new.xhtml";
+	public static final String VIEW_NOTIFICATIONS_INVESTIGATED = "/app/occurence/notifications/notifications-investigated.xhtml";
+	public static final String VIEW_NOTIFICATIONS_FILED = "/app/occurence/notifications/notifications-filed.xhtml";
 	public static final String VIEW_NOTIFICATIONS_ACCORDION = "/app/occurence/notifications/notifications-accordion.xhtml";
 
 	public static final String VIEW_NOTIFICATION_CREATE = "/app/occurence/notifications/notification-create-view.xhtml";
