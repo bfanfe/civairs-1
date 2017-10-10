@@ -1,0 +1,26 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:po="http://primefaces.org/olympos"
+	xmlns:shiro="http://shiro.apache.org/tags">
+
+
+	<ul class="layout-tab-submenu" id="layout-alertes">
+		<li><a>#{msg.tabMenuItemDashboardCapital}</a>
+			<ul>
+				<div class="EmptyBox10"/>
+
+					<li><a href="#{sessionBean.viewNewNotifications}" class="menulink">
+							<i class="icon-turn20 #{notificationBean.newNotificationsIconColor}" /> <span class="Fs10 DispBlock">#{nGInternatinalizationService.toLocaleVersion(notificationBean.newNotificationsAlerte)}</span>
+							<div class="EmptyBox5" /> <span
+							class="DispBlock Fs14 FontLatoregular #{notificationBean.newNotificationsIconColor}">#{nGInternatinalizationService.toLocaleVersion(notificationBean.newNotificationsCount)}</span> <span
+							class="DispBlock FontLatoLight "></span>
+					</a></li>
+
+			</ul></li>
+	</ul>
+
+
+</ui:composition>

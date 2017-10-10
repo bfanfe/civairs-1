@@ -1,0 +1,69 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:shiro="http://shiro.apache.org/tags"
+	template="#{sessionBean.sessionTemplate}">
+
+	<ui:define name="content">
+		<h:form>
+			<div class="Container100 ui-fluid">
+				<div class="Card">
+
+					<p:panelGrid columns="2" style="border:0px; background:none;"
+						layout="grid">
+						<div align="left">
+							<h1 class="CardBigTopic">CONFIGURATION DES ALERTES</h1>
+						</div>
+						<p:outputPanel>
+							<div align="right">
+
+								<p:menubar id="userCrudMenuBar"
+									style="border:0px; background:none; width:290px;">
+										<p:menuitem value="#{msg.crudModifyLabel}"
+											icon="ui-icon-pencil fa fa-pencil Fs15"
+											action="#{parametreBean.updateParametre}" ajax="false" />
+									
+								</p:menubar>
+							</div>
+						</p:outputPanel>
+					</p:panelGrid>
+					<div class="SeparatorFull" />
+
+
+					<p:dataTable id="parametreDataTable" var="parametre"
+						value="#{parametreBean.listParametre}"
+						selectionMode="single" rowKey="#{parametre.parametreId}"
+						selection="#{parametreBean.selectedParametre}"
+						paginator="false" scrollable="true" scrollHeight="400"
+						reflow="true">
+						
+						<p:column headerText="Id" visible="false">
+							<h:outputText value="#{parametre.parametreId}" />
+						</p:column>
+						<p:column headerText="Parametre">
+							<h:outputText value="#{parametre.label}" />
+						</p:column>
+						<p:column headerText="Valeur" >
+							<h:outputText value="#{parametre.valeur}" />
+						</p:column>
+						<p:column headerText="Unité">
+							<h:outputText value="#{parametre.unite}" />
+						</p:column>
+					</p:dataTable>
+
+					<div class="SeparatorFull" />
+					<p:contextMenu overlay="true" for="parametreDataTable">
+
+						<p:menuitem value="Modifier Parametre" action="#{parametreBean.updateParametre}" ajax="false" />
+						
+					</p:contextMenu>
+				</div>
+				
+			</div>
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

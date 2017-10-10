@@ -1,0 +1,19 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:po="http://primefaces.org/olympos">
+
+       
+    <ul id="layout-tab-menu">
+        <li><a href="#" rel="layout-menu" class="active"> <i class="icon-presentation18 White"></i> <span class="layout-tab-menu-link-text"><span></span>#{msg.tabMenuItemWorkSpace}</span> </a></li>
+        <li><a href="#" rel="layout-alertes" > <i class="icon-speedometer33 #{notificationBean.newNotificationsIconColor}"></i> <span class="layout-tab-menu-link-text"><span></span>#{msg.tabMenuItemDashboard}</span> </a></li>
+    </ul>
+        
+     <ui:include src="main-menu.xhtml"/>
+     <ui:include src="sub-menus.xhtml"/> 
+      
+
+</ui:composition>

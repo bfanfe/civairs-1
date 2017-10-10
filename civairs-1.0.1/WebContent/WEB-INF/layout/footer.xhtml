@@ -1,0 +1,43 @@
+<ui:composition 
+
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+
+    <div class="Container100" id="layout-footer">
+        <div class="Card">
+
+            <!-- FOOTER  -->
+            <div class="Container100 NoIndent" style="border-bottom:dashed 1px #ccc;" id="footerlinks">
+                <!-- <h:graphicImage name="images/logo/civairs_orange.png" styleClass="Fleft" library="olympos-layout" style="height:15px;"/> -->
+
+                <div class="DispInlBlock Fright"></div>                
+                
+                <div class="EmptyBox10"></div>
+            </div>
+
+            <div class="EmptyBox10"></div>
+
+            <div class="Container50 NoIndent Responsive100">
+                <div class="Container100 NoIndent">
+                    <a class="DispInlBlock FontLatoRegular Blue Fs12 Fleft HoverEffect">#{msg.footerCompanyName}</a>
+                    <span class="Fleft Black Fs12" style="padding:0px 5px;">|</span>
+                    <a class="DispInlBlock FontLatoRegular Blue Fs12 Fleft HoverEffect">#{msg.footerApplicationTitle} - #{msg.footerApplicationVersion}</a>
+                </div>
+            </div>
+
+            <div class="EmptyBox10 ShowOnMobile"></div>
+
+            <div class="Container50 NoIndent Responsive100">
+                <span class="DispBlock FontLatoRegular Black Fs12 HoverEffect TexAlRight FloatNoneOnMobile">#{msg.ngisCopyRightsLabel}</span>
+                <div class="EmptyBox10"></div>
+                <span class="DispBlock FontLatoRegular Black Fs12 HoverEffect TexAlRight"> <i class="icon-services1"></i> #{msg.ngisPhoneNumber} <br/>#{msg.ngisEmail}</span>
+            </div>
+
+        </div>
+    </div>
+
+</ui:composition>

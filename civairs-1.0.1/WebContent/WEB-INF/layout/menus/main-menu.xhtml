@@ -1,0 +1,25 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:po="http://primefaces.org/olympos"
+	xmlns:shiro="http://shiro.apache.org/tags">
+	<h:form id="menuform">
+		<po:menu>
+			
+			<p:submenu label="#{menus.mainMenuEntitiesUsersLabel}">
+				<p:menuitem value=" #{menus.mainMenuResponsibleEntitiesLabel}" icon="icon-planet23 Blue" action="#{sessionBean.loadViewResponsibleEntities}" ajax="false" />
+				<p:menuitem value="#{menus.mainMenuRolesLabel}" icon="icon-male238 White" action="#{sessionBean.loadViewRoles}" ajax="false" />
+				<p:menuitem value="#{menus.mainMenuUsersLabel}" icon="icon-office-worker1 White" action="#{sessionBean.loadViewUsers}" ajax="false" />
+			</p:submenu>
+			<p:submenu label="#{menus.mainMenuOccurencesNotificationsLabel}">
+				<p:menuitem value="#{menus.mainMenuNotificationCreateLabel}" icon="icon-turn20 Blue" action="#{notificationBean.initNotificationToCreate}" ajax="false" />
+				<p:menuitem value="#{menus.mainMenuNotificationsNewLabel}" icon="icon-turn20 Red" action="#{sessionBean.loadViewNewNotificationsInitial}" ajax="false" />
+				<p:menuitem value="#{menus.mainMenuNotificationsInvestigatedLabel}" icon="icon-bell60 Green" action="#{sessionBean.loadViewInvestigatedNotifications}" ajax="false" />
+				<p:menuitem value="#{menus.mainMenuNotificationsFiledLabel}" icon="icon-bell60 White" action="#{sessionBean.loadViewFiledNotifications}" ajax="false" />
+				
+			</p:submenu>
+		</po:menu>
+	</h:form>
+</ui:composition>

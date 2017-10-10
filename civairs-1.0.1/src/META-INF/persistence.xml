@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="civairs_db_pu" transaction-type="JTA">
+		<jta-data-source>jdbc/civairs</jta-data-source>
+		<class>com.ngis.civairs.model.entities.NGPermission</class>
+		<class>com.ngis.civairs.model.entities.NGRole</class>
+		<class>com.ngis.civairs.model.entities.NGUser</class>
+		<class>com.ngis.civairs.model.entities.occurence.ATMStaff</class>
+		<class>com.ngis.civairs.model.entities.occurence.ATSUnit</class>
+		<class>com.ngis.civairs.model.entities.occurence.AerodromeGeneral</class>
+		<class>com.ngis.civairs.model.entities.occurence.AerodromeWeatherReport</class>
+		<class>com.ngis.civairs.model.entities.occurence.Aircraft</class>
+		<class>com.ngis.civairs.model.entities.occurence.Airspace</class>
+		<class>com.ngis.civairs.model.entities.occurence.Analyse</class>
+		<class>com.ngis.civairs.model.entities.occurence.DangerousGood</class>
+		<class>com.ngis.civairs.model.entities.occurence.DescriptiveFactor</class>
+		<class>com.ngis.civairs.model.entities.occurence.Engine</class>
+		<class>com.ngis.civairs.model.entities.occurence.EntityAttribute</class>
+		<class>com.ngis.civairs.model.entities.occurence.Event</class>
+		<class>com.ngis.civairs.model.entities.occurence.ExplanatoryFactor</class>
+		<class>com.ngis.civairs.model.entities.occurence.FlightCrewLicence</class>
+		<class>com.ngis.civairs.model.entities.occurence.FlightCrewMember</class>
+		<class>com.ngis.civairs.model.entities.occurence.Identifier</class>
+		<class>com.ngis.civairs.model.entities.occurence.Incapacitation</class>
+		<class>com.ngis.civairs.model.entities.occurence.Narrative</class>
+		<class>com.ngis.civairs.model.entities.occurence.Notification</class>
+		<class>com.ngis.civairs.model.entities.occurence.Occurence</class>
+		<class>com.ngis.civairs.model.entities.occurence.PartInformation</class>
+		<class>com.ngis.civairs.model.entities.occurence.PrecipitationAndOtherWeatherPhenomena</class>
+		<class>com.ngis.civairs.model.entities.occurence.Propeller</class>
+		<class>com.ngis.civairs.model.entities.occurence.ReportingHistory</class>
+		<class>com.ngis.civairs.model.entities.occurence.ResourceLocator</class>
+		<class>com.ngis.civairs.model.entities.occurence.ResponsibleEntity</class>
+		<class>com.ngis.civairs.model.entities.occurence.RiskAssessment</class>
+		<class>com.ngis.civairs.model.entities.occurence.Runway</class>
+		<class>com.ngis.civairs.model.entities.occurence.RunwayIncursion</class>
+		<class>com.ngis.civairs.model.entities.occurence.SafetyRecommendation</class>
+		<class>com.ngis.civairs.model.entities.occurence.Sector</class>
+		<class>com.ngis.civairs.model.entities.occurence.Separation</class>
+		<class>com.ngis.civairs.model.entities.occurence.SeparationAircraft</class>
+		<class>com.ngis.civairs.model.entities.occurence.SeparationTrafficInfoTypeQuality</class>
+		<class>com.ngis.civairs.model.entities.occurence.StaticATMContribution</class>
+		<class>com.ngis.civairs.model.entities.occurence.StaticAirspaceClass</class>
+		<class>com.ngis.civairs.model.entities.occurence.StaticEffectOnATMService</class>
+		<class>com.ngis.civairs.model.entities.occurence.StaticEventFrequency</class>
+		<class>com.ngis.civairs.model.entities.occurence.StaticFlightPhase</class>
+		<class>com.ngis.civairs.model.entities.occurence.StaticManufacturerModel</class>
+		<class>com.ngis.civairs.model.entities.occurence.StaticOccurrenceCategory</class>
+		<class>com.ngis.civairs.model.entities.occurence.StaticOccurrenceClass</class>
+		<class>com.ngis.civairs.model.entities.occurence.StaticOccurrenceStatus</class>
+		<class>com.ngis.civairs.model.entities.occurence.StaticOperationType</class>
+		<class>com.ngis.civairs.model.entities.occurence.Vehicle</class>		
+	</persistence-unit>
+</persistence>
