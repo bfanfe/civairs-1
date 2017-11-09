@@ -1,4 +1,4 @@
-package com.ngis.civairs.model.entities.occurence;
+package com.ngis.civairs.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -233,22 +233,6 @@ public class Notification implements Serializable {
 
 	public void setAircrafts(List<Aircraft> aircrafts) {
 		this.aircrafts = aircrafts;
-	}
-
-	public Aircraft addAircraft(Aircraft aircraft) {
-		if(aircrafts == null) aircrafts = new ArrayList<Aircraft>();
-		getAircrafts().add(aircraft);
-		aircraft.setNotification(this);
-
-		return aircraft;
-	}
-
-	public Aircraft removeAircraft(Aircraft aircraft) {
-		if(aircrafts == null) aircrafts = new ArrayList<Aircraft>();
-		getAircrafts().remove(aircraft);
-		aircraft.setNotification(null);
-
-		return aircraft;
 	}
 	
 	public StaticAirspaceClass getStaticAirspaceClass() {

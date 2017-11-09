@@ -6,10 +6,10 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.ngis.civairs.entities.Identifier;
+import com.ngis.civairs.entities.Notification;
+import com.ngis.civairs.entities.Occurence;
 import com.ngis.civairs.model.constants.NGConstants;
-import com.ngis.civairs.model.entities.occurence.Identifier;
-import com.ngis.civairs.model.entities.occurence.Notification;
-import com.ngis.civairs.model.entities.occurence.Occurence;
 
 @Stateless
 public class IdentifierDAO {

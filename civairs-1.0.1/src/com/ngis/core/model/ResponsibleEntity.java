@@ -1,8 +1,9 @@
-package com.ngis.civairs.model.entities.occurence;
+package com.ngis.core.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.ngis.civairs.entities.Identifier;
 import com.ngis.civairs.model.enums.EnumResponsibleEntityType;
 
 import java.util.List;

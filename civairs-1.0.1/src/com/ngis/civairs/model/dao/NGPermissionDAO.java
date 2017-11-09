@@ -8,14 +8,14 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.ngis.civairs.model.constants.NGConstants;
-import com.ngis.civairs.model.entities.NGPermission;
+import com.ngis.core.model.Permission;
 
 @Stateless
 public class NGPermissionDAO {
 	@PersistenceContext(unitName = "civairs_db_pu")
 	private EntityManager em;
 
-	public String insert(NGPermission entity) {
+	public String insert(Permission entity) {
 		if (entity != null && entity.getPermissionId() != null && !entity.getPermissionId().isEmpty()) {
 			if (findById(entity.getPermissionId()) == null) {
 				try {
@@ -34,7 +34,7 @@ public class NGPermissionDAO {
 
 	}
 
-	public String update(NGPermission entity) {
+	public String update(Permission entity) {
 		if (entity != null && entity.getPermissionId() != null && !entity.getPermissionId().isEmpty()) {
 			try {
 				em.merge(entity);
@@ -49,14 +49,14 @@ public class NGPermissionDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<NGPermission> getList() {
+	public List<Permission> getList() {
 		Query query = em.createQuery("SELECT p FROM NGPermission p");
-		return (List<NGPermission>) query.getResultList();
+		return (List<Permission>) query.getResultList();
 	}
 
-	public NGPermission findById(String id) {
+	public Permission findById(String id) {
 		try {
-			return em.find(NGPermission.class, id);
+			return em.find(Permission.class, id);
 		} catch (Exception e) {
 			return null;
 		}

@@ -5,17 +5,17 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import com.ngis.civairs.model.entities.NGRole;
-import com.ngis.civairs.model.services.NGRoleService;
+import com.ngis.core.model.Role;
+import com.ngis.core.services.RoleService;
 
 @FacesConverter("nGRoleConverter")
 public class NGRoleConverter implements Converter{
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
-		NGRole obj = null;
+		Role obj = null;
 		if(value != null && value.trim().length() > 0) {
-			NGRoleService service = (NGRoleService) context.getExternalContext().getSessionMap().get("nGRoleService");   		
+			RoleService service = (RoleService) context.getExternalContext().getSessionMap().get("nGRoleService");   		
             if(service.getRolesMap() != null){
             	obj = service.getRolesMap().get(value);
             }
@@ -28,7 +28,7 @@ public class NGRoleConverter implements Converter{
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
 		String str = null;
 		if(value != null) {
-            str= String.valueOf(((NGRole) value).getRoleId());
+            str= String.valueOf(((Role) value).getRoleId());
         }
         return str;
 	}

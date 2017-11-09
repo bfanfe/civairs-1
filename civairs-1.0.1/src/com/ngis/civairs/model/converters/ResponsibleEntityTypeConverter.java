@@ -6,7 +6,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
 import com.ngis.civairs.model.enums.ResponsibleEntityType;
-import com.ngis.civairs.model.services.occurence.ResponsibleEntityService;
+import com.ngis.core.services.ResponsibleEntityService;
 
 @FacesConverter("responsibleEntityTypeConverter")
 public class ResponsibleEntityTypeConverter implements Converter{

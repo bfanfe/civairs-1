@@ -1,4 +1,4 @@
-package com.ngis.civairs.model.beans;
+package com.ngis.core.beans;
 
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
@@ -18,16 +18,16 @@ import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.DualListModel;
 import org.primefaces.model.TreeNode;
 
-import com.ngis.civairs.model.beans.SessionBean;
 import com.ngis.civairs.model.constants.NGConstants;
-import com.ngis.civairs.model.entities.NGRole;
-import com.ngis.civairs.model.entities.NGUser;
-import com.ngis.civairs.model.entities.occurence.ResponsibleEntity;
 import com.ngis.civairs.model.services.NGMessageService;
-import com.ngis.civairs.model.services.NGRoleService;
-import com.ngis.civairs.model.services.NGUserService;
-import com.ngis.civairs.model.services.occurence.ResponsibleEntityService;
 import com.ngis.civairs.model.tools.DigestEncriptor;
+import com.ngis.core.beans.SessionBean;
+import com.ngis.core.model.ResponsibleEntity;
+import com.ngis.core.model.Role;
+import com.ngis.core.model.User;
+import com.ngis.core.services.ResponsibleEntityService;
+import com.ngis.core.services.RoleService;
+import com.ngis.core.services.UserService;
 
 @ManagedBean
 @SessionScoped
@@ -46,10 +46,10 @@ public class UserBean implements Serializable {
 	 * roleService handles facilities related to roles
 	 */
 	@ManagedProperty("#{nGRoleService}")
-	private NGRoleService roleService;
+	private RoleService roleService;
 
 	@ManagedProperty("#{nGUserService}")
-	private NGUserService userService;
+	private UserService userService;
 
 	@ManagedProperty("#{responsibleEntityService}")
 	private ResponsibleEntityService responsibleEntityService;
@@ -57,18 +57,18 @@ public class UserBean implements Serializable {
 	/*
 	 * The following are attributes of roleBean
 	 */
-	private List<NGRole> roles;
-	private List<NGUser> emptyRoleUsers;
-	private NGUser userToCreate;
-	private NGUser userToUpdate;
+	private List<Role> roles;
+	private List<User> emptyRoleUsers;
+	private User userToCreate;
+	private User userToUpdate;
 
 	private String currentPasswd;
 	private String newPasswd;
 	private String confirmPasswd;
 
-	private List<NGRole> sourceRoles;
-	private List<NGRole> targetRoles;
-	private DualListModel<NGRole> dualListRoles;
+	private List<Role> sourceRoles;
+	private List<Role> targetRoles;
+	private DualListModel<Role> dualListRoles;
 
 	private TreeNode usersTreeRoot;
 
@@ -93,9 +93,9 @@ public class UserBean implements Serializable {
 	 * model. That model is used by the roles picklist component
 	 */
 	public void loadDualListRoles() {
-		sourceRoles = NGRoleService.copyList(roleService.getRoles());
-		targetRoles = new ArrayList<NGRole>();
-		dualListRoles = new DualListModel<NGRole>(sourceRoles, targetRoles);
+		sourceRoles = RoleService.copyList(roleService.getRoles());
+		targetRoles = new ArrayList<Role>();
+		dualListRoles = new DualListModel<Role>(sourceRoles, targetRoles);
 	}
 
 	public void initUserToCreate() {
@@ -103,7 +103,7 @@ public class UserBean implements Serializable {
 		/*
 		 * Création d'un utilisateur
 		 */
-		userToCreate = new NGUser();
+		userToCreate = new User();
 		
 		/*
 		 * Initialisation du paramètre "resetUserPassword" à "true" 
@@ -134,7 +134,7 @@ public class UserBean implements Serializable {
 			setResetUserPassword(false);
 			if (selectedNode.getType().equals("user")) {
 				try {
-					userToUpdate = (NGUser) selectedNode.getData();
+					userToUpdate = (User) selectedNode.getData();
 
 					// change userToUpdate responsibleEntity instance
 					String id = userToUpdate.getResponsibleEntity().getId();
@@ -143,13 +143,13 @@ public class UserBean implements Serializable {
 					}
 
 					// set pikList roles
-					sourceRoles = NGRoleService.copyList(roleService.getRoles());
-					targetRoles = new ArrayList<NGRole>();
+					sourceRoles = RoleService.copyList(roleService.getRoles());
+					targetRoles = new ArrayList<Role>();
 
-					if (userToUpdate.getNgRoles() != null) {
-						targetRoles = NGRoleService.copyList(userToUpdate.getNgRoles());
-						for (NGRole role : targetRoles) {
-							NGRole r;
+					if (userToUpdate.getRoles() != null) {
+						targetRoles = RoleService.copyList(userToUpdate.getRoles());
+						for (Role role : targetRoles) {
+							Role r;
 							for (int i = 0; i < sourceRoles.size(); i++) {
 								r = sourceRoles.get(i);
 								if (r.getRoleId().equals(role.getRoleId())) {
@@ -159,7 +159,7 @@ public class UserBean implements Serializable {
 						}
 
 					}
-					dualListRoles = new DualListModel<NGRole>(sourceRoles, targetRoles);
+					dualListRoles = new DualListModel<Role>(sourceRoles, targetRoles);
 
 					// load user udate view
 					ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
@@ -189,13 +189,13 @@ public class UserBean implements Serializable {
 		 */
 		if (event.isAdd()) {
 
-			NGRole obj = null;
+			Role obj = null;
 
 			for (Object item : event.getItems()) {
-				obj = (NGRole) item;
+				obj = (Role) item;
 
 				// remove transfered Role from source
-				NGRole removeRole = null;
+				Role removeRole = null;
 				for (int i = 0; i < sourceRoles.size(); i++) {
 					removeRole = sourceRoles.get(i);
 					if (removeRole.getRoleId().equals(obj.getRoleId()))
@@ -213,13 +213,13 @@ public class UserBean implements Serializable {
 		 * make this operation from targetRoles to sourceRoles
 		 */
 		if (event.isRemove()) {
-			NGRole obj = null;
+			Role obj = null;
 
 			for (Object item : event.getItems()) {
-				obj = (NGRole) item;
+				obj = (Role) item;
 
 				// remove transfered Role from target
-				NGRole removeRole = null;
+				Role removeRole = null;
 				for (int i = 0; i < targetRoles.size(); i++) {
 					removeRole = targetRoles.get(i);
 					if (removeRole.getRoleId().equals(obj.getRoleId()))
@@ -237,7 +237,7 @@ public class UserBean implements Serializable {
 	public void changePasswd() {
 		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
 		SessionBean session = (SessionBean) context.getSessionMap().get("sessionBean");
-		NGUser user = session.getSessionUser();
+		User user = session.getSessionUser();
 		String encryptedPasswd = null;
 		String msg = null;
 		if (currentPasswd != null) {
@@ -283,7 +283,7 @@ public class UserBean implements Serializable {
 	 */
 	public void updateUser() {
 		/* save role */
-		userToUpdate.setNgRoles(targetRoles);
+		userToUpdate.setRoles(targetRoles);
 
 		// Reset password if reset checkbox is check
 		if (resetUserPassword) {
@@ -313,7 +313,7 @@ public class UserBean implements Serializable {
 	public void createUser() {
 		/* save role */
 
-		userToCreate.setNgRoles(targetRoles);
+		userToCreate.setRoles(targetRoles);
 
 		String dbResult = userService.insertUser(userToCreate);
 		roles = userService.reloadRoles();
@@ -339,7 +339,7 @@ public class UserBean implements Serializable {
 		String dbResult = null;
 		if (selectedNode != null && selectedNode.getType().equals("user")) {
 			try {
-				userToUpdate = (NGUser) selectedNode.getData();
+				userToUpdate = (User) selectedNode.getData();
 				dbResult = userService.deleteUser(userToUpdate);
 				roles = userService.reloadRoles();
 				populateUsersTree();
@@ -392,10 +392,10 @@ public class UserBean implements Serializable {
 		if (roles != null) {
 			
 			//parcours de la liste des Role 
-			for (NGRole role : roles) {
+			for (Role role : roles) {
 				
 				//Test si le Role courant contient des User
-				if (!role.getNgUsers().isEmpty()) {
+				if (!role.getUsers().isEmpty()) {
 					
 					//si le Role courant contient des User, noeud est créé dans le Tree pour ce Role
 					TreeNode roleNode = new DefaultTreeNode("role", role, usersTreeRoot);
@@ -406,7 +406,7 @@ public class UserBean implements Serializable {
 					
 					//Parcours des User du Role courant
 					int userRE = 0;
-					for (NGUser user : role.getNgUsers()) {
+					for (User user : role.getUsers()) {
 						
 						/*Test si le le ResponsibleEntity du User courant est déjà ajouté
 						 *  ou non à la liste des ResponsibleEntity
@@ -434,7 +434,7 @@ public class UserBean implements Serializable {
 						TreeNode entityNode = new DefaultTreeNode("entityR", entityR, roleNode);
 
 						// Parcours de la liste des User du Role courant
-						for (NGUser user : role.getNgUsers()) {
+						for (User user : role.getUsers()) {
 							
 							//Test si le User courant appartient au ResponsibleEntity courant
 							if (user.getResponsibleEntity().getId().equals(entityR.getId())) {
@@ -452,7 +452,7 @@ public class UserBean implements Serializable {
 		}
 
 		// Créer les noeud des User qui n'ont pas de role directement sur la racine du Tree
-		for (NGUser user : emptyRoleUsers) {
+		for (User user : emptyRoleUsers) {
 			@SuppressWarnings("unused")
 			TreeNode userNode = new DefaultTreeNode("user", user, usersTreeRoot);
 		}
@@ -474,35 +474,35 @@ public class UserBean implements Serializable {
 		this.usersTreeRoot = usersTreeRoot;
 	}
 
-	public NGUser getUserToCreate() {
+	public User getUserToCreate() {
 		return userToCreate;
 	}
 
-	public NGUser getUserToUpdate() {
+	public User getUserToUpdate() {
 		return userToUpdate;
 	}
 
-	public void setUserToCreate(NGUser userToCreate) {
+	public void setUserToCreate(User userToCreate) {
 		this.userToCreate = userToCreate;
 	}
 
-	public void setUserToUpdate(NGUser userToUpdate) {
+	public void setUserToUpdate(User userToUpdate) {
 		this.userToUpdate = userToUpdate;
 	}
 
-	public NGRoleService getRoleService() {
+	public RoleService getRoleService() {
 		return roleService;
 	}
 
-	public void setRoleService(NGRoleService roleService) {
+	public void setRoleService(RoleService roleService) {
 		this.roleService = roleService;
 	}
 
-	public List<NGRole> getRoles() {
+	public List<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<NGRole> roles) {
+	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
 
@@ -521,35 +521,35 @@ public class UserBean implements Serializable {
 		this.updateDisabled = updateDisabled;
 	}
 
-	public List<NGRole> getSourceRoles() {
+	public List<Role> getSourceRoles() {
 		return sourceRoles;
 	}
 
-	public List<NGRole> getTargetRoles() {
+	public List<Role> getTargetRoles() {
 		return targetRoles;
 	}
 
-	public DualListModel<NGRole> getDualListRoles() {
+	public DualListModel<Role> getDualListRoles() {
 		return dualListRoles;
 	}
 
-	public void setSourceRoles(List<NGRole> sourceRoles) {
+	public void setSourceRoles(List<Role> sourceRoles) {
 		this.sourceRoles = sourceRoles;
 	}
 
-	public void setTargetRoles(List<NGRole> targetRoles) {
+	public void setTargetRoles(List<Role> targetRoles) {
 		this.targetRoles = targetRoles;
 	}
 
-	public void setDualListRoles(DualListModel<NGRole> dualListRoles) {
+	public void setDualListRoles(DualListModel<Role> dualListRoles) {
 		this.dualListRoles = dualListRoles;
 	}
 
-	public NGUserService getUserService() {
+	public UserService getUserService() {
 		return userService;
 	}
 
-	public void setUserService(NGUserService userService) {
+	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
 

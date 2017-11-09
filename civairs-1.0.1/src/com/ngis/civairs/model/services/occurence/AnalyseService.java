@@ -14,7 +14,13 @@ import javax.faces.context.FacesContext;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 
-import com.ngis.civairs.model.beans.SessionBean;
+import com.ngis.civairs.entities.Analyse;
+import com.ngis.civairs.entities.StaticATMContribution;
+import com.ngis.civairs.entities.StaticEffectOnATMService;
+import com.ngis.civairs.entities.StaticEventFrequency;
+import com.ngis.civairs.entities.StaticOccurrenceCategory;
+import com.ngis.civairs.entities.StaticOccurrenceClass;
+import com.ngis.civairs.entities.StaticOccurrenceStatus;
 import com.ngis.civairs.model.constants.NGConstants;
 import com.ngis.civairs.model.dao.occurence.AnalyseDAO;
 import com.ngis.civairs.model.dao.occurence.NotificationDAO;
@@ -24,14 +30,8 @@ import com.ngis.civairs.model.dao.occurence.StaticEventFrequencyDAO;
 import com.ngis.civairs.model.dao.occurence.StaticOccurrenceCategoryDAO;
 import com.ngis.civairs.model.dao.occurence.StaticOccurrenceClassDAO;
 import com.ngis.civairs.model.dao.occurence.StaticOccurrenceStatusDAO;
-import com.ngis.civairs.model.entities.occurence.Analyse;
-import com.ngis.civairs.model.entities.occurence.StaticATMContribution;
-import com.ngis.civairs.model.entities.occurence.StaticEffectOnATMService;
-import com.ngis.civairs.model.entities.occurence.StaticEventFrequency;
-import com.ngis.civairs.model.entities.occurence.StaticOccurrenceCategory;
-import com.ngis.civairs.model.entities.occurence.StaticOccurrenceClass;
-import com.ngis.civairs.model.entities.occurence.StaticOccurrenceStatus;
 import com.ngis.civairs.model.services.NGMessageService;
+import com.ngis.core.beans.SessionBean;
 
 @ManagedBean
 @SessionScoped

@@ -1,5 +1,6 @@
-package com.ngis.civairs.model.beans;
+package com.ngis.core.beans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -11,15 +12,21 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
 
-import com.ngis.civairs.model.entities.NGPermission;
-import com.ngis.civairs.model.entities.NGRole;
 import com.ngis.civairs.model.services.NGMessageService;
-import com.ngis.civairs.model.services.NGPermissionService;
-import com.ngis.civairs.model.services.NGRoleService;
+import com.ngis.core.model.Permission;
+import com.ngis.core.model.Role;
+import com.ngis.core.services.PermissionService;
+import com.ngis.core.services.RoleService;
 
 @ManagedBean
 @SessionScoped
-public class RoleBean {
+public class RoleBean implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 
 	/*
 	 * The following are Services handled in this backing bean
@@ -30,25 +37,25 @@ public class RoleBean {
 	 * layer
 	 */
 	@ManagedProperty("#{nGPermissionService}")
-	private NGPermissionService permissionService;
+	private PermissionService permissionService;
 	
 	
 	/**
 	 * roleService handles facilities related to roles
 	 */
 	@ManagedProperty("#{nGRoleService}")
-	private NGRoleService roleService;
+	private RoleService roleService;
 
 	/*
 	 * The following are attributes of roleBean
 	 */
 	private int activeRoleIndex = 0;
-	private List<NGRole> roles;
-	private List<NGPermission> sourcePermissions;
-	private List<NGPermission> targetPermissions;
-	private NGRole roleToUpdate;
-	private NGRole roleToCreate;
-	private DualListModel<NGPermission> dualListPermissions;
+	private List<Role> roles;
+	private List<Permission> sourcePermissions;
+	private List<Permission> targetPermissions;
+	private Role roleToUpdate;
+	private Role roleToCreate;
+	private DualListModel<Permission> dualListPermissions;
 
 	@PostConstruct
 	private void init() {
@@ -56,51 +63,51 @@ public class RoleBean {
 		loadDualListPermissions();
 	}
 
-	public NGRole getRoleToCreate() {
+	public Role getRoleToCreate() {
 		return roleToCreate;
 	}
 
-	public void setRoleToCreate(NGRole roleToCreate) {
+	public void setRoleToCreate(Role roleToCreate) {
 		this.roleToCreate = roleToCreate;
 	}
 
-	public NGPermissionService getPermissionService() {
+	public PermissionService getPermissionService() {
 		return permissionService;
 	}
 
-	public void setPermissionService(NGPermissionService permissionService) {
+	public void setPermissionService(PermissionService permissionService) {
 		this.permissionService = permissionService;
 	}
 
-	public NGRoleService getRoleService() {
+	public RoleService getRoleService() {
 		return roleService;
 	}
 
-	public void setRoleService(NGRoleService roleService) {
+	public void setRoleService(RoleService roleService) {
 		this.roleService = roleService;
 	}
 
-	public List<NGPermission> getSourcePermissions() {
+	public List<Permission> getSourcePermissions() {
 		return sourcePermissions;
 	}
 
-	public List<NGPermission> getTargetPermissions() {
+	public List<Permission> getTargetPermissions() {
 		return targetPermissions;
 	}
 
-	public void setSourcePermissions(List<NGPermission> sourcePermissions) {
+	public void setSourcePermissions(List<Permission> sourcePermissions) {
 		this.sourcePermissions = sourcePermissions;
 	}
 
-	public void setTargetPermissions(List<NGPermission> targetPermissions) {
+	public void setTargetPermissions(List<Permission> targetPermissions) {
 		this.targetPermissions = targetPermissions;
 	}
 
-	public List<NGRole> getRoles() {
+	public List<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<NGRole> roles) {
+	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
 
@@ -115,16 +122,16 @@ public class RoleBean {
 	 * component
 	 */
 	public void loadDualListPermissions() {
-		sourcePermissions = NGPermissionService.copyList(permissionService.getPermissions());
-		targetPermissions = new ArrayList<NGPermission>();
-		dualListPermissions = new DualListModel<NGPermission>(sourcePermissions, targetPermissions);
+		sourcePermissions = PermissionService.copyList(permissionService.getPermissions());
+		targetPermissions = new ArrayList<Permission>();
+		dualListPermissions = new DualListModel<Permission>(sourcePermissions, targetPermissions);
 	}
 
-	public NGRole getRoleToUpdate() {
+	public Role getRoleToUpdate() {
 		return roleToUpdate;
 	}
 
-	public void setRoleToUpdate(NGRole roleToUpdate) {
+	public void setRoleToUpdate(Role roleToUpdate) {
 		this.roleToUpdate = roleToUpdate;
 	}
 
@@ -141,13 +148,13 @@ public class RoleBean {
 		setRoleToUpdate(roleService.getRole(roleId));
 
 		// set pikList permissions
-		sourcePermissions = NGPermissionService.copyList(permissionService.getPermissions());
-		targetPermissions = new ArrayList<NGPermission>();
+		sourcePermissions = PermissionService.copyList(permissionService.getPermissions());
+		targetPermissions = new ArrayList<Permission>();
 
-		if (roleToUpdate.getNgPermissions() != null) {
-			targetPermissions = NGPermissionService.copyList(roleToUpdate.getNgPermissions());
-			for (NGPermission permission : targetPermissions) {
-				NGPermission p;
+		if (roleToUpdate.getPermissions() != null) {
+			targetPermissions = PermissionService.copyList(roleToUpdate.getPermissions());
+			for (Permission permission : targetPermissions) {
+				Permission p;
 				for (int i = 0; i < sourcePermissions.size(); i++) {
 					p = sourcePermissions.get(i);
 					if (p.getPermissionId().equals(permission.getPermissionId())) {
@@ -157,7 +164,7 @@ public class RoleBean {
 			}
 
 		}
-		dualListPermissions = new DualListModel<NGPermission>(sourcePermissions, targetPermissions);
+		dualListPermissions = new DualListModel<Permission>(sourcePermissions, targetPermissions);
 		// load role update view
 		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
 		SessionBean session = (SessionBean) context.getSessionMap().get("sessionBean");
@@ -170,12 +177,12 @@ public class RoleBean {
 	 */
 	public void initRoleToCreate() {
 		// create new role
-		setRoleToCreate(new NGRole());
+		setRoleToCreate(new Role());
 		
 		// set pikList permissions
-		sourcePermissions = NGPermissionService.copyList(permissionService.getPermissions());
-		targetPermissions = new ArrayList<NGPermission>();
-		dualListPermissions = new DualListModel<NGPermission>(sourcePermissions, targetPermissions);
+		sourcePermissions = PermissionService.copyList(permissionService.getPermissions());
+		targetPermissions = new ArrayList<Permission>();
+		dualListPermissions = new DualListModel<Permission>(sourcePermissions, targetPermissions);
 
 		// load role create view
 		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
@@ -198,13 +205,13 @@ public class RoleBean {
 		 */
 		if (event.isAdd()) {
 
-			NGPermission p = null;
+			Permission p = null;
 
 			for (Object item : event.getItems()) {
-				p = (NGPermission) item;
+				p = (Permission) item;
 
 				// remove transfered Permisson from source
-				NGPermission removePermission = null;
+				Permission removePermission = null;
 				for (int i = 0; i < sourcePermissions.size(); i++) {
 					removePermission = sourcePermissions.get(i);
 					if (removePermission.getPermissionId().equals(p.getPermissionId()))
@@ -222,13 +229,13 @@ public class RoleBean {
 		 * make this operation from targetPermissions to sourcePermissions
 		 */
 		if (event.isRemove()) {
-			NGPermission p = null;
+			Permission p = null;
 
 			for (Object item : event.getItems()) {
-				p = (NGPermission) item;
+				p = (Permission) item;
 
 				// remove transfered Permisson from target
-				NGPermission removePermission = null;
+				Permission removePermission = null;
 				for (int i = 0; i < targetPermissions.size(); i++) {
 					removePermission = targetPermissions.get(i);
 					if (removePermission.getPermissionId().equals(p.getPermissionId()))
@@ -248,7 +255,7 @@ public class RoleBean {
 	 */
 	public void updateRole() {
 		/* save role */
-		roleToUpdate.setNgPermissions(targetPermissions);
+		roleToUpdate.setPermissions(targetPermissions);
 		String dbResult = roleService.saveRole(roleToUpdate);
 
 		/* add message to conntext */
@@ -264,7 +271,7 @@ public class RoleBean {
 	public void createRole() {
 		/* save role */
 
-		roleToCreate.setNgPermissions(targetPermissions);
+		roleToCreate.setPermissions(targetPermissions);
 		String dbResult = roleService.saveRole(roleToCreate);
 		roles = roleService.reloadRoles();
 		/* add message to conntext */
@@ -300,11 +307,11 @@ public class RoleBean {
 		goBackToRolesView();
 	}
 
-	public DualListModel<NGPermission> getDualListPermissions() {
+	public DualListModel<Permission> getDualListPermissions() {
 		return dualListPermissions;
 	}
 
-	public void setDualListPermissions(DualListModel<NGPermission> dualListPermissions) {
+	public void setDualListPermissions(DualListModel<Permission> dualListPermissions) {
 		this.dualListPermissions = dualListPermissions;
 	}
 

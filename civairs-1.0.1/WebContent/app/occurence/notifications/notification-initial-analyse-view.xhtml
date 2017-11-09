@@ -6,23 +6,61 @@
 	template="#{sessionBean.sessionTemplate}">
 
 	<ui:define name="content">
+	<div class="layout-portlets-box"/>
 	<h:form id="createNotificationForm" >
 		<div class="Container100 Responsive100 NoIndent">
-			
+		
+		<p:fieldset legend="EVENEMENT ANALYSE" toggleable="true" toggleSpeed="500" style="background:none;">
 			<div class="Container100 ui-fluid">
                 <div class="Card">
-                    <h1 class="CardBigTopic">#{notifications.notificationEventToAnalyze}</h1>
-                    <div class="SeparatorFull"></div>
-                    <p:outputLabel value="#{notificationBean.selectedNotification.identifier.responsibleEntity.name} - #{notificationBean.selectedNotification.event_Reference} - #{notificationBean.selectedNotification.event_Title}" />
                     
+                    <div class="Container50 Responsive100 NoIndent">
+                    <p:tab >
+			            <h:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+			                <h:outputText value="Pays :" style="font-weight: bold"/>
+			                <p:outputLabel value="Côte d'Ivoire" />
+			 
+			                <h:outputText value="Structure :" style="font-weight: bold"/>
+			                <p:outputLabel value="#{notificationBean.selectedNotification.identifier.responsibleEntity.name}" />
+			 
+			            </h:panelGrid>
+			        </p:tab>
+					</div>
+					
+					<div class="Container50 Responsive100 NoIndent">
+					<p:tab >
+			            <h:panelGrid columns="2" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+			                
+			                <h:outputText value="Référence :" style="font-weight: bold"/>
+			                <p:outputLabel value="#{notificationBean.selectedNotification.event_Reference}" />
+			                
+			                <h:outputText value="Date UTC :" style="font-weight: bold"/>
+			                <p:outputLabel value="#{notificationBean.selectedNotification.utcDate}" />
+			            </h:panelGrid>
+			        </p:tab>
+					</div>
                  </div>
+                 
+                 <div class="Container100 Responsive100 NoIndent">
+                 <div class="Card">
+                 
+                 <div class="CardBigTopic">Description succinte</div>
+                 <div class="Separator"></div>
+                   <p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+                       <h:outputText value="#{notificationBean.selectedNotification.event_Title}" />
+					</p:panelGrid>
+					</div>
+				</div>
             </div>
+         </p:fieldset>
+         <div class="EmptyBox20"></div> 
+            
+         <p:fieldset legend="CREATION D'UNE ANALYSE" toggleable="true" toggleSpeed="500">
 			
 			<div class="Container100 ui-fluid">
                 <div class="Card">
                     <h1 class="CardBigTopic">#{notifications.notificationEventStatus}</h1>
                     <div class="SeparatorFull"></div>
-                    
                     <p:selectOneRadio id="radioStatut" layout="responsive" columns="3" style="margin:0px 0px;" value="#{notificationBean.selectedNotification.analyse.staticOccurrenceStatus}" converter="staticOccurrenceStatusConverter">
                     	<f:selectItems value="#{notificationBean.staticOccurrenceStatus}" var="oStatus" itemLabel="#{nGInternatinalizationService.toLocaleVersion(oStatus.description)}" itemValue="#{oStatus}" />
                         <p:ajax event="blur"/>
@@ -95,7 +133,8 @@
 					
 					</div>
 				</div>
-            </div>
+				
+                 
             
             <div class="Container100 ui-fluid">
                 <div class="Card">
@@ -107,6 +146,7 @@
                 </div>
             </div>
             
+            
             <div class="Container100 Responsive100 ui-fluid">
                 <div class="Card" align="right">
                 <p:commandButton id="analyseNotificationCancel" style="width:100px;margin:0px 5px" 
@@ -117,7 +157,9 @@
 					action="#{notificationBean.analyseNotification}" ajax="false"/> 
 				</div>
             </div>
-            
+            </p:fieldset>  
+            </div>
+     
 	</h:form>
 	</ui:define>
 </ui:composition>

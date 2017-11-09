@@ -3,7 +3,7 @@ package com.ngis.civairs.model.services;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
-import com.ngis.civairs.model.beans.SessionBean;
+import com.ngis.core.beans.SessionBean;
 
 public class NGBeansService {
 

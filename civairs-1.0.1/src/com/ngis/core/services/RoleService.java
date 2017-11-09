@@ -1,4 +1,4 @@
-package com.ngis.civairs.model.services;
+package com.ngis.core.services;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,18 +7,31 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 
+import com.ngis.civairs.applicationException.CRUDException;
 import com.ngis.civairs.model.dao.NGRoleDAO;
-import com.ngis.civairs.model.entities.NGRole;
+import com.ngis.core.model.Permission;
+import com.ngis.core.model.Role;
+import com.ngis.core.model.User;
 
 @ManagedBean
 @SessionScoped
-public class NGRoleService {
+@Stateless
+public class RoleService implements IRole{
+	
+	@PersistenceContext(unitName = "civairs_db_pu")
+	private EntityManager em;
+	
+	private Role role;
 
-	private List<NGRole> roles;
-	private Map<String, NGRole> rolesMap;
+	private List<Role> roles;
+	private Map<String, Role> rolesMap;
 
 	@EJB
 	private NGRoleDAO dao;
@@ -29,71 +42,134 @@ public class NGRoleService {
 		loadRolesMap();
 	}
 
-	public NGRole getRole(String roleId) {
+	public Role getRole(String roleId) {
 		return rolesMap.get(roleId);
 	}
 
-	public List<NGRole> reloadRoles() {
+	public List<Role> reloadRoles() {
 		roles = dao.getList();
 		loadRolesMap();
 		return roles;
 	}
 
-	public String saveRole(NGRole roleToSave) {
+	public String saveRole(Role roleToSave) {
 		if (dao.findById(roleToSave.getRoleId()) == null)
 			return dao.insert(roleToSave);
 		else
 			return dao.update(roleToSave);
 	}
 	
-	public String deleteRole(NGRole roleToDelete){
+	public String deleteRole(Role roleToDelete){
 		return dao.remove(roleToDelete);
 	}
 
-	public List<NGRole> getRoles() {
+	public List<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<NGRole> roles) {
+	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
 
-	public Map<String, NGRole> getRolesMap() {
+	public Map<String, Role> getRolesMap() {
 		return rolesMap;
 	}
 
-	public void setRolesMap(Map<String, NGRole> rolesMap) {
+	public void setRolesMap(Map<String, Role> rolesMap) {
 		this.rolesMap = rolesMap;
 	}
 	
 	public void loadRolesMap(){
-		rolesMap = new HashMap<String, NGRole>();
-		for (NGRole role : roles) {
+		rolesMap = new HashMap<String, Role>();
+		for (Role role : roles) {
 			rolesMap.put(role.getRoleId(), role);
 		}
 	}
 
-	public static NGRole copy(NGRole role) {
-		NGRole copy = null;
+	public static Role copy(Role role) {
+		Role copy = null;
 		if (role != null) {
-			copy = new NGRole();
+			copy = new Role();
 			copy.setRoleId(role.getRoleId());
-			copy.setNgPermissions(role.getNgPermissions());
+			copy.setPermissions(role.getPermissions());
 			copy.setRoleDescription(role.getRoleDescription());
-			copy.setNgUsers(role.getNgUsers());
+			copy.setUsers(role.getUsers());
 			
 		}
 		return copy;
 		
 	}
 	
-	public static List<NGRole> copyList(List<NGRole> list){
-		List<NGRole> copy = null;
+	public static List<Role> copyList(List<Role> list){
+		List<Role> copy = null;
 		if(list != null){
-			copy = new ArrayList<NGRole>();
+			copy = new ArrayList<Role>();
 			copy.addAll(list);
 		}
 		return copy;
+	}
+
+	/**
+	 * @return the role
+	 */
+	public Role getRole() {
+		return role;
+	}
+
+	/**
+	 * @param role the role to set
+	 */
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	@Override
+	public void createRole(Role role, List<Permission> permissions, List<User> users) {
+		// TODO Auto-generated method stub
+		role.setPermissions(permissions);
+		role.setUsers(users);
+		em.persist(role);
+		try{
+			em.flush();
+			
+		} catch (PersistenceException e) {
+			// TODO: handle exception
+			throw new CRUDException("Problème d'insertion du role");
+			
+		}
+		
+	}
+
+	@Override
+	public void updateRole(Role role, List<Permission> permissions, List<User> users) {
+		// TODO Auto-generated method stub
+		role.getPermissions().clear();
+		role.getPermissions().addAll(permissions);
+		role.getUsers().clear();
+		role.getUsers().addAll(users);
+		em.merge(role);
+		try{
+			em.flush();
+			
+		} catch (PersistenceException e) {
+			// TODO: handle exception
+			throw new CRUDException("Problème de mise à jour du role");
+			
+		}
+		
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Role> findAllRole() {
+		// TODO Auto-generated method stub
+		return em.createQuery("SELECT r FROM Role r").getResultList();
+	}
+
+	@Override
+	public void deleteRole(String roleId) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

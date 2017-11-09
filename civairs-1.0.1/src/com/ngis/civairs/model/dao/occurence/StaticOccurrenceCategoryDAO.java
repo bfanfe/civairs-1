@@ -6,8 +6,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.ngis.civairs.entities.StaticOccurrenceCategory;
 import com.ngis.civairs.model.constants.NGConstants;
-import com.ngis.civairs.model.entities.occurence.StaticOccurrenceCategory;
 
 @Stateless
 public class StaticOccurrenceCategoryDAO {

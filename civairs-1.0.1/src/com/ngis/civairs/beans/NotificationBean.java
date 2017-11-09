@@ -1,41 +1,78 @@
-package com.ngis.civairs.model.beans.occurence;
+package com.ngis.civairs.beans;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.event.FacesEvent;
 
-import com.ngis.civairs.model.beans.SessionBean;
+import org.primefaces.component.tabview.Tab;
+import org.primefaces.context.RequestContext;
+import org.primefaces.event.TabChangeEvent;
+import org.primefaces.event.TabCloseEvent;
+import org.primefaces.event.TabEvent;
+
+import com.ngis.civairs.applicationException.CRUDException;
+import com.ngis.civairs.entities.Aircraft;
+import com.ngis.civairs.entities.AircraftInvolved;
+import com.ngis.civairs.entities.Analyse;
+import com.ngis.civairs.entities.Identifier;
+import com.ngis.civairs.entities.Notification;
+import com.ngis.civairs.entities.StaticATMContribution;
+import com.ngis.civairs.entities.StaticAirspaceClass;
+import com.ngis.civairs.entities.StaticEffectOnATMService;
+import com.ngis.civairs.entities.StaticEventFrequency;
+import com.ngis.civairs.entities.StaticFlightPhase;
+import com.ngis.civairs.entities.StaticManufacturerModel;
+import com.ngis.civairs.entities.StaticOccurrenceCategory;
+import com.ngis.civairs.entities.StaticOccurrenceClass;
+import com.ngis.civairs.entities.StaticOccurrenceStatus;
+import com.ngis.civairs.entities.StaticOperationType;
 import com.ngis.civairs.model.constants.NGConstants;
-import com.ngis.civairs.model.entities.occurence.Aircraft;
-import com.ngis.civairs.model.entities.occurence.Analyse;
-import com.ngis.civairs.model.entities.occurence.Identifier;
-import com.ngis.civairs.model.entities.occurence.Notification;
-import com.ngis.civairs.model.entities.occurence.StaticATMContribution;
-import com.ngis.civairs.model.entities.occurence.StaticAirspaceClass;
-import com.ngis.civairs.model.entities.occurence.StaticEffectOnATMService;
-import com.ngis.civairs.model.entities.occurence.StaticEventFrequency;
-import com.ngis.civairs.model.entities.occurence.StaticFlightPhase;
-import com.ngis.civairs.model.entities.occurence.StaticManufacturerModel;
-import com.ngis.civairs.model.entities.occurence.StaticOccurrenceCategory;
-import com.ngis.civairs.model.entities.occurence.StaticOccurrenceClass;
-import com.ngis.civairs.model.entities.occurence.StaticOccurrenceStatus;
-import com.ngis.civairs.model.entities.occurence.StaticOperationType;
 import com.ngis.civairs.model.enums.EnumAirspaceClass;
 import com.ngis.civairs.model.services.occurence.AircraftService;
 import com.ngis.civairs.model.services.occurence.AnalyseService;
 import com.ngis.civairs.model.services.occurence.NotificationService;
 import com.ngis.civairs.model.tools.HashcodeUtility;
+import com.ngis.civairs.services.INotification;
+import com.ngis.civairs.services.IOperationType;
+import com.ngis.core.beans.SessionBean;
+
+
 
 @ManagedBean
 @SessionScoped
-public class NotificationBean {
+public class NotificationBean implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@EJB
+	private INotification notificationServices;
+	
+	@EJB
+	private IOperationType operationTypeServices;
+
+	private Notification notification;
+	private List<Notification> notifications;
+	private List<StaticOperationType> operationTypes;
+	private Aircraft aircraft;
+	private List<Aircraft> aircrafts;
+	private String aircraftTabTitle = "Aircraft";
+	
 
 	@ManagedProperty("#{notificationService}")
 	private NotificationService notificationService;
@@ -57,6 +94,137 @@ public class NotificationBean {
 	private int activeNotificationAircraftIndex = 0;
 
 	private int aircraftNumber = 1;
+	
+	private int tabIndex = 1;
+	
+	
+	@PostConstruct
+	public void init(){
+		
+		aircrafts = new ArrayList<Aircraft>();
+		aircrafts.add(new Aircraft());
+		
+		notification = new Notification();
+		notification.setAircrafts(aircrafts); 
+		
+		notifications = new ArrayList<Notification>();
+		notifications = notificationServices.findAllNotification();
+		
+		operationTypes = new ArrayList<StaticOperationType>();
+		operationTypes = operationTypeServices.findAllOperationType();
+		
+	}
+	
+	@PreDestroy
+	public void destroy(){
+		notification = null;
+	}
+	
+	/*public void createAircraft() {
+		if(aircrafts.contains(aircraft)) {
+            FacesMessage msg = new FacesMessage("Dublicated", "This aircraft has already been added");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        } 
+        else {
+            aircrafts.add(aircraft);
+            aircraft = new Aircraft();
+        }
+	}*/
+	
+	public String reinitAircraft(){
+		setAircraft(new Aircraft());
+		return null;
+	}
+	
+	public void onTabClose(TabCloseEvent event) {
+		aircrafts.remove(event.getData());
+		FacesMessage msg = new FacesMessage("Tab Closed", "Closed tab: " + event.getTab().getTitle()+"Nb: "+notification.getAircrafts().size());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+	
+	public Notification prepareSave(){
+		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+		SessionBean session = (SessionBean) context.getSessionMap().get("sessionBean");
+		
+		String fileNumber = HashcodeUtility
+				.hashABS31ToString("" + notification.getUtcDate() + notification.getUtcTime());
+		
+		Identifier notificationIdentifier = new Identifier();
+		notificationIdentifier.setFile_Number(fileNumber);
+		notificationIdentifier.setResponsibleEntity(session.getSessionUser().getResponsibleEntity());
+		notificationIdentifier.setId(session.getSessionUser().getResponsibleEntity().getId() + "-" + fileNumber);
+
+		// Set Notification Id to Identifier's one
+		notification.setId(notificationIdentifier.getId());
+
+		// Set reportingTime
+		notification.setReportingTime(Date.from(Instant.now()));
+
+		// Set status to NewNotification
+		notification.setStatus(NGConstants.NOTIFICATION_STATUS_NEW);
+
+		// Add aircraft to notification
+
+		for (Aircraft ac : notification.getAircrafts()) {
+			if (ac.getId() == null) {
+				String acId = HashcodeUtility
+						.hashABS31ToString("" + notification.getId() + ac.getAircraft_Registration());
+				ac.setId(acId);
+			}
+		}
+
+		// Add notification to identifier
+		notificationIdentifier.addNotification(notification);
+
+		// Persist identifier
+		notificationService.insertNotificationByIdentifier(notificationIdentifier);
+
+		return notification;
+	}
+	
+	public void saveNotification() {
+		try{
+			notificationServices.createNotification(notification, aircrafts);
+			notification = new Notification();
+			RequestContext.getCurrentInstance().update("createNotificationForm");
+		}catch(CRUDException e){
+			RequestContext.getCurrentInstance().showMessageInDialog(
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", 
+							"Erreur lors de l'enregistrement de la notification !"));
+		}
+		
+		// Back to Responsible Entities view
+		//backToNewNotificationsView();
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	/**
+	 * @return the notificationServices
+	 */
+	public INotification getNotificationServices() {
+		return notificationServices;
+	}
+
+
+
+	/**
+	 * @param notificationServices the notificationServices to set
+	 */
+	public void setNotificationServices(INotification notificationServices) {
+		this.notificationServices = notificationServices;
+	}
+
+
 
 	public List<StaticManufacturerModel> getStaticManufacturerModels() {
 		return aircraftService.getStaticManufacturerModels();
@@ -90,9 +258,9 @@ public class NotificationBean {
 		notificationService.setStaticAirspaceClasses(staticAirspaceClasses);
 	}
 
-	public List<Notification> getNotifications() {
+	/*public List<Notification> getNotifications() {
 		return notificationService.getNewNotifications();
-	}
+	}*/
 
 	public List<Notification> getNewNotifications() {
 		return notificationService.getNewNotifications();
@@ -449,7 +617,6 @@ public class NotificationBean {
 		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
 		SessionBean session = (SessionBean) context.getSessionMap().get("sessionBean");
 		session.loadViewNewNotificationsInitial();
-
 	}
 	
 	public void backToInvestigatedNotificationsView(){
@@ -500,49 +667,8 @@ public class NotificationBean {
 	}
 
 	
-
-	public List<Aircraft> getNotificationAircrafts(Notification notification) {
-		if (notification != null) {
-
-			if (notification.getAircrafts() == null) {
-				notification.setAircrafts(new ArrayList<Aircraft>());
-			}
-
-			// add an involved aircraft to the notification
-			while (aircraftNumber > notification.getAircrafts().size()) {
-
-				Aircraft aircraft = new Aircraft();
-				aircraft.setAircraft_Index(notification.getAircrafts().size() + 1);
-
-				notification.addAircraft(aircraft);
-
-				setActiveNotificationAircraftIndex(aircraftNumber - 1);
-			}
-
-			// remove an involved aircraft from the notification
-			while (aircraftNumber < notification.getAircrafts().size()) {
-
-				Aircraft aircraft = notification.getAircrafts().get(notification.getAircrafts().size() - 1);
-				notification.removeAircraft(aircraft);
-
-				setActiveNotificationAircraftIndex(aircraftNumber - 1);
-			}
-		}
-		return notification.getAircrafts();
-	}
-
-	public List<Aircraft> getNotificationToCreateAircrafts() {
-		return getNotificationAircrafts(notificationToCreate);
-
-	}
-
 	public void setNotificationToCreateAircrafts(List<Aircraft> aircrafts) {
 		this.notificationToCreate.setAircrafts(aircrafts);
-	}
-
-	public List<Aircraft> getSelectedNotificationAircrafts() {
-		return getNotificationAircrafts(selectedNotification);
-
 	}
 
 	public void setSelectedNotificationAircrafts(List<Aircraft> aircrafts) {
@@ -581,5 +707,96 @@ public class NotificationBean {
 	public void setUpdateDisabled(String updateDisabled) {
 		this.updateDisabled = updateDisabled;
 	}
+	
+	
+	
+	
 
+	public List<Notification> getNotifications() {
+		return notifications;
+	}
+
+	public void setNotifications(List<Notification> notifications) {
+		this.notifications = notifications;
+	}
+
+	public List<StaticOperationType> getOperationTypes() {
+		return operationTypes;
+	}
+
+	public void setOperationTypes(List<StaticOperationType> operationTypes) {
+		this.operationTypes = operationTypes;
+	}
+
+
+
+	/**
+	 * @return the notification
+	 */
+	public Notification getNotification() {
+		return notification;
+	}
+
+	/**
+	 * @param notification the notification to set
+	 */
+	public void setNotification(Notification notification) {
+		this.notification = notification;
+	}
+
+	/**
+	 * @return the aircrafts
+	 */
+	public List<Aircraft> getAircrafts() {
+		return aircrafts;
+	}
+
+	/**
+	 * @param aircrafts the aircrafts to set
+	 */
+	public void setAircrafts(List<Aircraft> aircrafts) {
+		this.aircrafts = aircrafts;
+	}
+
+	/**
+	 * @return the tabIndex
+	 */
+	public int getTabIndex() {
+		return tabIndex;
+	}
+
+	/**
+	 * @param tabIndex the tabIndex to set
+	 */
+	public void setTabIndex(int tabIndex) {
+		this.tabIndex = tabIndex;
+	}
+
+	/**
+	 * @return the aircraftTabTitle
+	 */
+	public String getAircraftTabTitle() {
+		return aircraftTabTitle;
+	}
+
+	/**
+	 * @param aircraftTabTitle the aircraftTabTitle to set
+	 */
+	public void setAircraftTabTitle(String aircraftTabTitle) {
+		this.aircraftTabTitle = aircraftTabTitle;
+	}
+
+	/**
+	 * @return the aircraft
+	 */
+	public Aircraft getAircraft() {
+		return aircraft;
+	}
+
+	/**
+	 * @param aircraft the aircraft to set
+	 */
+	public void setAircraft(Aircraft aircraft) {
+		this.aircraft = aircraft;
+	}
 }

@@ -8,22 +8,22 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.ngis.civairs.model.constants.NGConstants;
-import com.ngis.civairs.model.entities.NGPermission;
-import com.ngis.civairs.model.entities.NGRole;
-import com.ngis.civairs.model.entities.NGUser;
+import com.ngis.core.model.Permission;
+import com.ngis.core.model.Role;
+import com.ngis.core.model.User;
 
 @Stateless
 public class NGRoleDAO {
 	@PersistenceContext( unitName = "civairs_db_pu")
 	private EntityManager em;
 	
-	public String insert(NGRole entity){
+	public String insert(Role entity){
 		if(entity != null && entity.getRoleId() != null && !entity.getRoleId().isEmpty()){
 			if(findById(entity.getRoleId()) == null) {
 				try{
 					em.persist(entity);
-					em.getEntityManagerFactory().getCache().evict(NGUser.class);
-					em.getEntityManagerFactory().getCache().evict(NGPermission.class);
+					em.getEntityManagerFactory().getCache().evict(User.class);
+					em.getEntityManagerFactory().getCache().evict(Permission.class);
 				}catch(Exception e){
 					return NGConstants.DB_INSERT_FAILED;
 				}
@@ -37,7 +37,7 @@ public class NGRoleDAO {
 		}			
 	}
 	
-	public String update(NGRole entity){
+	public String update(Role entity){
 		if(entity != null && entity.getRoleId() != null && !entity.getRoleId().isEmpty()){
 			
 			try{
@@ -45,8 +45,8 @@ public class NGRoleDAO {
 				em.merge(entity);
 				
 				//remove all managed users from persistence context 
-				em.getEntityManagerFactory().getCache().evict(NGUser.class);
-				em.getEntityManagerFactory().getCache().evict(NGPermission.class);
+				em.getEntityManagerFactory().getCache().evict(User.class);
+				em.getEntityManagerFactory().getCache().evict(Permission.class);
 			return NGConstants.DB_UPDATE_OK;
 			}catch(Exception e){
 				e.printStackTrace();
@@ -58,14 +58,14 @@ public class NGRoleDAO {
 		}		
 	}
 	
-	public String remove(NGRole entity) {
+	public String remove(Role entity) {
 		if (entity != null && entity.getRoleId() != null && !entity.getRoleId().isEmpty()) {
 			try {
-				NGRole dbEntity = findById(entity.getRoleId());
+				Role dbEntity = findById(entity.getRoleId());
 				if(dbEntity != null) {
 					em.remove(dbEntity);
-					em.getEntityManagerFactory().getCache().evict(NGUser.class);
-					em.getEntityManagerFactory().getCache().evict(NGPermission.class);
+					em.getEntityManagerFactory().getCache().evict(User.class);
+					em.getEntityManagerFactory().getCache().evict(Permission.class);
 				}
 				entity = null;
 				return NGConstants.DB_DELETE_OK;
@@ -80,15 +80,15 @@ public class NGRoleDAO {
 	
 	
 	@SuppressWarnings("unchecked")
-	public List<NGRole> getList(){
+	public List<Role> getList(){
 		Query query = em.createQuery("SELECT p FROM NGRole p");
-		return (List<NGRole>) query.getResultList();
+		return (List<Role>) query.getResultList();
 		
 	}
 		
-	public NGRole findById(String id){
+	public Role findById(String id){
 		try{
-			return em.find(NGRole.class, id);
+			return em.find(Role.class, id);
 		}catch(Exception e){
 			return null;
 		}		

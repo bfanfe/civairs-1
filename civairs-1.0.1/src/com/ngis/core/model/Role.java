@@ -1,4 +1,4 @@
-package com.ngis.civairs.model.entities;
+package com.ngis.core.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -11,8 +11,8 @@ import java.util.List;
  */
 @Entity
 @Table(name="ng_role")
-@NamedQuery(name="NGRole.findAll", query="SELECT n FROM NGRole n")
-public class NGRole implements Serializable {
+@NamedQuery(name="NGRole.findAll", query="SELECT n FROM Role n")
+public class Role implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -27,16 +27,16 @@ public class NGRole implements Serializable {
 	@JoinTable(name="role_permission",
 	joinColumns=@JoinColumn(name="role_id"),
 	inverseJoinColumns=@JoinColumn(name="permission_id"))
-	private List<NGPermission> ngPermissions;
+	private List<Permission> permissions;
 
 	//bi-directional many-to-many association to NGUser
 	@ManyToMany
 	@JoinTable(name="role_user",
 	joinColumns=@JoinColumn(name="role_id"),
 	inverseJoinColumns=@JoinColumn(name="login"))
-	private List<NGUser> ngUsers;
+	private List<User> users;
 
-	public NGRole() {
+	public Role() {
 	}
 
 	public String getRoleId() {
@@ -55,20 +55,20 @@ public class NGRole implements Serializable {
 		this.roleDescription = roleDescription;
 	}
 
-	public List<NGPermission> getNgPermissions() {
-		return this.ngPermissions;
+	public List<Permission> getPermissions() {
+		return permissions;
 	}
 
-	public void setNgPermissions(List<NGPermission> ngPermissions) {
-		this.ngPermissions = ngPermissions;
+	public void setPermissions(List<Permission> permissions) {
+		this.permissions = permissions;
 	}
 
-	public List<NGUser> getNgUsers() {
-		return this.ngUsers;
+	public List<User> getUsers() {
+		return users;
 	}
 
-	public void setNgUsers(List<NGUser> ngUsers) {
-		this.ngUsers = ngUsers;
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 
 }

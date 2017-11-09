@@ -17,7 +17,6 @@
 							layout="grid">
 							<div align="left">
 								<h1 class="CardBigTopic">#{entities.responsibleEntitiesTitle}</h1>
-								<hr />
 							</div>
 							<p:outputPanel>
 								<div align="right">
@@ -32,8 +31,9 @@
 							</p:outputPanel>
 						</p:panelGrid>
 						<div class="SeparatorFull"></div>
-						<p:accordionPanel id="rolesAccordion" multiple="false" activeIndex="#{responsibleEntityBean.activeResponsibleEntityIndex}"
+						<p:accordionPanel id="rolesAccordion" multiple="false" activeIndex="#{responsibleEntityBean.activeIndex}"
 							value="#{responsibleEntityBean.responsibleEntities}" var="entity">
+							<p:ajax event="tabChange" listener="#{responsibleEntityBean.onTabChange}"/>
 							<p:tab title="#{entity.name}" >
 								<p:panelGrid columns="1" cellpadding="10"
 									style="border:0px !important; background:none;"

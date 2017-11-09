@@ -1,4 +1,4 @@
-package com.ngis.civairs.model.entities;
+package com.ngis.core.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -11,8 +11,8 @@ import java.util.List;
  */
 @Entity
 @Table(name="ng_permission")
-@NamedQuery(name="NGPermission.findAll", query="SELECT n FROM NGPermission n")
-public class NGPermission implements Serializable {
+@NamedQuery(name="NGPermission.findAll", query="SELECT n FROM Permission n")
+public class Permission implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -27,9 +27,9 @@ public class NGPermission implements Serializable {
 	@JoinTable(name="role_permission",
 	joinColumns=@JoinColumn(name="permission_id"),
 	inverseJoinColumns=@JoinColumn(name="role_id"))
-	private List<NGRole> ngRoles;
+	private List<Role> roles;
 
-	public NGPermission() {
+	public Permission() {
 	}
 
 	public String getPermissionId() {
@@ -48,12 +48,12 @@ public class NGPermission implements Serializable {
 		this.permissionDescription = permissionDescription;
 	}
 
-	public List<NGRole> getNgRoles() {
-		return this.ngRoles;
+	public List<Role> getRoles() {
+		return roles;
 	}
 
-	public void setNgRoles(List<NGRole> ngRoles) {
-		this.ngRoles = ngRoles;
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
 
 }

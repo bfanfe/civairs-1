@@ -11,7 +11,7 @@
 	
 	<h:form id="notificationsForm">
 			<p:growl id="mygrowl" showDetail="true" />
-
+			
 			<div class="Container100 Responsive100 NoIndent">
 				<div class="Container100 ui-fluid">
 					<div class="Card">
@@ -19,7 +19,6 @@
 							layout="grid">
 							<div align="left">
 								<h1 class="CardBigTopic">#{notifications.notificationsNewTitle}</h1>
-							<hr />
 							</div>
 							<p:outputPanel>
 								<div align="right">
@@ -66,7 +65,7 @@
 
 
 					<p:dataTable id="notificationsDataTable" var="notification"
-						value="#{notificationBean.newNotifications}"
+						value="#{notificationBean.notifications}"
 						selectionMode="single" rowKey="#{notification.id}" sortBy="#{notification.reportingTime}"
 						selection="#{notificationBean.selectedNotification}"
 						paginator="false" scrollable="true" scrollHeight="400"

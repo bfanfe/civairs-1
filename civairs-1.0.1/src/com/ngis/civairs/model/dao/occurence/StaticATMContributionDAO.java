@@ -6,8 +6,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.ngis.civairs.entities.StaticATMContribution;
 import com.ngis.civairs.model.constants.NGConstants;
-import com.ngis.civairs.model.entities.occurence.StaticATMContribution;
 
 @Stateless
 public class StaticATMContributionDAO {

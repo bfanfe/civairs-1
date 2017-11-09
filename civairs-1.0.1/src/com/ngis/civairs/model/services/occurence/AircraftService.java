@@ -9,12 +9,12 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import com.ngis.civairs.entities.StaticFlightPhase;
+import com.ngis.civairs.entities.StaticManufacturerModel;
+import com.ngis.civairs.entities.StaticOperationType;
 import com.ngis.civairs.model.dao.occurence.StaticFlightPhaseDAO;
 import com.ngis.civairs.model.dao.occurence.StaticManufacturerModelDAO;
 import com.ngis.civairs.model.dao.occurence.StaticOperationTypeDAO;
-import com.ngis.civairs.model.entities.occurence.StaticFlightPhase;
-import com.ngis.civairs.model.entities.occurence.StaticManufacturerModel;
-import com.ngis.civairs.model.entities.occurence.StaticOperationType;
 
 @ManagedBean
 @SessionScoped

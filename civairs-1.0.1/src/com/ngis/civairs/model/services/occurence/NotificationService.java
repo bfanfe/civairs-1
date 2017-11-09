@@ -14,15 +14,15 @@ import javax.faces.context.FacesContext;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 
-import com.ngis.civairs.model.beans.SessionBean;
+import com.ngis.civairs.entities.Identifier;
+import com.ngis.civairs.entities.Notification;
+import com.ngis.civairs.entities.StaticAirspaceClass;
 import com.ngis.civairs.model.constants.NGConstants;
 import com.ngis.civairs.model.dao.occurence.IdentifierDAO;
 import com.ngis.civairs.model.dao.occurence.NotificationDAO;
 import com.ngis.civairs.model.dao.occurence.StaticAirspaceClassDAO;
-import com.ngis.civairs.model.entities.occurence.Identifier;
-import com.ngis.civairs.model.entities.occurence.Notification;
-import com.ngis.civairs.model.entities.occurence.StaticAirspaceClass;
 import com.ngis.civairs.model.services.NGMessageService;
+import com.ngis.core.beans.SessionBean;
 
 @ManagedBean
 @SessionScoped

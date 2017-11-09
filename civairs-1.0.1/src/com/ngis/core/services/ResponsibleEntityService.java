@@ -1,4 +1,4 @@
-package com.ngis.civairs.model.services.occurence;
+package com.ngis.core.services;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,18 +7,30 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 
+import com.ngis.civairs.applicationException.CRUDException;
 import com.ngis.civairs.model.dao.occurence.ResponsibleEntityDAO;
-import com.ngis.civairs.model.entities.occurence.ResponsibleEntity;
 import com.ngis.civairs.model.enums.EnumResponsibleEntityType;
 import com.ngis.civairs.model.enums.ResponsibleEntityType;
 import com.ngis.civairs.model.services.NGMessageService;
+import com.ngis.core.model.ResponsibleEntity;
 
 @ManagedBean
 @SessionScoped
-public class ResponsibleEntityService {
+@Stateless
+public class ResponsibleEntityService implements IResponsibleEntity{
+	
+	@PersistenceContext(unitName = "civairs_db_pu")
+	private EntityManager em;
+	
+	
+	
 	
 	private List<ResponsibleEntity> responsibleEntities;
 	
@@ -129,6 +141,39 @@ public class ResponsibleEntityService {
 		String daoResult = dao.delete(toDelete);
 		NGMessageService.addMessage(daoResult);
 		loadResponsibleEntities();
+	}
+
+
+	
+
+	@Override
+	public void createResponsibleEntity(ResponsibleEntity responsibleEntity) {
+		// TODO Auto-generated method stub
+		em.persist(responsibleEntity);
+		try{
+			em.flush();
+			
+		} catch (PersistenceException e) {
+			// TODO: handle exception
+			throw new CRUDException("Problème d'insertion de la structure");
+			
+		}
+		
+	}
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ResponsibleEntity> findAllResponsibleEntity() {
+		// TODO Auto-generated method stub
+		return em.createQuery("SELECT n FROM ResponsibleEntity n").getResultList();
+	}
+
+
+	@Override
+	public void deleteResponsibleEntity(String responsibleEntityId) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 

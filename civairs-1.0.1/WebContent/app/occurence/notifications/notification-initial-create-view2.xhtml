@@ -1,0 +1,270 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{sessionBean.sessionTemplate}">
+
+	<ui:define name="content">
+	<div class="layout-portlets-box"/>
+	<h:form id="createNotificationForm">
+	<p:fieldset legend="CREATION D'UNE NOTIFICATION INITIALE" toggleable="true" toggleSpeed="500" 
+	style="background:none;">
+	
+		<div class="Container100 NoIndent Flex FlexWrap">
+
+		<!-- Left column -->
+       	<div class="Container50 NoIndent Responsive100 Flex FlexWrap">
+        	
+        	<div class="Container100 Flex">
+                <div class="Card">
+                    <h1 class="CardBigTopic">#{notifications.notificationFileReference}</h1>
+                    <div class="SeparatorFull"></div>
+                    
+                    <div class="Container50 Responsive100 ui-fluid">
+                    <p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+                        <p:outputLabel value="#{notifications.notificationAerodromeCode}" escape="false" />
+                        <p:inputText placeholder="#{notifications.notificationAircraftDepartureADExample}" 
+                        value="#{notificationBean.notification.aerodrome_Code}" />
+					</p:panelGrid>
+					</div>
+					
+					<div class="Container50 Responsive100 ui-fluid">
+					<p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+                        <p:outputLabel value="#{notifications.notificationEventReference}" escape="false" />
+						<p:inputText placeholder="#{notifications.notificationEventReferenceExample}" 
+						value="#{notificationBean.notification.event_Reference}" />
+					</p:panelGrid>
+					</div>
+					
+					<div class="EmptyBox5"></div>
+					<div class="Container100 Responsive100 ui-fluid">
+					<p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">   
+                        <p:outputLabel value="#{notifications.notificationEventTitle}" />
+                        <p:inputTextarea rows="1" placeholder="#{notifications.notificationEventTitle}" 
+                    	value="#{notificationBean.notification.event_Title}" />
+                    </p:panelGrid>
+					</div>
+                </div>
+            </div>
+            
+            <div class="Container100 Flex">
+                <div class="Card">
+                <h1 class="CardBigTopic">#{notifications.notificationDateLocation}</h1>
+                <div class="SeparatorFull"></div>
+                    <div class="Container50 Responsive100 ui-fluid">
+                    <p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+	                        <p:outputLabel value="#{notifications.notificationUtcDateLabel}" />
+                       		<p:calendar placeholder="#{notifications.notificationUtcDateLabel}" 
+                       		value="#{notificationBean.notification.utcDate}" pattern="dd/MM/yyyy" />
+						</p:panelGrid>
+					</div>
+					
+					<div class="Container50 Responsive100 ui-fluid">
+					<p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+	                        <p:outputLabel value="#{notifications.notificationUtcTimeLabel}" />
+							<p:calendar placeholder="#{notifications.notificationUtcTimeLabel}" 
+							value="#{notificationBean.notification.utcTime}" timeOnly="true" pattern="HH:mm" timeControlType="select" />
+						</p:panelGrid>
+					</div>
+					
+					<div class="Container50 Responsive100 ui-fluid">
+                    <p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+	                        <p:outputLabel value="#{notifications.notificationLocalDateLabel}" />
+                       		<p:calendar placeholder="#{notifications.notificationLocalDateLabel}" 
+                       		value="#{notificationBean.notification.local_Date}" pattern="dd/MM/yyyy" />
+						</p:panelGrid>
+					</div>
+					
+					<div class="Container50 Responsive100 ui-fluid">
+					<p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+	                        <p:outputLabel value="#{notifications.notificationLocalTimeLabel}" />
+							<p:calendar placeholder="#{notifications.notificationLocalTimeLabel}" 
+							value="#{notificationBean.notification.local_Time}" timeOnly="true" pattern="HH:mm" timeControlType="select" />
+						</p:panelGrid>
+					</div>
+					
+                    <div class="Container50 Responsive100 ui-fluid">
+                    <p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+	                        <p:outputLabel value="#{notifications.notificationAirspaceClass}" />
+	                        <p:selectOneMenu value="#{notificationBean.notification.staticAirspaceClass}" converter="staticAirspaceClassConverter" var="ac">
+                            			<f:selectItems value="#{notificationBean.staticAirspaceClasses}" var="aClass" itemLabel="#{aClass.description}" itemValue="#{aClass}" />
+                            			<p:column>#{ac.description}</p:column>
+                            			<p:ajax event="blur"/>
+                        			</p:selectOneMenu>
+					</p:panelGrid>
+					</div>
+					
+					<div class="Container50 Responsive100 ui-fluid">
+					<p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+	                        <p:outputLabel value="#{notifications.notificationFIRName}" />
+							<p:inputText placeholder="#{notifications.notificationFIRName}" 
+							value="#{notificationBean.notification.FIR_UIR_Name}" />
+					</p:panelGrid>
+					</div>
+					
+					<div class="Container100 Responsive100 ui-fluid">
+	                	<p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">  
+	                    <p:outputLabel value="#{notifications.notificationPrecisionOnEventLocation}" escape="false"/>
+	                    <p:inputTextarea rows="1" placeholder="#{notifications.notificationPrecisionOnEventLocation}" 
+                    	value="#{notificationBean.notification.event_Location}" />
+	                	</p:panelGrid>
+                	</div>
+                </div>
+                
+            </div>
+          </div>
+            
+            <!-- Right column -->
+            
+           <div class="Container50 NoIndent Responsive100 Flex FlexWrap">
+        	<div class="Container100 Flex">
+                  <div class="Card">
+                    <h1 class="CardBigTopic">#{notifications.notificationInvolvedAircraft}</h1>
+                    <div class="SeparatorFull" />
+                    
+                   		<div class="Container100 Responsive100 ui-fluid">
+							<p:outputLabel for="spinner" value="#{notifications.notificationNumberOfInvolvedAircraft}" />
+	                        <p:spinner id="spinner" min="1" max="2" value="#{notificationBean.aircraftNumber}">
+	                        	<p:ajax update="aircraftTabView"/>
+	                        </p:spinner>
+                        </div>
+                        <div class="EmptyBox5"></div>
+                        
+                        <p:tabView id="aircraftTabView" styleClass="OvHidden" 
+                        activeIndex="#{notificationBean.activeNotificationAircraftIndex}" 
+							value="#{notificationBean.notificationToCreateAircrafts}" var="flight">
+							
+							<p:ajax event="onTabClose" listener="#{notificationBean.onTabClose}" />
+		                        
+                            <p:tab title="Aircraft - #{flight.aircraft_Index}" closable="true">
+	                            
+	                            <div class="Container50 Responsive100 ui-fluid">
+			                    <p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+			                        <p:outputLabel value="#{notifications.notificationAircraftType}" />
+			                         <p:selectOneMenu autoWidth="false" id="console" value="#{flight.staticManufacturerModel}" converter="staticManufacturerModelConverter" var="m">
+                            			<f:selectItems value="#{notificationBean.staticManufacturerModels}" var="model" itemLabel="#{model.alias_ICAO_TYPE} #{model.description}" itemValue="#{model}" />
+                            			<p:column>#{m.alias_ICAO_TYPE}</p:column>
+                            			<p:column>#{m.description}</p:column>
+                            			<p:ajax event="blur"/>
+                        			</p:selectOneMenu>
+								</p:panelGrid>
+								</div>
+								
+								<div class="Container50 Responsive100 ui-fluid">
+								<p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+				                        <p:outputLabel value="#{notifications.notificationAircraftTypeOther}" />
+										<p:inputTextarea rows="1" placeholder="#{notifications.notificationAircraftTypeOther}" 
+										value="#{flight.manufacturer_Model}" >
+											<p:ajax event="blur"/>
+										</p:inputTextarea>
+								</p:panelGrid>
+								</div>
+								
+								<div class="Container100 Responsive100 ui-fluid">
+								<p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+				                        <p:outputLabel value="#{notifications.notificationAircraftFlightPhase}" />
+										<p:selectOneMenu autoWidth="false" value="#{flight.staticFlightPhase}" converter="staticFlightPhaseConverter" var="p">
+                            			<f:selectItems value="#{notificationBean.staticFlightPhases}" var="phase" itemLabel="#{nGInternatinalizationService.toLocaleVersion(phase.description)}" itemValue="#{phase}" />
+                            			<p:column> #{nGInternatinalizationService.toLocaleVersion(p.description)}</p:column>
+                            			<p:ajax event="blur"/>
+                        			</p:selectOneMenu>
+								</p:panelGrid>
+								</div>
+								
+								<div class="Container100 Responsive100 ui-fluid">
+								<p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">   
+				                        <p:outputLabel value="#{notifications.notificationAircraftOperator}" />
+				                        <p:inputTextarea rows="1" placeholder="#{notifications.notificationAircraftOperator}" 
+			                    	value="#{flight.operator}" >
+			                    		<p:ajax event="blur"/>
+			                    	</p:inputTextarea>
+			                    </p:panelGrid>
+								</div>
+								
+								<div class="Container50 Responsive100 ui-fluid">
+			                    <p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+			                        <p:outputLabel value="#{notifications.notificationAircraftRegistration}" />
+			                        <p:inputText placeholder="#{notifications.notificationAircraftRegistration}" 
+			                        value="#{flight.aircraft_Registration}" >
+			                        	<p:ajax event="blur"/>
+			                        </p:inputText>
+								</p:panelGrid>
+								</div>
+								
+								<div class="Container50 Responsive100 ui-fluid">
+								<p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+				                        <p:outputLabel value="#{notifications.notificationAircraftCallsign}" />
+										<p:inputText placeholder="#{notifications.notificationAircraftCallsign}" 
+										value="#{flight.call_Sign}" >
+											<p:ajax event="blur"/>
+										</p:inputText>
+								</p:panelGrid>
+								</div>
+								
+								<div class="Container100 Responsive100 ui-fluid">
+			                    <p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+			                        <p:outputLabel value="#{notifications.notificationAircraftOperationType}" />
+			                        <p:selectOneMenu autoWidth="false" value="#{flight.staticOperationType}" converter="staticOperationTypeConverter" var="ot">
+                            			<f:selectItems value="#{notificationBean.operationTypes}" var="oprType" itemLabel="#{nGInternatinalizationService.toLocaleVersion(oprType.description)}" itemValue="#{oprType}" />
+                            			<p:column> #{nGInternatinalizationService.toLocaleVersion(ot.description)}</p:column>
+                            			<p:ajax event="blur"/>
+                        			</p:selectOneMenu>
+								</p:panelGrid>
+								</div>
+								
+								<div class="Container50 Responsive100 ui-fluid">
+			                    <p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+			                        <p:outputLabel value="#{notifications.notificationAircraftDepartureAD}" />
+			                        <p:inputText placeholder="#{notifications.notificationAircraftDepartureADExample}" 
+			                        value="#{flight.last_Departure_Point}" >
+			                        	<p:ajax event="blur"/>
+			                        </p:inputText>
+								</p:panelGrid>
+								</div>
+								
+								<div class="Container50 Responsive100 ui-fluid">
+								<p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+				                        <p:outputLabel value="#{notifications.notificationAircraftDestinationAD}" />
+										<p:inputTextarea rows="1" placeholder="#{notifications.notificationAircraftDestinationADExample}" 
+										value="#{flight.planned_Destination}" >
+											<p:ajax event="blur"/>
+										</p:inputTextarea>
+								</p:panelGrid>
+								</div>
+	                            
+                                <div class="EmptyBox10"></div>
+                            </p:tab>
+                        </p:tabView>
+                    </div>
+            		</div>
+				</div>
+            </div>
+            
+            <div class="Container100 ui-fluid">
+                <div class="Card">
+                    <h1 class="CardBigTopic">#{notifications.notificationEventDescription}</h1>
+                    <div class="SeparatorFull"></div>
+                    <p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+                    	<p:outputLabel value="#{notifications.notificationEventDescriptionDetails}" />
+                    	<p:inputTextarea rows="10" placeholder="Your message" 
+                    		value="#{notificationBean.notificationToCreate.headline}" />
+                   		</p:panelGrid>
+                </div>
+            </div>
+            
+            
+            <div class="Container100 Responsive100 ui-fluid">
+                <div class="Card" align="right">
+                <p:commandButton id="createNotificationCancel" style="width:100px;margin:0px 5px" 
+                	value="#{msg.buttonCancelLabel}" 
+					action="#{notificationBean.cancelNotification}" ajax="false"/>
+				<p:commandButton id="createNotificationValidate" style="width:100px;margin:0px 5px" 
+					value="#{msg.buttonSaveLabel}" 
+					action="#{notificationBean.createNotification}" ajax="false"/> 
+				</div>
+            </div>
+    </p:fieldset>
+	</h:form>
+	</ui:define>
+</ui:composition>

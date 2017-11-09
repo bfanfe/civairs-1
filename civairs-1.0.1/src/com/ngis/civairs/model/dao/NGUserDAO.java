@@ -8,22 +8,22 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.ngis.civairs.model.constants.NGConstants;
-import com.ngis.civairs.model.entities.NGRole;
-import com.ngis.civairs.model.entities.NGUser;
+import com.ngis.core.model.Role;
+import com.ngis.core.model.User;
 
 @Stateless
 public class NGUserDAO {
 	@PersistenceContext(unitName = "civairs_db_pu")
 	private EntityManager em;
 
-	public String insert(NGUser entity) {
+	public String insert(User entity) {
 		if (entity != null && entity.getLogin() != null && !entity.getLogin().isEmpty()) {
 			if (findById(entity.getLogin()) == null) {
 				try {
 					em.persist(entity);
 					
 					//remove all managed role from persistence context 
-					em.getEntityManagerFactory().getCache().evict(NGRole.class);
+					em.getEntityManagerFactory().getCache().evict(Role.class);
 				} catch (Exception e) {
 					return NGConstants.DB_INSERT_FAILED;
 				}
@@ -37,7 +37,7 @@ public class NGUserDAO {
 		}
 	}
 
-	public String update(NGUser entity) {
+	public String update(User entity) {
 		if (entity != null && entity.getLogin() != null && !entity.getLogin().isEmpty()) {
 			try {
 				
@@ -45,7 +45,7 @@ public class NGUserDAO {
 				em.merge(entity);
 				
 				//remove all managed role from persistence context 
-				em.getEntityManagerFactory().getCache().evict(NGRole.class);
+				em.getEntityManagerFactory().getCache().evict(Role.class);
 				return NGConstants.DB_UPDATE_OK;
 			} catch (Exception e) {
 				return NGConstants.DB_UPDATE_FAILED;
@@ -55,15 +55,15 @@ public class NGUserDAO {
 		}
 	}
 	
-	public String remove(NGUser entity) {
+	public String remove(User entity) {
 		if (entity != null && entity.getLogin() != null && !entity.getLogin().isEmpty()) {
 			try {
-				NGUser dbEntity = findById(entity.getLogin());
+				User dbEntity = findById(entity.getLogin());
 				if(dbEntity != null) {
 					em.remove(dbEntity);
 					
 					//remove all managed role from persistence context 
-					em.getEntityManagerFactory().getCache().evict(NGRole.class);
+					em.getEntityManagerFactory().getCache().evict(Role.class);
 				}
 				entity = null;
 				return NGConstants.DB_DELETE_OK;
@@ -77,14 +77,14 @@ public class NGUserDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<NGUser> getList() {
+	public List<User> getList() {
 		Query query = em.createQuery("SELECT p FROM NGUser p");
-		return (List<NGUser>) query.getResultList();
+		return (List<User>) query.getResultList();
 	}
 
-	public NGUser findById(String id) {
+	public User findById(String id) {
 		try {
-			return em.find(NGUser.class, id);
+			return em.find(User.class, id);
 		} catch (Exception e) {
 			return null;
 		}

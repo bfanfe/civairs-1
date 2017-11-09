@@ -1,4 +1,4 @@
-package com.ngis.civairs.model.beans;
+package com.ngis.core.beans;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -20,12 +20,12 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 
+import com.ngis.civairs.entities.Engine;
 import com.ngis.civairs.model.dao.NGUserDAO;
 import com.ngis.civairs.model.dao.occurence.EntityAttributeDAO;
-import com.ngis.civairs.model.entities.NGUser;
-import com.ngis.civairs.model.entities.occurence.Engine;
 import com.ngis.civairs.model.services.NGMessageService;
 import com.ngis.civairs.model.services.NGViewService;
+import com.ngis.core.model.User;
 
 @ManagedBean
 @SessionScoped
@@ -43,7 +43,7 @@ public class SessionBean implements Serializable {
 
 	private String sessionTheme;
 	private String sessionTopbar;
-	private NGUser sessionUser;
+	private User sessionUser;
 	private Locale sessionLocale;
 	private String sessionTabmenu;
 	private String sessionMainmenu;
@@ -116,7 +116,7 @@ public class SessionBean implements Serializable {
 		return sessionTopbar;
 	}
 
-	public NGUser getSessionUser() {
+	public User getSessionUser() {
 		return sessionUser;
 	}
 
@@ -128,7 +128,7 @@ public class SessionBean implements Serializable {
 		this.sessionTopbar = sessionTopbar;
 	}
 
-	public void setSessionUser(NGUser sessionUser) {
+	public void setSessionUser(User sessionUser) {
 		this.sessionUser = sessionUser;
 	}
 
@@ -197,7 +197,7 @@ public class SessionBean implements Serializable {
 	}
 
 	public void loadSessionUser() {
-		this.sessionUser = new NGUser();
+		this.sessionUser = new User();
 	}
 
 	public void loadSessionMenus() {

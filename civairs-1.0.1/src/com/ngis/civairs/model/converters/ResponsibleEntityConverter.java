@@ -5,8 +5,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import com.ngis.civairs.model.entities.occurence.ResponsibleEntity;
-import com.ngis.civairs.model.services.occurence.ResponsibleEntityService;
+import com.ngis.core.model.ResponsibleEntity;
+import com.ngis.core.services.ResponsibleEntityService;
 
 @FacesConverter("responsibleEntityConverter")
 public class ResponsibleEntityConverter implements Converter{

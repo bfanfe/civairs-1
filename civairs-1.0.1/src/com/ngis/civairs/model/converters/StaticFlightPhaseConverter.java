@@ -5,7 +5,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import com.ngis.civairs.model.entities.occurence.StaticFlightPhase;
+import com.ngis.civairs.entities.StaticFlightPhase;
 import com.ngis.civairs.model.services.occurence.AircraftService;
 
 @FacesConverter("staticFlightPhaseConverter")
@@ -14,7 +14,7 @@ public class StaticFlightPhaseConverter implements Converter{
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		StaticFlightPhase obj = null;
-		if(value != null && value.trim().length() > 0) {
+		if(value != null && value.trim().length() > 0 && value != "") {
 			AircraftService service = (AircraftService) context.getExternalContext().getSessionMap().get("aircraftService");   		
             if(service.getStaticFlightPhasesMap()!= null){
             	obj = service.getStaticFlightPhasesMap().get(value);

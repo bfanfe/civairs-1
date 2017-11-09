@@ -1,37 +1,90 @@
-package com.ngis.civairs.model.beans.occurence;
+package com.ngis.core.beans;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
-import com.ngis.civairs.model.beans.SessionBean;
-import com.ngis.civairs.model.entities.occurence.ResponsibleEntity;
 import com.ngis.civairs.model.enums.ResponsibleEntityType;
-import com.ngis.civairs.model.services.occurence.ResponsibleEntityService;
 import com.ngis.civairs.model.tools.HashcodeUtility;
+import com.ngis.core.model.ResponsibleEntity;
+import com.ngis.core.services.ResponsibleEntityService;
+import com.ngis.core.services.ResponsibleEntityService2;
 
 @ManagedBean
 @SessionScoped
 public class ResponsibleEntityBean {
+	
+	public static final String ResponsibleEntityView="/app/admin/users/responsible-entities?faces-redirect=true";
+	
+	@EJB
+	private ResponsibleEntityService2 responsibleEntityServices;
+	
+	private ResponsibleEntity responsibleEntity;
+	private List<ResponsibleEntity> responsibleEntities;
+	private int activeIndex = 0;
+	private ResponsibleEntity selectedResponsibleEntity;
+	
+	
+	
+	
+	
+	
 
 	@ManagedProperty("#{responsibleEntityService}")
 	private ResponsibleEntityService responsibleEntityService;
-
-	private ResponsibleEntity selectedResponsibleEntity;
-
-	private ResponsibleEntity responsibleEntityToCreate;
+	
 
 	private int activeResponsibleEntityIndex = 0;
 
 	private ResponsibleEntityType selectedResponsibleEntityType;
-
-	public List<ResponsibleEntity> getResponsibleEntities() {
-		return responsibleEntityService.getResponsibleEntities();
+	
+	
+	@PostConstruct
+	public void init(){
+		responsibleEntity = new ResponsibleEntity();
+		responsibleEntities = new ArrayList<ResponsibleEntity>();
+		responsibleEntities = responsibleEntityServices.findAllResponsibleEntity();
 	}
+	
+	/**
+	 * @return
+	 */
+	public String createResponsibleEntity(){
+		//Set id
+		String id = HashcodeUtility.hashABS31ToString(
+				responsibleEntity.getName()+responsibleEntity.getEntity_Type());
+		responsibleEntity.setId(id);
+		
+		//Set entityType
+		responsibleEntity.setEntity_Type(selectedResponsibleEntityType.getId());
+		responsibleEntityServices.createResponsibleEntity(responsibleEntity);
+		responsibleEntity = new ResponsibleEntity();
+		responsibleEntities.clear();
+		responsibleEntities = responsibleEntityServices.findAllResponsibleEntity();
+		return ResponsibleEntityView;
+		
+	}
+	
+	public ResponsibleEntity onTabChange(){
+		selectedResponsibleEntity = responsibleEntities.get(activeIndex);
+		return selectedResponsibleEntity;
+	}
+	
+	
+	
+	
+	
+
+	/*public List<ResponsibleEntity> getResponsibleEntities() {
+		return responsibleEntityService.getResponsibleEntities();
+	}*/
 
 	public ResponsibleEntityService getResponsibleEntityService() {
 		return responsibleEntityService;
@@ -41,12 +94,12 @@ public class ResponsibleEntityBean {
 		this.responsibleEntityService = responsibleEntityService;
 	}
 
-	public ResponsibleEntity getResponsibleEntityToCreate() {
-		return responsibleEntityToCreate;
+	public ResponsibleEntity getResponsibleEntity() {
+		return responsibleEntity;
 	}
 
-	public void setResponsibleEntityToCreate(ResponsibleEntity responsibleEntityToCreate) {
-		this.responsibleEntityToCreate = responsibleEntityToCreate;
+	public void setResponsibleEntity(ResponsibleEntity responsibleEntity) {
+		this.responsibleEntity = responsibleEntity;
 	}
 
 	public ResponsibleEntity getSelectedResponsibleEntity() {
@@ -59,14 +112,14 @@ public class ResponsibleEntityBean {
 
 	public void insertResponsibleEntity() {
 		//Set id
-		String id = HashcodeUtility.hashABS31ToString(responsibleEntityToCreate.getName()+responsibleEntityToCreate.getEntity_Type());
-		responsibleEntityToCreate.setId(id);
+		String id = HashcodeUtility.hashABS31ToString(responsibleEntity.getName()+responsibleEntity.getEntity_Type());
+		responsibleEntity.setId(id);
 		
 		//Set entityType
-		responsibleEntityToCreate.setEntity_Type(selectedResponsibleEntityType.getId());
+		responsibleEntity.setEntity_Type(selectedResponsibleEntityType.getId());
 		
 		//Persist
-		responsibleEntityService.insertResponsibleEntity(responsibleEntityToCreate);
+		responsibleEntityService.insertResponsibleEntity(responsibleEntity);
 		
 		//Back to Responsible Entities view
 		backToResponsibleEntitiesView();
@@ -90,7 +143,7 @@ public class ResponsibleEntityBean {
 	}
 	
 	public void initResponsibleEntityToCreate(){
-		responsibleEntityToCreate = new ResponsibleEntity();
+		responsibleEntity = new ResponsibleEntity();
 		
 		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
 		SessionBean session = (SessionBean) context.getSessionMap().get("sessionBean");
@@ -159,5 +212,37 @@ public class ResponsibleEntityBean {
 	public void setActiveResponsibleEntityIndex(int activeResponsibleEntityIndex) {
 		this.activeResponsibleEntityIndex = activeResponsibleEntityIndex;
 	}
+
+	/**
+	 * @param responsibleEntities the responsibleEntities to set
+	 */
+	public void setResponsibleEntities(List<ResponsibleEntity> responsibleEntities) {
+		this.responsibleEntities = responsibleEntities;
+	}
+
+
+
+
+
+
+	public List<ResponsibleEntity> getResponsibleEntities() {
+		return responsibleEntities;
+	}
+
+	/**
+	 * @return the activeIndex
+	 */
+	public int getActiveIndex() {
+		return activeIndex;
+	}
+
+	/**
+	 * @param activeIndex the activeIndex to set
+	 */
+	public void setActiveIndex(int activeIndex) {
+		this.activeIndex = activeIndex;
+	}
+	
+	
 
 }

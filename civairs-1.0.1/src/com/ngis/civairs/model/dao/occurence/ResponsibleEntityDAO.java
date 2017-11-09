@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.ngis.civairs.model.constants.NGConstants;
-import com.ngis.civairs.model.entities.occurence.ResponsibleEntity;
+import com.ngis.core.model.ResponsibleEntity;
 
 @Stateless
 public class ResponsibleEntityDAO {

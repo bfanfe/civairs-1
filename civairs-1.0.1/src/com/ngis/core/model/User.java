@@ -1,9 +1,7 @@
-package com.ngis.civairs.model.entities;
+package com.ngis.core.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
-import com.ngis.civairs.model.entities.occurence.ResponsibleEntity;
 
 import java.util.Date;
 import java.util.List;
@@ -15,8 +13,8 @@ import java.util.List;
  */
 @Entity
 @Table(name="ng_user")
-@NamedQuery(name="NGUser.findAll", query="SELECT n FROM NGUser n")
-public class NGUser implements Serializable {
+@NamedQuery(name="NGUser.findAll", query="SELECT n FROM User n")
+public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -51,9 +49,9 @@ public class NGUser implements Serializable {
 	@JoinTable(name="role_user",
 	joinColumns=@JoinColumn(name="login"),
 	inverseJoinColumns=@JoinColumn(name="role_id"))
-	private List<NGRole> ngRoles;
+	private List<Role> roles;
 
-	public NGUser() {
+	public User() {
 	}
 
 	public String getLogin() {
@@ -119,13 +117,14 @@ public class NGUser implements Serializable {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
+	
 
-	public List<NGRole> getNgRoles() {
-		return this.ngRoles;
+	public List<Role> getRoles() {
+		return roles;
 	}
 
-	public void setNgRoles(List<NGRole> ngRoles) {
-		this.ngRoles = ngRoles;
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
 
 	public ResponsibleEntity getResponsibleEntity() {

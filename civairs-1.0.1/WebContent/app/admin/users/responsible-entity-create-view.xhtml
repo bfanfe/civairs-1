@@ -14,7 +14,6 @@
 							layout="grid">
 							<div align="left">
 								<h1 class="CardBigTopic">#{entities.responsibleEntityCreateViewTitle}</h1>
-								<hr />
 							</div>
 							<p:outputPanel />
 						</p:panelGrid>
@@ -31,7 +30,7 @@
 
 									
 									<p:outputLabel value="#{entities.responsibleEntityName}" />
-									<p:inputText value="#{responsibleEntityBean.responsibleEntityToCreate.name}" />
+									<p:inputText value="#{responsibleEntityBean.responsibleEntity.name}" />
 
 								</p:panelGrid>
 								<p:panelGrid columns="2" layout="grid"
@@ -39,10 +38,10 @@
 									styleClass="ui-panelgrid-blank">
 
 									<p:outputLabel value="#{entities.responsibleEntityAddress} :" />
-									<p:inputText value="#{responsibleEntityBean.responsibleEntityToCreate.address}" />
+									<p:inputText value="#{responsibleEntityBean.responsibleEntity.address}" />
 
 									<p:outputLabel value="#{entities.responsibleEntityPhone} :" />
-									<p:inputText value="#{responsibleEntityBean.responsibleEntityToCreate.phone}" />
+									<p:inputText value="#{responsibleEntityBean.responsibleEntity.phone}" />
 
 								</p:panelGrid>
 								<p:panelGrid columns="2" layout="grid"
@@ -50,7 +49,7 @@
 									styleClass="ui-panelgrid-blank">
 
 									<p:outputLabel value="#{entities.responsibleEntityEmail} :" />
-									<p:inputText value="#{responsibleEntityBean.responsibleEntityToCreate.email}" />
+									<p:inputText value="#{responsibleEntityBean.responsibleEntity.email}" />
 
 									<p:outputLabel value="#{entities.responsibleEntityType} :" />
 									<p:selectOneMenu value="#{responsibleEntityBean.selectedResponsibleEntityType}"
@@ -74,7 +73,7 @@
 										value="#{msg.buttonCancelLabel}"
 										action="#{responsibleEntityBean.backToResponsibleEntitiesView}" ajax="false" />
 									<p:commandButton style="width:100px"
-										value="#{msg.buttonSaveLabel}" action="#{responsibleEntityBean.insertResponsibleEntity}"
+										value="#{msg.buttonSaveLabel}" action="#{responsibleEntityBean.createResponsibleEntity}"
 										ajax="false" />
 								</p:panelGrid>
 							</div>

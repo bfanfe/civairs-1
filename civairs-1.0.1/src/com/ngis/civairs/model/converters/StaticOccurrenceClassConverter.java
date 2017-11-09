@@ -5,7 +5,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import com.ngis.civairs.model.entities.occurence.StaticOccurrenceClass;
+import com.ngis.civairs.entities.StaticOccurrenceClass;
 import com.ngis.civairs.model.services.occurence.AnalyseService;
 
 @FacesConverter("staticOccurrenceClassConverter")
