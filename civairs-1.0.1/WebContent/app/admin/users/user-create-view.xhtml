@@ -1,0 +1,138 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{sessionBean.sessionTemplate}">
+
+	<ui:define name="content">
+	<h:form id="createUserForm" >
+	
+		<div class="Container100 Responsive100 NoIndent">
+			<div class="Container100 ui-fluid">
+				<div class="Card">
+					<p:panelGrid columns="2" style="border:0px; background:none;"
+						layout="grid">
+						<div align="left">
+							<h1 class="CardBigTopic">#{users.userCreateDialogTitle}</h1>
+							<hr />
+						</div>
+						<p:outputPanel />
+					</p:panelGrid>
+					<div class="SeparatorFull"/>
+					<p:outputPanel id="createUserDetails" style="text-align:left;">
+						<p:panelGrid columns="1" layout="grid"
+							style="background:none; margin-left: 6px !important; margin-right: 12px !important;"
+							styleClass="ui-panelgrid-blank">
+
+							<p:panelGrid columns="2" layout="grid"
+								style="border:0px !important; background:none; margin-left: 6px !important; margin-right: 12px !important;"
+								styleClass="ui-panelgrid-blank">
+								<p:panelGrid columns="2" layout="grid"
+									style="border:0px !important; background:none;"
+									styleClass="ui-panelgrid-blank">
+
+									<p:outputLabel value="#{users.userLoginLabel}" />
+
+									<p:inputText value="#{userBean.userToCreate.login}" />
+
+									<p:outputLabel value="#{users.userPasswordResetLabel}" />
+									<p:selectBooleanCheckbox value="true" disabled="true" />
+
+								</p:panelGrid>
+								<p:panelGrid columns="2" layout="grid"
+									style="border:0px !important; background:none; margin-left: 6px !important; margin-right: 12px !important;"
+									styleClass="ui-panelgrid-blank">
+
+									<p:outputLabel value="#{users.userFirstNameLabel}" />
+
+									<p:inputText value="#{userBean.userToCreate.firstName}" />
+
+									<p:outputLabel value="#{users.userLastNameLabel}" />
+									<p:inputText value="#{userBean.userToCreate.lastName}" />
+								</p:panelGrid>
+								<p:panelGrid columns="2" layout="grid"
+									style="border:0px !important; background:none; margin-left: 6px !important; margin-right: 12px !important;"
+									styleClass="ui-panelgrid-blank">
+
+									<p:outputLabel value="#{users.userBirthDateLabel}" />
+
+									<p:calendar value="#{userBean.userToCreate.birthDate}" />
+
+									<p:outputLabel value="#{users.userAdressLabel}" />
+									<p:inputTextarea value="#{userBean.userToCreate.adress}" />
+								</p:panelGrid>
+								<p:panelGrid columns="2" layout="grid"
+									style="border:0px !important; background:none; margin-left: 6px !important; margin-right: 12px !important;"
+									styleClass="ui-panelgrid-blank">
+
+									<p:outputLabel value="#{users.userPhoneLabel}" />
+
+									<p:inputMask value="#{userBean.userToCreate.phoneNumber}"
+										mask="(+999) 999-999-99?99" />
+
+
+									<p:outputLabel value="#{users.userEmailLabel}" />
+									<p:inputText value="#{userBean.userToCreate.email}" />
+								</p:panelGrid>
+								<p:panelGrid columns="2" layout="grid"
+									style="border:0px !important; background:none; margin-left: 6px !important; margin-right: 12px !important;"
+									styleClass="ui-panelgrid-blank">
+
+									<p:outputLabel value="#{users.userResponsibleEntityLabel}" />
+
+									<p:selectOneMenu value="#{userBean.userToCreate.responsibleEntity}"
+										var="varenum" converter="responsibleEntityConverter">
+										<f:selectItems value="#{userBean.responsibleEntities}" var="enums"
+											itemLabel="#{enums.name}" itemValue="#{enums}"  />
+										<p:column>#{varenum.name}</p:column>
+									</p:selectOneMenu>
+								</p:panelGrid>
+								<p:panelGrid columns="2" layout="grid"
+									style="border:0px !important; background:none; margin-left: 6px !important; margin-right: 12px !important;"
+									styleClass="ui-panelgrid-blank"/>
+
+							</p:panelGrid>
+							<div class="Container100 Responsive100 NoIndent">
+								<div class="Container100 ui-fluid">
+									<div class="Card">
+										<h1 class="CardBigTopic">#{users.userRolesPicklistTitle}</h1>
+										<p:pickList id="userCreateRolesPickList"
+											value="#{userBean.dualListRoles}" var="role"
+											itemValue="#{role}" itemLabel="#{role.roleDescription}"
+											converter="nGRoleConverter" showSourceControls="false"
+											showTargetControls="false" showSourceFilter="false"
+											showTargetFilter="false" responsive="true">
+											<f:facet name="sourceCaption">#{users.availableRolesLabel}</f:facet>
+											<f:facet name="targetCaption">#{users.userRolesLabel}</f:facet>
+											<p:ajax event="transfer"
+												listener="#{userBean.onRoleTransfer}" />
+										</p:pickList>
+									</div>
+								</div>
+							</div>
+						</p:panelGrid>
+					</p:outputPanel>
+					<div class="SeparatorFull"/>
+					<p:panelGrid columns="1" layout="grid" style="border:0px">
+						<div align="right">
+							<p:panelGrid columns="2" layout="grid"
+								style="border:0px !important; background:none; width:210px; margin-left: 6px !important; margin-right: 12px !important;"
+								styleClass="ui-panelgrid-blank">
+
+								<p:commandButton id="createUserCancel" style="width:100px"
+									value="#{msg.buttonCancelLabel}"
+									action="#{userBean.cancelUser}" ajax="false" />
+								<p:commandButton id="createUserValidate" style="width:100px" 
+									value="#{msg.buttonSaveLabel}" action="#{userBean.createUser}" ajax="false" />
+
+							</p:panelGrid>
+						</div>
+					</p:panelGrid>
+				</div>
+			</div>
+		</div>
+
+	</h:form>
+	</ui:define>
+</ui:composition>

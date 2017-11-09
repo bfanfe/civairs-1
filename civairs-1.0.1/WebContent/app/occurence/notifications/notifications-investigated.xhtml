@@ -1,0 +1,77 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:shiro="http://shiro.apache.org/tags"
+	template="#{sessionBean.sessionTemplate}">
+
+	<ui:define name="content">
+	
+	<h:form id="notificationsForm">
+			<p:growl id="mygrowl" showDetail="true" />
+
+			<div class="Container100 Responsive100 NoIndent">
+				<div class="Container100 ui-fluid">
+					<div class="Card">
+						<p:panelGrid columns="2" style="border:0px; background:none;"
+							layout="grid">
+							<div align="left">
+								<h1 class="CardBigTopic">#{notifications.notificationsInvestigatedTitle}</h1>
+							<hr />
+							</div>
+							<p:outputPanel>
+						</p:outputPanel>
+					</p:panelGrid>
+					<div class="SeparatorFull" />
+
+
+					<p:dataTable id="notificationDataTable" var="notification"
+						value="#{notificationBean.investigatedNotifications}"
+						selectionMode="single" rowKey="#{notification.id}" sortBy="#{notification.reportingTime}"
+						selection="#{notificationBean.selectedNotification}"
+						paginator="false" scrollable="true" scrollHeight="400"
+						reflow="true">
+						
+						<p:column headerText="" visible="false">
+							<h:outputText value="#{notification.reportingTime}" />
+						</p:column>
+						<p:column headerText="#{notifications.notificationIDLabel}" visible="false">
+							<h:outputText value="#{notification.id}" />
+						</p:column>
+						<p:column headerText="#{notifications.notificationResponsibleEntityLabel}">
+							<h:outputText value="#{notification.identifier.responsibleEntity.name}" />
+						</p:column>
+						<p:column headerText="#{notifications.notificationFile_NumberLabel}" >
+							<h:outputText value="#{notification.identifier.file_Number}" />
+						</p:column>
+						<p:column headerText="#{notifications.notificationAircraft_IDLabel}">
+							<h:outputText value="#{notification.aircraft_ID}" />
+						</p:column>
+						<p:column headerText="#{notifications.notificationAircraft_TypeLabel}">
+							<h:outputText value="#{notification.aircraft_Type}" />
+						</p:column>
+						<p:column headerText="#{notifications.notificationLocalDateLabel}">
+							<h:outputText value="#{nGDateFormatService.ddMMYYYYSlashDateformat(notification.localDate)}"/>
+						</p:column>
+						<p:column headerText="#{notifications.notificationLocalTimeLabel}">
+							<h:outputText value="#{nGDateFormatService.hhmmTimeformat(notification.localTime)}"/>
+						</p:column>
+						<p:column headerText="#{notifications.notificationUtcDateLabel}">
+							<h:outputText value="#{nGDateFormatService.ddMMYYYYSlashDateformat(notification.utcDate)}"/>
+						</p:column>
+						<p:column headerText="#{notifications.notificationUtcTimeLabel}">
+							<h:outputText value="#{nGDateFormatService.hhmmTimeformat(notification.utcTime)}"/>
+						</p:column>
+					</p:dataTable>
+
+					<div class="SeparatorFull" />
+				</div>
+				
+			</div>
+			</div>
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

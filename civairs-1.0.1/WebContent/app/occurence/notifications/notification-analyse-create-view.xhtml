@@ -1,0 +1,197 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{sessionBean.sessionTemplate}">
+
+	<ui:define name="content">
+	<h:form id="createNotificationForm" >
+		<div class="Container100 Responsive100 NoIndent">
+			
+			<div class="Container100 ui-fluid">
+                <div class="Card">
+                    <h1 class="CardBigTopic">Événement à analyser</h1>
+                    <div class="SeparatorFull"></div>
+                    <p:outputLabel value="Donner les informations sur l'événement analysé" />
+                    
+                 </div>
+            </div>
+            
+            <div class="Container100 ui-fluid">
+                <div class="Card">
+                    <h1 class="CardBigTopic">Classe de l'évènement</h1>
+                    <div class="SeparatorFull"></div>
+                    
+                    <p:selectOneRadio id="radioClasse" layout="responsive" columns="3" style="margin:0px 0px;">
+                    	<f:selectItem itemLabel="Incident" itemValue="Incident"/>
+                    	<f:selectItem itemLabel="Incident grave" itemValue="Incident grave"/>
+                    	<f:selectItem itemLabel="Accident" itemValue="Accident"/>
+                    </p:selectOneRadio>
+                 </div>
+            </div>
+			
+			<div class="Container100 ui-fluid">
+                <div class="Card">
+                    <h1 class="CardBigTopic">Statut de l'évènement</h1>
+                    <div class="SeparatorFull"></div>
+                    
+                    <p:selectOneRadio id="radioStatut" layout="responsive" columns="3" style="margin:0px 0px;">
+                    	<f:selectItem itemLabel="Ouvert, analyse en cours" itemValue="Ouvert, analyse en cours"/>
+                    	<f:selectItem itemLabel="Clos avec analyse détaillée" itemValue="Clos avec analyse détaillée"/>
+                    	<f:selectItem itemLabel="Clos avec analyse sommaire" itemValue="Clos avec analyse sommaire"/>
+                    </p:selectOneRadio>
+                 </div>
+            </div>
+            
+            <div class="Container100 ui-fluid">
+                <div class="Card">
+                    <h1 class="CardBigTopic">Classification</h1>
+                    <div class="SeparatorFull"></div>
+                    
+                    <div class="Container50 Responsive100 NoIndent">
+                    <p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+                        <p:outputLabel for="gravite" value="Classe d'occurrence" />
+                        <p:selectOneMenu id="gravite" value="Classe d'occurrence">
+                           <f:selectItem itemLabel="Select One" itemValue="" />
+                           <f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
+                           <f:selectItem itemLabel="PS4" itemValue="PS4" />
+                           <f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+                       	</p:selectOneMenu>
+					</p:panelGrid>
+					</div>
+					
+					<div class="Container50 Responsive100 NoIndent">
+					<p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+                        <p:outputLabel for="frequence" value="Fréquence de l'évènement" />
+                        <p:selectOneMenu id="frequence" value="Fréquence de l'évènement">
+                           <f:selectItem itemLabel="Select One" itemValue="" />
+                           <f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
+                           <f:selectItem itemLabel="PS4" itemValue="PS4" />
+                           <f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+                       	</p:selectOneMenu>
+					</p:panelGrid>
+					</div>
+					
+					<div class="Container50 Responsive100 NoIndent">
+                    <p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+                        <p:outputLabel for="contributionATM" value="Contribution de l'ATM" />
+                        <p:selectOneMenu id="contributionATM" value="Contribution de l'ATM">
+                           <f:selectItem itemLabel="Select One" itemValue="" />
+                           <f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
+                           <f:selectItem itemLabel="PS4" itemValue="PS4" />
+                           <f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+                       	</p:selectOneMenu>
+					</p:panelGrid>
+					</div>
+					
+					<div class="Container50 Responsive100 NoIndent">
+					<p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+						<p:outputLabel for="effetATM" value="Effet sur le service ATM" />
+                        <p:selectOneMenu id="effetATM" value="Effet sur le service ATM">
+                           <f:selectItem itemLabel="Select One" itemValue="" />
+                           <f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
+                           <f:selectItem itemLabel="PS4" itemValue="PS4" />
+                           <f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+                       	</p:selectOneMenu>
+					</p:panelGrid>
+					</div>
+				</div>
+			</div>
+			
+			<div class="Container100 ui-fluid">
+                <div class="Card">
+					<h1 class="CardBigTopic">Catégorie d'occurrence</h1>
+					<div class="SeparatorFull"></div>
+					<div class="CardSmallTopic">
+                    A quelle(s) catégorie(s) d'accident(s) l'évènement aurait-il / a t-il pu conduire ?
+                    </div>
+                    <p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">   
+	                <p:selectManyCheckbox id="chkboxCategories" value="#{checkboxView.selectedCities}" layout="responsive" columns="2" style="margin:10px 0px;">
+                        <!--<f:selectItems value="#{checkboxView.cities}" var="city" itemLabel="#{city}" itemValue="#{city}" />-->
+                        <f:selectItem itemLabel="Select One" itemValue="" />
+                        <f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
+                        <f:selectItem itemLabel="PS4" itemValue="PS4" />
+                        <f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+                        <f:selectItem itemLabel="Select One" itemValue="" />
+                        <f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
+                        <f:selectItem itemLabel="PS4" itemValue="PS4" />
+                        <f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+                        <f:selectItem itemLabel="Select One" itemValue="" />
+                        <f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
+                        <f:selectItem itemLabel="PS4" itemValue="PS4" />
+                        <f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+                        <f:selectItem itemLabel="Select One" itemValue="" />
+                        <f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
+                        <f:selectItem itemLabel="PS4" itemValue="PS4" />
+                        <f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+                    </p:selectManyCheckbox>
+                    </p:panelGrid>
+                    
+                    <p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+                        <p:outputLabel value="Si autre, préciser" />
+                        <p:inputText placeholder="Si autre, préciser" 
+                        value="#{notificationBean.notificationToCreate.headline}" />
+					</p:panelGrid>
+                    
+                    <div class="Separator"></div>
+					<div class="CardSmallTopic">Type(s) d'évènement(s)</div>
+                    <p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">   
+	                <p:selectManyCheckbox id="chkboxType" value="#{checkboxView.selectedCities}" layout="responsive" columns="2" style="margin:10px 0px;">
+                        <!--<f:selectItems value="#{checkboxView.cities}" var="city" itemLabel="#{city}" itemValue="#{city}" />-->
+                        <f:selectItem itemLabel="Select One" itemValue="" />
+                        <f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
+                        <f:selectItem itemLabel="PS4" itemValue="PS4" />
+                        <f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+                        <f:selectItem itemLabel="Select One" itemValue="" />
+                        <f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
+                        <f:selectItem itemLabel="PS4" itemValue="PS4" />
+                        <f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+                        <f:selectItem itemLabel="Select One" itemValue="" />
+                        <f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
+                        <f:selectItem itemLabel="PS4" itemValue="PS4" />
+                        <f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+                        <f:selectItem itemLabel="Select One" itemValue="" />
+                        <f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
+                        <f:selectItem itemLabel="PS4" itemValue="PS4" />
+                        <f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+                    </p:selectManyCheckbox>
+					</p:panelGrid>
+					
+					<p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+                        <p:outputLabel value="Si autre, préciser" />
+                        <p:inputText placeholder="Si autre, préciser" 
+                        value="#{notificationBean.notificationToCreate.headline}" />
+					</p:panelGrid>
+					
+					</div>
+				</div>
+            </div>
+            
+            <div class="Container100 ui-fluid">
+                <div class="Card">
+                    <h1 class="CardBigTopic">Résultats de l'analyse et mesures prises</h1>
+                    <div class="SeparatorFull"></div>
+                    <div class="CardSmallTopic">
+                    Suite à l'analyse de l'évènement, description des causes de l'évènemnt et 
+                    des mesures prises le cas échéant pour reduire le risque
+                    </div>
+                    <p:inputTextarea rows="10" placeholder="Your message" 
+                    	value="#{notificationBean.notificationToCreate.headline}" />
+                </div>
+            </div>
+            
+            <div class="Container100 Responsive100 ui-fluid">
+                <div class="Card" align="right">
+                <p:commandButton id="createNotificationCancel" style="width:100px;margin:0px 5px" 
+                	value="#{msg.buttonCancelLabel}" 
+					action="#{notificationBean.cancelNotification}" ajax="false"/>
+				<p:commandButton id="createNotificationValidate" style="width:100px;margin:0px 5px" 
+					value="#{msg.buttonSaveLabel}" 
+					action="#{notificationBean.createNotification}" ajax="false"/> 
+				</div>
+            </div>
+            
+	</h:form>
+	</ui:define>
+</ui:composition>

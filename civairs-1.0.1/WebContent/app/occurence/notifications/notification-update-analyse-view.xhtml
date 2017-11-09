@@ -1,0 +1,123 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="#{sessionBean.sessionTemplate}">
+
+	<ui:define name="content">
+	<h:form id="createNotificationForm" >
+		<div class="Container100 Responsive100 NoIndent">
+			
+			<div class="Container100 ui-fluid">
+                <div class="Card">
+                    <h1 class="CardBigTopic">#{notifications.notificationEventToAnalyze}</h1>
+                    <div class="SeparatorFull"></div>
+                    <p:outputLabel value="#{notificationBean.selectedNotification.identifier.responsibleEntity.name} - #{notificationBean.selectedNotification.event_Reference} - #{notificationBean.selectedNotification.event_Title}" />
+                    
+                 </div>
+            </div>
+			
+			<div class="Container100 ui-fluid">
+                <div class="Card">
+                    <h1 class="CardBigTopic">#{notifications.notificationEventStatus}</h1>
+                    <div class="SeparatorFull"></div>
+                    
+                    <p:selectOneRadio id="radioStatut" layout="responsive" columns="3" style="margin:0px 0px;" value="#{notificationBean.selectedNotification.analyse.staticOccurrenceStatus}" converter="staticOccurrenceStatusConverter">
+                    	<f:selectItems value="#{notificationBean.staticOccurrenceStatus}" var="oStatus" itemLabel="#{nGInternatinalizationService.toLocaleVersion(oStatus.description)}" itemValue="#{oStatus}" />
+                        <p:ajax event="blur"/>
+                    </p:selectOneRadio>
+                 </div>
+            </div>
+            
+            <div class="Container100 ui-fluid">
+                <div class="Card">
+                    <h1 class="CardBigTopic">#{notifications.notificationEventClassification}</h1>
+                    <div class="SeparatorFull"></div>
+                    
+                    <div class="Container50 Responsive100 NoIndent">
+                    <p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+                        <p:outputLabel value="#{notifications.notificationEventOccurrenceClass}" />
+                        <p:selectOneMenu value="#{notificationBean.selectedNotification.analyse.staticOccurrenceClass}" converter="staticOccurrenceClassConverter" var="oc">
+                            			<f:selectItems value="#{notificationBean.staticOccurrenceClasses}" var="oClass" itemLabel="#{nGInternatinalizationService.toLocaleVersion(oClass.description)}" itemValue="#{oClass}" />
+                            			<p:column>#{nGInternatinalizationService.toLocaleVersion(oc.description)}</p:column>
+                            			<p:ajax event="blur"/>
+                        			</p:selectOneMenu>
+					</p:panelGrid>
+					</div>
+					
+					<div class="Container50 Responsive100 NoIndent">
+					<p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+                        <p:outputLabel value="#{notifications.notificationEventFrequency}" />
+                        <p:selectOneMenu value="#{notificationBean.selectedNotification.analyse.staticEventFrequency}" converter="staticEventFrequencyConverter" var="ef">
+                            			<f:selectItems value="#{notificationBean.staticEventFrequencies}" var="eFrequency" itemLabel="#{nGInternatinalizationService.toLocaleVersion(eFrequency.description)}" itemValue="#{eFrequency}" />
+                            			<p:column>#{nGInternatinalizationService.toLocaleVersion(ef.description)}</p:column>
+                            			<p:ajax event="blur"/>
+                        			</p:selectOneMenu>
+					</p:panelGrid>
+					</div>
+					
+					<div class="Container50 Responsive100 NoIndent">
+                    <p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+                        <p:outputLabel value="#{notifications.notificationEventATMContribution}" />
+                        <p:selectOneMenu value="#{notificationBean.selectedNotification.analyse.staticAtmContribution}" converter="staticATMContributionConverter" var="ac">
+                            			<f:selectItems value="#{notificationBean.staticATMContributions}" var="aContribution" itemLabel="#{nGInternatinalizationService.toLocaleVersion(aContribution.description)}" itemValue="#{aContribution}" />
+                            			<p:column>#{nGInternatinalizationService.toLocaleVersion(ac.description)}</p:column>
+                            			<p:ajax event="blur"/>
+                        			</p:selectOneMenu>
+					</p:panelGrid>
+					</div>
+					
+					<div class="Container50 Responsive100 NoIndent">
+					<p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">
+						<p:outputLabel value="#{notifications.notificationEventEffectOnATMService}" />
+                        <p:selectOneMenu value="#{notificationBean.selectedNotification.analyse.staticEffectOnAtmService}" converter="staticEffectOnATMServiceConverter" var="eff">
+                            			<f:selectItems value="#{notificationBean.staticEffectOnATMServices}" var="effect" itemLabel="#{nGInternatinalizationService.toLocaleVersion(effect.description)}" itemValue="#{effect}" />
+                            			<p:column>#{nGInternatinalizationService.toLocaleVersion(eff.description)}</p:column>
+                            			<p:ajax event="blur"/>
+                        			</p:selectOneMenu>
+					</p:panelGrid>
+					</div>
+				</div>
+			</div>
+			
+			<div class="Container100 ui-fluid">
+                <div class="Card">
+					<h1 class="CardBigTopic">#{notifications.notificationEventOccurrenceCategory}</h1>
+					<div class="SeparatorFull"></div>
+					<div class="CardSmallTopic">#{notifications.notificationEventTypesOfEvent}</div>
+                    <p:panelGrid columns="1" layout="grid" style="border:0px !important; background:none;" styleClass="ui-panelgrid-blank">   
+	                <p:selectManyCheckbox value="#{notificationBean.selectedNotification.analyse.staticOccurrenceCategories}" converter="staticOccurrenceCategoryConverter" layout="responsive" columns="2" style="margin:10px 0px;">
+                       <f:selectItems value="#{notificationBean.staticOccurrenceCategories}" var="oCategory" itemLabel="#{nGInternatinalizationService.toLocaleVersion(oCategory.description)}" itemValue="#{oCategory}" />
+                        <p:ajax event="blur"/>
+                    </p:selectManyCheckbox>
+                    </p:panelGrid>
+					
+					</div>
+				</div>
+            </div>
+            
+            <div class="Container100 ui-fluid">
+                <div class="Card">
+                    <h1 class="CardBigTopic">#{notifications.notificationEventAnalysisResult}</h1>
+                    <div class="SeparatorFull"></div>
+                    <div class="CardSmallTopic">#{notifications.notificationEventAnalysisResultActions}</div>
+                    <p:inputTextarea rows="10" placeholder="#{notifications.notificationEventAnalysisResult}" 
+                    	value="#{notificationBean.selectedNotification.analyse.result_And_Actions}" />
+                </div>
+            </div>
+            
+            <div class="Container100 Responsive100 ui-fluid">
+                <div class="Card" align="right">
+                <p:commandButton id="analyseCancel" style="width:100px;margin:0px 5px" 
+                	value="#{msg.buttonCancelLabel}" 
+					action="#{notificationBean.cancelAnalyse}" ajax="false"/>
+				<p:commandButton id="analyseValidate" style="width:100px;margin:0px 5px" 
+					value="#{msg.buttonSaveLabel}" 
+					action="#{notificationBean.updateAnalyse}" ajax="false"/>
+				</div>
+            </div>
+            
+	</h:form>
+	</ui:define>
+</ui:composition>

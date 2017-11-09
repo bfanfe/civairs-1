@@ -1,0 +1,154 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:shiro="http://shiro.apache.org/tags"
+	template="#{sessionBean.sessionTemplate}">
+
+	<ui:define name="content">
+
+		<h:form id="notificationsForm">
+			<p:growl id="mygrowl" showDetail="true" />
+
+			<div class="Container100 Responsive100 NoIndent">
+				<div class="Container100 ui-fluid">
+					<div class="Card">
+						<p:panelGrid columns="2" style="border:0px; background:none;"
+							layout="grid">
+							<div align="left">
+								<h1 class="CardBigTopic">#{notifications.notificationsTitle}</h1>
+								<hr />
+							</div>
+							<p:outputPanel>
+								<div align="right">
+
+									<p:menubar id="notificationCrudMenuBar"
+										style="border:0px; background:none; width:90px;">
+										<p:menuitem value="#{msg.crudCreateLabel}"
+											icon="ui-icon-newwin fa fa-bolt"
+											action="#{notificationBean.initNotificationToCreate}"
+											ajax="false" />
+										
+									</p:menubar>
+									
+								</div>
+							</p:outputPanel>
+						</p:panelGrid>
+						<div class="SeparatorFull" />
+
+						<p:accordionPanel id="notificationsAccordion" multiple="false"
+							activeIndex="#{notificationBean.activeNotificationIndex}" 
+							value="#{notificationBean.notifications}" var="notification">
+							<p:tab
+								title="#{notification.reportingTime} - #{notification.identifier.responsibleEntity.name} - #{notification.aircraft_ID} - #{notification.aircraft_Type}">
+								<p:panelGrid columns="1" layout="grid" class="Container80 ui-fluid" style="border:0px !important; background:none;">
+								<p:panelGrid columns="1" class="Container100 ui-fluid">
+								<f:facet name="header">#{notifications.notificationEventIdentificationLabel}</f:facet>		
+								<p:panelGrid columns="2" class="Container100 ui-fluid" layout="grid" style="border:0px !important; background:none;">
+									
+										
+										<p:outputLabel
+											value="#{notifications.notificationIDLabel} : " />
+											<p:outputLabel  style="font-family: 'latobold';"
+											value="#{notification.id}" />
+										<p:outputLabel
+											value="#{notifications.notificationFile_NumberLabel} : "/>
+										<p:outputLabel style="font-family: 'latobold';"
+											value="	#{notification.identifier.file_Number}" />
+										<p:outputLabel
+											value="#{notifications.notificationResponsibleEntityLabel} : "/>
+											<p:outputLabel style="font-family: 'latobold';"
+											value="#{notification.identifier.responsibleEntity.name}" />
+
+										<p:outputLabel
+											value="#{notifications.notificationAircraft_IDLabel} : "/>
+											<p:outputLabel style="font-family: 'latobold';"
+											value="#{notification.aircraft_ID}"  />
+										<p:outputLabel
+											value="#{notifications.notificationAircraft_TypeLabel} : "/>
+											<p:outputLabel style="font-family: 'latobold';"
+											value="#{notification.aircraft_Type}" />
+										<p:outputLabel
+											value="#{notifications.notificationAircraft2_IDLabel} : "/>
+											<p:outputLabel style="font-family: 'latobold';"
+											value="#{notification.aircraft2_ID}"  />
+										<p:outputLabel
+											value="#{notifications.notificationAircraft2_TypeLabel} : "/>
+											<p:outputLabel style="font-family: 'latobold';"
+											value="#{notification.aircraft2_Type}" />
+
+											<p:outputLabel
+												value="#{notifications.notificationLocalDateLabel} : " />
+											
+											<p:outputLabel style="font-family: 'latobold';"
+											value="#{nGDateFormatService.ddMMYYYYSlashDateformat(notification.localDate)}"/>
+
+											<p:outputLabel 
+												value="#{notifications.notificationLocalTimeLabel} : " />
+												
+											<p:outputLabel style="font-family: 'latobold';"
+											value="#{nGDateFormatService.hhmmTimeformat(notification.localTime)}"/>
+										
+											<p:outputLabel
+												value="#{notifications.notificationUtcDateLabel}: " />
+											<p:outputLabel style="font-family: 'latobold';"
+											value="#{nGDateFormatService.ddMMYYYYSlashDateformat(notification.utcDate)}"/>
+
+											<p:outputLabel
+												value="#{notifications.notificationUtcTimeLabel} : " />
+												
+											<p:outputLabel style="font-family: 'latobold';"
+											value="#{nGDateFormatService.hhmmTimeformat(notification.utcTime)}"/>										
+
+										</p:panelGrid>
+										</p:panelGrid>
+										
+										<p:panelGrid columns="1" class="Container100 ui-fluid">
+										<f:facet name="header">#{notifications.notificationHeadlineLabel}</f:facet>
+										<p:inputTextarea style="border:0px !important; background:none;" readonly="true"
+												value=" #{nGInternatinalizationService.toLocaleVersion(notification.headline)}" />
+										</p:panelGrid>
+										</p:panelGrid>
+
+										<p:outputPanel class="Container20 ui-fluid">
+											<div align="right">
+												<p:menubar style="border:0px; background:none; width:120px;">
+													
+														<p:menuitem value="#{msg.crudModifyLabel}"
+															action="#{notificationBean.selectNotificationToUpdate(notification.id)}"
+															ajax="false" icon="ui-icon-pencil fa fa-pencil Fs15" />
+													
+														<p:menuitem value="#{msg.crudDeleteLabel}"
+															action="#{notificationBean.selectNotificationToDelete(notification.id)}"
+															ajax="false" icon="ui-icon-close fa fa-close Fs15">
+															<p:confirm header="#{msg.deleteConfirmTitle}"
+																message="#{msg.deleteConfirmMessage}"
+																icon="ui-icon-alert" />
+														</p:menuitem>
+													
+												</p:menubar>
+												<p:confirmDialog global="true">
+													<p:commandButton value="#{msg.confirmYES}" type="button"
+														styleClass="ui-confirmdialog-yes" />
+													<p:commandButton value="#{msg.confirmNO}" type="button"
+														styleClass="ui-confirmdialog-no" />
+												</p:confirmDialog>
+											</div>
+										</p:outputPanel>
+									
+							</p:tab>
+
+						</p:accordionPanel>
+						
+						<div class="SeparatorFull" />
+						
+					</div>
+
+				</div>
+			</div>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
