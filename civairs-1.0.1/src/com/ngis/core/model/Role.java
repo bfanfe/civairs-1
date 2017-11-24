@@ -30,11 +30,8 @@ public class Role implements Serializable {
 	private List<Permission> ngPermissions;
 
 	//bi-directional many-to-many association to User
-	@ManyToMany
-	@JoinTable(name="role_user",
-	joinColumns=@JoinColumn(name="role_id"),
-	inverseJoinColumns=@JoinColumn(name="login"))
-	private List<User> ngUsers;
+	@ManyToMany(mappedBy="roles")
+	private List<User> users;
 
 	public Role() {
 	}
@@ -63,12 +60,34 @@ public class Role implements Serializable {
 		this.ngPermissions = ngPermissions;
 	}
 
-	public List<User> getNgUsers() {
-		return this.ngUsers;
+	public List<User> getUsers() {
+		return this.users;
 	}
 
-	public void setNgUsers(List<User> ngUsers) {
-		this.ngUsers = ngUsers;
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+	
+	@Override
+    public int hashCode() {
+        return (getRoleId() != null) 
+            ? (getClass().getSimpleName().hashCode() + getRoleId().hashCode())
+            : super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return (other != null && getRoleId() != null
+                && other.getClass().isAssignableFrom(getClass()) 
+                && getClass().isAssignableFrom(other.getClass())) 
+            ? getRoleId().equals(((Role) other).getRoleId())
+            : (other == this);
+    }
+
+
+	@Override
+	public String toString() {
+		return String.format("%s-%s", getClass().getSimpleName(), getRoleId());
 	}
 
 }

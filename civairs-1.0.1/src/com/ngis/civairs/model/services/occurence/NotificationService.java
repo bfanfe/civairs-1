@@ -1,5 +1,6 @@
 package com.ngis.civairs.model.services.occurence;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,15 +20,20 @@ import com.ngis.civairs.model.constants.NGConstants;
 import com.ngis.civairs.model.dao.occurence.IdentifierDAO;
 import com.ngis.civairs.model.dao.occurence.NotificationDAO;
 import com.ngis.civairs.model.dao.occurence.StaticAirspaceClassDAO;
-import com.ngis.civairs.model.services.NGMessageService;
 import com.ngis.core.model.occurence.Identifier;
 import com.ngis.core.model.occurence.Notification;
 import com.ngis.core.model.occurence.StaticAirspaceClass;
+import com.ngis.core.services.MessageService;
 
 @ManagedBean
 @SessionScoped
-public class NotificationService {
+public class NotificationService implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private List<Notification> newNotifications;
 	
 	private List<Notification> investigatedNotifications;
@@ -195,7 +201,7 @@ public class NotificationService {
 	
 	public void insertNotificationByIdentifier(Identifier toInsert){
 		String daoResult = identifierDAO.insert(toInsert);
-		NGMessageService.addMessage(daoResult);
+		//MessageService.infoMessage(daoResult);
 		loadNewNotifications();
 	}
 	
@@ -205,7 +211,7 @@ public class NotificationService {
 	 */
 	public void updateNotification(Notification toUpdate){
 		String daoResult = dao.update(toUpdate);
-		NGMessageService.addMessage(daoResult);
+		//MessageService.infoMessage(daoResult);
 		loadNewNotifications();
 	}
 	
@@ -216,7 +222,7 @@ public class NotificationService {
 	public void fileNotification(Notification toFile){
 		toFile.setStatus(NGConstants.NOTIFICATION_STATUS_FILED);
 		String daoResult = dao.update(toFile);
-		NGMessageService.addMessage(daoResult);
+		//MessageService.infoMessage(daoResult);
 		loadNewNotifications();
 	}
 	
@@ -227,7 +233,7 @@ public class NotificationService {
 	public void investigateNotification(Notification toInvestigate){
 		toInvestigate.setStatus(NGConstants.NOTIFICATION_STATUS_INVESTIGATED);
 		String daoResult = dao.update(toInvestigate);
-		NGMessageService.addMessage(daoResult);
+		//MessageService.infoMessage(daoResult);
 		loadNewNotifications();
 	}
 	
@@ -237,7 +243,7 @@ public class NotificationService {
 	 */
 	public void deleteNotification(Notification toDelete){
 		String daoResult = dao.delete(toDelete);
-		NGMessageService.addMessage(daoResult);
+		//MessageService.infoMessage(daoResult);
 		loadNewNotifications();
 	}
 	

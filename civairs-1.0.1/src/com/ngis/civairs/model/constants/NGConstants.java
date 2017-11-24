@@ -1,15 +1,15 @@
 package com.ngis.civairs.model.constants;
 
 public class NGConstants {
-	public static final String DB_INSERT_OK = "dbInsertOK";
-	public static final String DB_INSERT_EXIST = "dbInsertEXIST";;
-	public static final String DB_INSERT_FAILED = "dbInsertFAILED";;
+	public static final String DB_INSERT_OK = "DB_INSERT_OK";
+	public static final String DB_INSERT_EXIST = "dbInsDB_INSERT_EXISTertEXIST";;
+	public static final String DB_INSERT_FAILED = "DB_INSERT_FAILED";;
 
-	public static final String DB_UPDATE_OK = "dbUpdateOK";
-	public static final String DB_UPDATE_FAILED = "dbUpdateFAILED";
+	public static final String DB_UPDATE_OK = "DB_UPDATE_OK";
+	public static final String DB_UPDATE_FAILED = "DB_UPDATE_FAILED";
 
-	public static final String DB_DELETE_OK = "dbDeleteOK";
-	public static final String DB_DELETE_FAILED = "dbDeleteFAILED";
+	public static final String DB_DELETE_OK = "DB_DELETE_OK";
+	public static final String DB_DELETE_FAILED = "DB_DELETE_FAILED";
 
 	// Alerte classes
 	public static final String ALERTE_OLD = "Purple";

@@ -1,5 +1,6 @@
 package com.ngis.civairs.model.services.occurence;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,8 +19,13 @@ import com.ngis.core.model.occurence.StaticOperationType;
 
 @ManagedBean
 @SessionScoped
-public class AircraftService {
+public class AircraftService implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private List<StaticManufacturerModel> staticManufacturerModels;
 	
 	private Map<String, StaticManufacturerModel> staticManufacturerModelsMap;

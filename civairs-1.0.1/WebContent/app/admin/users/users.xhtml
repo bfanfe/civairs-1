@@ -26,20 +26,20 @@
 									<p:menubar id="userCrudMenuBar"
 										style="border:0px; background:none; width:290px;">
 										<shiro:hasPermission name="user:create">
-											<p:menuitem value="#{msg.crudCreateLabel}"
-												action="#{userBean.initUserToCreate()}"
+											<p:menuitem value="#{msg.crudCreateLabel}" 
+												action="#{userBean.initNewUser()}"
 												icon="ui-icon-newwin fa fa-bolt" ajax="false" />
 										</shiro:hasPermission>
 										<shiro:hasPermission name="user:update">
 											<p:menuitem value="#{msg.crudModifyLabel}"
 												icon="ui-icon-pencil fa fa-pencil Fs15"
-												action="#{userBean.changeUserToUpdate()}"
-												disabled="#{userBean.updateDisabled}" ajax="false" />
+												action="#{userBean.initUpdateUser()}"
+												disabled="#{userBean.userUnSelected}" ajax="false" />
 										</shiro:hasPermission>
 										<shiro:hasPermission name="user:delete">
 											<p:menuitem value="#{msg.crudDeleteLabel}"
 												icon="ui-icon-close fa fa-close Fs15"
-												disabled="#{userBean.updateDisabled}"
+												disabled="#{userBean.userUnSelected}"
 												action="#{userBean.deleteUser()}" ajax="false">
 												<p:confirm header="#{msg.deleteConfirmTitle}"
 													message="#{msg.deleteConfirmMessage}" icon="ui-icon-alert" />
@@ -59,27 +59,27 @@
 							</p:outputPanel>
 						</p:panelGrid>
 						<div class="SeparatorFull"></div>
-
-						<p:tree id="usersTree" value="#{userBean.usersTreeRoot}"
-							var="node" selectionMode="single"
-							selection="#{userBean.selectedNode}">
-							<p:ajax event="select" update=":usersForm:userCrudMenuBar"
-								listener="#{userBean.onNodeSelect}" />
-							<p:treeNode type="role" expandedIcon="ui-icon-folder-open"
-								collapsedIcon="ui-icon-folder-collapsed">
-								<h:outputText value="#{node.roleDescription}" />
-							</p:treeNode>
-							<p:treeNode type="entityR" expandedIcon="ui-icon-folder-open"
-								collapsedIcon="ui-icon-folder-collapsed">
-								<h:outputText value="#{node.name}" />
-							</p:treeNode>
-							<p:treeNode type="user">
-								<i class="icon-office-worker1 Fs20 Fnone"> </i>
-								<h:outputText
-									value="#{node.login}, #{node.firstName} #{node.lastName}" />
-							</p:treeNode>
-
-						</p:tree>
+						<p:dataTable id="usersDataTable" var="user"
+						value="#{userBean.userList}"
+						selectionMode="single" rowKey="#{user.login}" sortBy="#{user.responsibleEntity.name}"
+						selection="#{userBean.selectedUser}" 
+						paginator="false" scrollable="true" scrollHeight="400"
+						reflow="true">
+						<p:ajax event="rowSelect"  update=":usersForm:userCrudMenuBar"
+								listener="#{userBean.onUserSelect}" />
+						<p:column headerText="Login">
+							<h:outputText value="#{user.login}" />
+						</p:column>
+						<p:column headerText="Nom">
+							<h:outputText value="#{user.firstName}" />
+						</p:column>
+						<p:column headerText="Prénom">
+							<h:outputText value="#{user.lastName}" />
+						</p:column>
+						<p:column headerText="Organisation" >
+							<h:outputText value="#{user.responsibleEntity.name}" />
+						</p:column>
+					</p:dataTable>
 					</div>
 				</div>
 			</div>

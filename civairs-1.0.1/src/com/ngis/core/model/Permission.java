@@ -18,7 +18,7 @@ public class Permission implements Serializable {
 	@Id
 	@Column(name="permission_id")
 	private String permissionId;
-
+	
 	@Column(name="permission_description")
 	private String permissionDescription;
 
@@ -54,6 +54,28 @@ public class Permission implements Serializable {
 
 	public void setNgRoles(List<Role> ngRoles) {
 		this.ngRoles = ngRoles;
+	}
+	
+	@Override
+    public int hashCode() {
+        return (getPermissionId() != null) 
+            ? (getClass().getSimpleName().hashCode() + getPermissionId().hashCode())
+            : super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return (other != null && getPermissionId() != null
+                && other.getClass().isAssignableFrom(getClass()) 
+                && getClass().isAssignableFrom(other.getClass())) 
+            ? getPermissionId().equals(((Permission) other).getPermissionId())
+            : (other == this);
+    }
+
+
+	@Override
+	public String toString() {
+		return String.format("%s-%s", getClass().getSimpleName(), getPermissionId());
 	}
 
 }

@@ -6,7 +6,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
 import com.ngis.civairs.model.enums.ResponsibleEntityType;
-import com.ngis.civairs.model.services.occurence.ResponsibleEntityService;
+import com.ngis.civairs.model.services.occurence.ResponsibleEntityService2;
 
 @FacesConverter("responsibleEntityTypeConverter")
 public class ResponsibleEntityTypeConverter implements Converter{
@@ -15,7 +15,7 @@ public class ResponsibleEntityTypeConverter implements Converter{
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		ResponsibleEntityType obj = null;
 		if(value != null && value.trim().length() > 0) {
-			ResponsibleEntityService service = (ResponsibleEntityService) context.getExternalContext().getSessionMap().get("responsibleEntityService");   		
+			ResponsibleEntityService2 service = (ResponsibleEntityService2) context.getExternalContext().getSessionMap().get("responsibleEntityService2");   		
             if(service.getResponsibleEntityTypesMap() != null){
             	obj = service.getResponsibleEntityTypesMap().get(value);
             }

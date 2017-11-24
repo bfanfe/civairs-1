@@ -1,5 +1,6 @@
 package com.ngis.civairs.model.services;
 
+import java.io.Serializable;
 import java.util.Locale;
 
 import javax.faces.bean.ManagedBean;
@@ -8,8 +9,12 @@ import javax.faces.context.FacesContext;
 
 @ManagedBean
 @SessionScoped
-public class NGInternatinalizationService {
+public class NGInternatinalizationService implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static Locale inglish;
 	
 	/**

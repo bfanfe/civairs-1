@@ -1,5 +1,6 @@
 package com.ngis.civairs.model.services;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,8 +16,12 @@ import com.ngis.core.model.Role;
 
 @ManagedBean
 @SessionScoped
-public class NGRoleService {
+public class NGRoleService implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<Role> roles;
 	private Map<String, Role> rolesMap;
 
@@ -80,7 +85,7 @@ public class NGRoleService {
 			copy.setRoleId(role.getRoleId());
 			copy.setNgPermissions(role.getNgPermissions());
 			copy.setRoleDescription(role.getRoleDescription());
-			copy.setNgUsers(role.getNgUsers());
+			copy.setUsers(role.getUsers());
 			
 		}
 		return copy;

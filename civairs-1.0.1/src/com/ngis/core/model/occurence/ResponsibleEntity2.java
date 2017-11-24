@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Table(name="ResponsibleEntity")
 @NamedQuery(name="ResponsibleEntity.findAll", query="SELECT r FROM ResponsibleEntity r")
-public class ResponsibleEntity implements Serializable {
+public class ResponsibleEntity2 implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -41,7 +41,7 @@ public class ResponsibleEntity implements Serializable {
 	@OneToMany(mappedBy="responsibleEntity")
 	private List<Identifier> identifiers;
 
-	public ResponsibleEntity() {
+	public ResponsibleEntity2() {
 	}
 
 	public String getId() {
@@ -110,7 +110,7 @@ public class ResponsibleEntity implements Serializable {
 
 	public Identifier addIdentifier(Identifier identifier) {
 		getIdentifiers().add(identifier);
-		identifier.setResponsibleEntity(this);
+		//identifier.setResponsibleEntity(this);
 
 		return identifier;
 	}

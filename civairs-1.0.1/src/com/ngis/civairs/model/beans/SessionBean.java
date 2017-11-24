@@ -22,10 +22,10 @@ import org.apache.shiro.subject.Subject;
 
 import com.ngis.civairs.model.dao.NGUserDAO;
 import com.ngis.civairs.model.dao.occurence.EntityAttributeDAO;
-import com.ngis.civairs.model.services.NGMessageService;
 import com.ngis.civairs.model.services.NGViewService;
 import com.ngis.core.model.User;
 import com.ngis.core.model.occurence.Engine;
+import com.ngis.core.services.MessageService;
 
 @ManagedBean
 @SessionScoped
@@ -57,7 +57,10 @@ public class SessionBean implements Serializable {
 	private String formSaveButton;
 	private String formCancelButton;
 	
+	private static int messagesViewType ; 
 	
+	@EJB
+	MessageService messageService;
 	
 	@EJB
 	private NGUserDAO nGUserDAO;
@@ -78,6 +81,7 @@ public class SessionBean implements Serializable {
 		loadSessionTheme();
 		loadSessionMenus();
 		setSessionTemplate(NGViewService.DEFAULT_TEMPLATE);
+		setMessagesViewType(MessageService.VIEW_MESSAGES_IN_DIALOG);
 
 	}
 
@@ -249,17 +253,17 @@ public class SessionBean implements Serializable {
 			loadDefaultView();
 
 		} catch (UnknownAccountException uae) {
-			NGMessageService.addError("loginUnknownLogin");
+			messageService.errorMessage("loginUnknownLogin");
 		} catch (IncorrectCredentialsException ice) {
-			NGMessageService.addError("loginIncorrectPassword");
+			messageService.errorMessage("loginIncorrectPassword");
 		} catch (LockedAccountException lae) {
-			NGMessageService.addError("loginLockedAccount");
+			messageService.errorMessage("loginLockedAccount");
 		} catch (ExcessiveAttemptsException eae) {
-			NGMessageService.addError("loginExcessiveAttempt");
+			messageService.errorMessage("loginExcessiveAttempt");
 		} catch (AuthenticationException ae) {
-			NGMessageService.addError("loginUnableToConnect");
+			messageService.errorMessage("loginUnableToConnect");
 		} catch (Exception e) {
-			NGMessageService.addError("loginUnableToLoadPage");
+			messageService.errorMessage("loginUnableToLoadPage");
 		}
 
 	}
@@ -459,6 +463,14 @@ public class SessionBean implements Serializable {
 
 	public void setFormCancelButton(String formCancelButton) {
 		this.formCancelButton = formCancelButton;
+	}
+
+	public static int getMessagesViewType() {
+		return messagesViewType;
+	}
+
+	public static void setMessagesViewType(int messagesViewType) {
+		SessionBean.messagesViewType = messagesViewType;
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.ngis.civairs.model.services;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,8 +16,12 @@ import com.ngis.core.model.Permission;
 
 @ManagedBean
 @SessionScoped
-public class NGPermissionService {
+public class NGPermissionService implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<Permission> permissions;
 	private Map<String, Permission> permissionsMap;
 	

@@ -20,18 +20,18 @@ import org.primefaces.model.TreeNode;
 
 import com.ngis.civairs.model.beans.SessionBean;
 import com.ngis.civairs.model.constants.NGConstants;
-import com.ngis.civairs.model.services.NGMessageService;
 import com.ngis.civairs.model.services.NGRoleService;
 import com.ngis.civairs.model.services.NGUserService;
-import com.ngis.civairs.model.services.occurence.ResponsibleEntityService;
+import com.ngis.civairs.model.services.occurence.ResponsibleEntityService2;
 import com.ngis.civairs.model.tools.DigestEncriptor;
 import com.ngis.core.model.Role;
 import com.ngis.core.model.User;
-import com.ngis.core.model.occurence.ResponsibleEntity;
+import com.ngis.core.services.MessageService;
+import com.ngis.core.model.ResponsibleEntity;
 
 @ManagedBean
 @SessionScoped
-public class UserBean implements Serializable {
+public class UserBean2 implements Serializable {
 
 	/**
 	 * 
@@ -52,7 +52,7 @@ public class UserBean implements Serializable {
 	private NGUserService userService;
 
 	@ManagedProperty("#{responsibleEntityService}")
-	private ResponsibleEntityService responsibleEntityService;
+	private ResponsibleEntityService2 responsibleEntityService;
 
 	/*
 	 * The following are attributes of roleBean
@@ -148,8 +148,8 @@ public class UserBean implements Serializable {
 					sourceRoles = NGRoleService.copyList(roleService.getRoles());
 					targetRoles = new ArrayList<Role>();
 
-					if (userToUpdate.getNgRoles() != null) {
-						targetRoles = NGRoleService.copyList(userToUpdate.getNgRoles());
+					if (userToUpdate.getRoles() != null) {
+						targetRoles = NGRoleService.copyList(userToUpdate.getRoles());
 						for (Role role : targetRoles) {
 							Role r;
 							for (int i = 0; i < sourceRoles.size(); i++) {
@@ -170,7 +170,7 @@ public class UserBean implements Serializable {
 
 				} catch (Exception e) {
 					userToUpdate = null;
-					NGMessageService.addError("Unable to select user !");
+					//MessageService.errorMessage("Unable to select user !");
 				}
 			}
 		}
@@ -273,9 +273,9 @@ public class UserBean implements Serializable {
 		}
 
 		if (msg == null) {
-			NGMessageService.addInfo("Mot de passe modifié avec succès !");
+			//MessageService.infoMessage("Mot de passe modifié avec succès !");
 		} else {
-			NGMessageService.addError(msg);
+			//MessageService.errorMessage(msg);
 		}
 
 	}
@@ -285,7 +285,7 @@ public class UserBean implements Serializable {
 	 */
 	public void updateUser() {
 		/* save role */
-		userToUpdate.setNgRoles(targetRoles);
+		userToUpdate.setRoles(targetRoles);
 
 		// Reset password if reset checkbox is check
 		if (resetUserPassword) {
@@ -303,7 +303,7 @@ public class UserBean implements Serializable {
 
 		/* add message to conntext */
 
-		NGMessageService.addMessage(dbResult);
+		//MessageService.infoMessage(dbResult);
 		populateUsersTree();
 		goBackToUsersView();
 
@@ -315,13 +315,13 @@ public class UserBean implements Serializable {
 	public void createUser() {
 		/* save role */
 
-		userToCreate.setNgRoles(targetRoles);
+		userToCreate.setRoles(targetRoles);
 
 		String dbResult = userService.insertUser(userToCreate);
 		roles = userService.reloadRoles();
 		/* add message to conntext */
 
-		NGMessageService.addMessage(dbResult);
+		//MessageService.infoMessage(dbResult);
 		populateUsersTree();
 		goBackToUsersView();
 	}
@@ -348,7 +348,7 @@ public class UserBean implements Serializable {
 			} catch (Exception e) {
 				dbResult = NGConstants.DB_DELETE_FAILED;
 			}
-			NGMessageService.addMessage(dbResult);
+			//MessageService.infoMessage(dbResult);
 		}
 
 		goBackToUsersView();
@@ -397,7 +397,7 @@ public class UserBean implements Serializable {
 			for (Role role : roles) {
 				
 				//Test si le Role courant contient des User
-				if (!role.getNgUsers().isEmpty()) {
+				if (!role.getUsers().isEmpty()) {
 					
 					//si le Role courant contient des User, noeud est créé dans le Tree pour ce Role
 					TreeNode roleNode = new DefaultTreeNode("role", role, usersTreeRoot);
@@ -408,7 +408,7 @@ public class UserBean implements Serializable {
 					
 					//Parcours des User du Role courant
 					int userRE = 0;
-					for (User user : role.getNgUsers()) {
+					for (User user : role.getUsers()) {
 						
 						/*Test si le le ResponsibleEntity du User courant est déjà ajouté
 						 *  ou non à la liste des ResponsibleEntity
@@ -436,7 +436,7 @@ public class UserBean implements Serializable {
 						TreeNode entityNode = new DefaultTreeNode("entityR", entityR, roleNode);
 
 						// Parcours de la liste des User du Role courant
-						for (User user : role.getNgUsers()) {
+						for (User user : role.getUsers()) {
 							
 							//Test si le User courant appartient au ResponsibleEntity courant
 							if (user.getResponsibleEntity().getId().equals(entityR.getId())) {
@@ -450,7 +450,7 @@ public class UserBean implements Serializable {
 				}
 			}
 		} else {
-			NGMessageService.addError("Empty roles !");
+			//MessageService.errorMessage("Empty roles !");
 		}
 
 		// Créer les noeud des User qui n'ont pas de role directement sur la racine du Tree
@@ -646,7 +646,7 @@ public class UserBean implements Serializable {
 	 * Récupère le service responsibleEntityService
 	 * @return ResponsibleEntityService
 	 */
-	public ResponsibleEntityService getResponsibleEntityService() {
+	public ResponsibleEntityService2 getResponsibleEntityService() {
 		return responsibleEntityService;
 	}
 
@@ -654,7 +654,7 @@ public class UserBean implements Serializable {
 	 * Modifie le service responsibleEntityService
 	 * @param responsibleEntityService
 	 */
-	public void setResponsibleEntityService(ResponsibleEntityService responsibleEntityService) {
+	public void setResponsibleEntityService(ResponsibleEntityService2 responsibleEntityService) {
 		this.responsibleEntityService = responsibleEntityService;
 	}
 

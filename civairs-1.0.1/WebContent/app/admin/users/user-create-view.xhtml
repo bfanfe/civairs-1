@@ -34,7 +34,7 @@
 
 									<p:outputLabel value="#{users.userLoginLabel}" />
 
-									<p:inputText value="#{userBean.userToCreate.login}" />
+									<p:inputText value="#{userBean.newUser.login}" /> 
 
 									<p:outputLabel value="#{users.userPasswordResetLabel}" />
 									<p:selectBooleanCheckbox value="true" disabled="true" />
@@ -46,10 +46,10 @@
 
 									<p:outputLabel value="#{users.userFirstNameLabel}" />
 
-									<p:inputText value="#{userBean.userToCreate.firstName}" />
+									<p:inputText value="#{userBean.newUser.firstName}" />
 
 									<p:outputLabel value="#{users.userLastNameLabel}" />
-									<p:inputText value="#{userBean.userToCreate.lastName}" />
+									<p:inputText value="#{userBean.newUser.lastName}" />
 								</p:panelGrid>
 								<p:panelGrid columns="2" layout="grid"
 									style="border:0px !important; background:none; margin-left: 6px !important; margin-right: 12px !important;"
@@ -57,10 +57,10 @@
 
 									<p:outputLabel value="#{users.userBirthDateLabel}" />
 
-									<p:calendar value="#{userBean.userToCreate.birthDate}" />
+									<p:calendar value="#{userBean.newUser.birthDate}" />
 
 									<p:outputLabel value="#{users.userAdressLabel}" />
-									<p:inputTextarea value="#{userBean.userToCreate.adress}" />
+									<p:inputTextarea value="#{userBean.newUser.adress}" />
 								</p:panelGrid>
 								<p:panelGrid columns="2" layout="grid"
 									style="border:0px !important; background:none; margin-left: 6px !important; margin-right: 12px !important;"
@@ -68,12 +68,12 @@
 
 									<p:outputLabel value="#{users.userPhoneLabel}" />
 
-									<p:inputMask value="#{userBean.userToCreate.phoneNumber}"
+									<p:inputMask value="#{userBean.newUser.phoneNumber}"
 										mask="(+999) 999-999-99?99" />
 
 
 									<p:outputLabel value="#{users.userEmailLabel}" />
-									<p:inputText value="#{userBean.userToCreate.email}" />
+									<p:inputText value="#{userBean.newUser.email}" />
 								</p:panelGrid>
 								<p:panelGrid columns="2" layout="grid"
 									style="border:0px !important; background:none; margin-left: 6px !important; margin-right: 12px !important;"
@@ -81,12 +81,12 @@
 
 									<p:outputLabel value="#{users.userResponsibleEntityLabel}" />
 
-									<p:selectOneMenu value="#{userBean.userToCreate.responsibleEntity}"
-										var="varenum" converter="responsibleEntityConverter">
-										<f:selectItems value="#{userBean.responsibleEntities}" var="enums"
+									<p:selectOneMenu value="#{userBean.newUser.responsibleEntity}"
+										var="varenum" converter="selectItemsConverter">
+										<f:selectItems value="#{userBean.responsibleEntityList}" var="enums"
 											itemLabel="#{enums.name}" itemValue="#{enums}"  />
 										<p:column>#{varenum.name}</p:column>
-									</p:selectOneMenu>
+									</p:selectOneMenu> 
 								</p:panelGrid>
 								<p:panelGrid columns="2" layout="grid"
 									style="border:0px !important; background:none; margin-left: 6px !important; margin-right: 12px !important;"
@@ -100,13 +100,12 @@
 										<p:pickList id="userCreateRolesPickList"
 											value="#{userBean.dualListRoles}" var="role"
 											itemValue="#{role}" itemLabel="#{role.roleDescription}"
-											converter="nGRoleConverter" showSourceControls="false"
+											converter="pickListConverter" showSourceControls="false"
 											showTargetControls="false" showSourceFilter="false"
-											showTargetFilter="false" responsive="true">
+											showTargetFilter="false" responsive="true" >
 											<f:facet name="sourceCaption">#{users.availableRolesLabel}</f:facet>
 											<f:facet name="targetCaption">#{users.userRolesLabel}</f:facet>
-											<p:ajax event="transfer"
-												listener="#{userBean.onRoleTransfer}" />
+											
 										</p:pickList>
 									</div>
 								</div>

@@ -10,16 +10,16 @@ import javax.faces.context.FacesContext;
 
 import com.ngis.civairs.model.beans.SessionBean;
 import com.ngis.civairs.model.enums.ResponsibleEntityType;
-import com.ngis.civairs.model.services.occurence.ResponsibleEntityService;
+import com.ngis.civairs.model.services.occurence.ResponsibleEntityService2;
 import com.ngis.civairs.model.tools.HashcodeUtility;
-import com.ngis.core.model.occurence.ResponsibleEntity;
+import com.ngis.core.model.ResponsibleEntity;
 
 @ManagedBean
 @SessionScoped
-public class ResponsibleEntityBean {
+public class ResponsibleEntityBean2 {
 
-	@ManagedProperty("#{responsibleEntityService}")
-	private ResponsibleEntityService responsibleEntityService;
+	@ManagedProperty("#{responsibleEntityService2}")
+	private ResponsibleEntityService2 responsibleEntityService;
 
 	private ResponsibleEntity selectedResponsibleEntity;
 
@@ -33,11 +33,11 @@ public class ResponsibleEntityBean {
 		return responsibleEntityService.getResponsibleEntities();
 	}
 
-	public ResponsibleEntityService getResponsibleEntityService() {
+	public ResponsibleEntityService2 getResponsibleEntityService() {
 		return responsibleEntityService;
 	}
 
-	public void setResponsibleEntityService(ResponsibleEntityService responsibleEntityService) {
+	public void setResponsibleEntityService(ResponsibleEntityService2 responsibleEntityService) {
 		this.responsibleEntityService = responsibleEntityService;
 	}
 

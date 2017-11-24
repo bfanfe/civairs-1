@@ -1,5 +1,6 @@
 package com.ngis.civairs.model.services;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.faces.bean.ApplicationScoped;
@@ -7,7 +8,12 @@ import javax.faces.bean.ManagedBean;
 
 @ManagedBean
 @ApplicationScoped
-public class NGDateFormatService {
+public class NGDateFormatService implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@SuppressWarnings("deprecation")
 	public String ddMMYYYYDateformat(Date date){

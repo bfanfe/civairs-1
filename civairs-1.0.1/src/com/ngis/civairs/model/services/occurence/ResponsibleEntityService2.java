@@ -1,5 +1,6 @@
 package com.ngis.civairs.model.services.occurence;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,13 +14,18 @@ import javax.faces.bean.SessionScoped;
 import com.ngis.civairs.model.dao.occurence.ResponsibleEntityDAO;
 import com.ngis.civairs.model.enums.EnumResponsibleEntityType;
 import com.ngis.civairs.model.enums.ResponsibleEntityType;
-import com.ngis.civairs.model.services.NGMessageService;
-import com.ngis.core.model.occurence.ResponsibleEntity;
+import com.ngis.core.model.ResponsibleEntity;
+import com.ngis.core.services.MessageService;
 
 @ManagedBean
 @SessionScoped
-public class ResponsibleEntityService {
+public class ResponsibleEntityService2 implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private List<ResponsibleEntity> responsibleEntities;
 	
 	private List<ResponsibleEntityType> responsibleEntityTypes;
@@ -48,7 +54,7 @@ public class ResponsibleEntityService {
 	
 	
 	public void loadResponsibleEntities(){
-		responsibleEntities = dao.selectAll();
+		//responsibleEntities = dao.selectAll();
 		responsibleEntitiesMap = new HashMap<String, ResponsibleEntity>();
 		for(int i=0; i<responsibleEntities.size(); i++ ){
 			responsibleEntitiesMap.put(responsibleEntities.get(i).getId(), responsibleEntities.get(i));
@@ -106,8 +112,8 @@ public class ResponsibleEntityService {
 	 */
 	
 	public void insertResponsibleEntity(ResponsibleEntity toInsert){
-		String daoResult = dao.insert(toInsert);
-		NGMessageService.addMessage(daoResult);
+		//String daoResult = dao.insert(toInsert);
+		//NGMessageService.addMessage(daoResult);
 		loadResponsibleEntities();
 	}
 	
@@ -116,8 +122,8 @@ public class ResponsibleEntityService {
 	 * @param toUpdate
 	 */
 	public void updateResponsibleEntity(ResponsibleEntity toUpdate){
-		String daoResult = dao.update(toUpdate);
-		NGMessageService.addMessage(daoResult);
+		//String daoResult = dao.update(toUpdate);
+		//NGMessageService.addMessage(daoResult);
 		loadResponsibleEntities();
 	}
 	
@@ -126,8 +132,8 @@ public class ResponsibleEntityService {
 	 * @param toDelete
 	 */
 	public void deleteResponsibleEntity(ResponsibleEntity toDelete){
-		String daoResult = dao.delete(toDelete);
-		NGMessageService.addMessage(daoResult);
+		//String daoResult = dao.delete(toDelete);
+		//NGMessageService.addMessage(daoResult);
 		loadResponsibleEntities();
 	}
 	

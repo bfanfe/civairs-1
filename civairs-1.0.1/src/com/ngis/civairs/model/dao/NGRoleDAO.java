@@ -22,8 +22,8 @@ public class NGRoleDAO {
 			if(findById(entity.getRoleId()) == null) {
 				try{
 					em.persist(entity);
-					em.getEntityManagerFactory().getCache().evict(User.class);
-					em.getEntityManagerFactory().getCache().evict(Permission.class);
+					//em.getEntityManagerFactory().getCache().evict(User.class);
+					//em.getEntityManagerFactory().getCache().evict(Permission.class);
 				}catch(Exception e){
 					return NGConstants.DB_INSERT_FAILED;
 				}
@@ -45,8 +45,8 @@ public class NGRoleDAO {
 				em.merge(entity);
 				
 				//remove all managed users from persistence context 
-				em.getEntityManagerFactory().getCache().evict(User.class);
-				em.getEntityManagerFactory().getCache().evict(Permission.class);
+				//em.getEntityManagerFactory().getCache().evict(User.class);
+				//em.getEntityManagerFactory().getCache().evict(Permission.class);
 			return NGConstants.DB_UPDATE_OK;
 			}catch(Exception e){
 				e.printStackTrace();
@@ -64,8 +64,8 @@ public class NGRoleDAO {
 				Role dbEntity = findById(entity.getRoleId());
 				if(dbEntity != null) {
 					em.remove(dbEntity);
-					em.getEntityManagerFactory().getCache().evict(User.class);
-					em.getEntityManagerFactory().getCache().evict(Permission.class);
+					//em.getEntityManagerFactory().getCache().evict(User.class);
+					//em.getEntityManagerFactory().getCache().evict(Permission.class);
 				}
 				entity = null;
 				return NGConstants.DB_DELETE_OK;

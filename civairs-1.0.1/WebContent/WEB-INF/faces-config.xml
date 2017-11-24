@@ -10,23 +10,23 @@
 			<supported-locale>fr</supported-locale>
 		</locale-config>
 		<resource-bundle>
-			<base-name>com.ngis.civairs.model.resources.messages</base-name>
+			<base-name>com.ngis.core.resources.messages</base-name>
 			<var>msg</var> 
 		</resource-bundle>
 		<resource-bundle>
-			<base-name>com.ngis.civairs.model.resources.menus</base-name>
+			<base-name>com.ngis.core.resources.menus</base-name>
 			<var>menus</var> 
 		</resource-bundle>
 		<resource-bundle>
-			<base-name>com.ngis.civairs.model.resources.occurence.responsible_entities</base-name>
+			<base-name>com.ngis.core.resources.occurence.responsible_entities</base-name>
 			<var>entities</var> 
 		</resource-bundle>
 		<resource-bundle>
-			<base-name>com.ngis.civairs.model.resources.occurence.notifications</base-name>
+			<base-name>com.ngis.core.resources.occurence.notifications</base-name>
 			<var>notifications</var> 
 		</resource-bundle>
 		<resource-bundle>
-			<base-name>com.ngis.civairs.model.resources.users</base-name>
+			<base-name>com.ngis.core.resources.users</base-name>
 			<var>users</var> 
 		</resource-bundle>
 	</application>

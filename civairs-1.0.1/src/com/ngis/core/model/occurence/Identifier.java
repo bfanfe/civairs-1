@@ -3,6 +3,8 @@ package com.ngis.core.model.occurence;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.ngis.core.model.ResponsibleEntity;
+
 import java.util.ArrayList;
 import java.util.List;
 

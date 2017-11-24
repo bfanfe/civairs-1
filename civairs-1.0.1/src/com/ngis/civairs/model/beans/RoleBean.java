@@ -3,6 +3,7 @@ package com.ngis.civairs.model.beans;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -11,11 +12,11 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
 
-import com.ngis.civairs.model.services.NGMessageService;
 import com.ngis.civairs.model.services.NGPermissionService;
 import com.ngis.civairs.model.services.NGRoleService;
 import com.ngis.core.model.Permission;
 import com.ngis.core.model.Role;
+import com.ngis.core.services.MessageService;
 
 @ManagedBean
 @SessionScoped
@@ -49,6 +50,9 @@ public class RoleBean {
 	private Role roleToUpdate;
 	private Role roleToCreate;
 	private DualListModel<Permission> dualListPermissions;
+	
+	//@EJB
+	//MessageService messageService;
 
 	@PostConstruct
 	private void init() {
@@ -253,7 +257,7 @@ public class RoleBean {
 
 		/* add message to conntext */
 
-		NGMessageService.addMessage(dbResult);
+		//MessageService.infoMessage(dbResult);
 		goBackToRolesView();
 
 	}
@@ -269,7 +273,7 @@ public class RoleBean {
 		roles = roleService.reloadRoles();
 		/* add message to conntext */
 
-		NGMessageService.addMessage(dbResult);
+		//MessageService.infoMessage(dbResult);
 		goBackToRolesView();
 	}
 
@@ -280,7 +284,7 @@ public class RoleBean {
 		setRoleToUpdate(roleService.getRole(roleId));
 		String dbResult = roleService.deleteRole(roleToUpdate);
 		roles = roleService.reloadRoles();
-		NGMessageService.addMessage(dbResult);
+		//MessageService.infoMessage(dbResult);
 		goBackToRolesView();
 
 	}

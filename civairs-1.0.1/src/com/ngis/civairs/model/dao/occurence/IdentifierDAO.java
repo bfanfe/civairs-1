@@ -23,8 +23,8 @@ public class IdentifierDAO {
 			if (selectById(toInsert.getId()) == null) {
 				try {
 					em.persist(toInsert);
-					em.getEntityManagerFactory().getCache().evict(Notification.class);
-					em.getEntityManagerFactory().getCache().evict(Occurence.class);
+					//em.getEntityManagerFactory().getCache().evict(Notification.class);
+					//em.getEntityManagerFactory().getCache().evict(Occurence.class);
 				} catch (Exception e) {
 					return NGConstants.DB_INSERT_FAILED;
 				}

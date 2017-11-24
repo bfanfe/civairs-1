@@ -1,5 +1,6 @@
 package com.ngis.civairs.model.services.occurence;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +27,6 @@ import com.ngis.civairs.model.dao.occurence.StaticEventTypeDAO;
 import com.ngis.civairs.model.dao.occurence.StaticOccurrenceCategoryDAO;
 import com.ngis.civairs.model.dao.occurence.StaticOccurrenceClassDAO;
 import com.ngis.civairs.model.dao.occurence.StaticOccurrenceStatusDAO;
-import com.ngis.civairs.model.services.NGMessageService;
 import com.ngis.civairs.view.messages.MessageHandler;
 import com.ngis.core.model.occurence.Analyse;
 import com.ngis.core.model.occurence.StaticATMContribution;
@@ -36,10 +36,16 @@ import com.ngis.core.model.occurence.StaticEventType;
 import com.ngis.core.model.occurence.StaticOccurrenceCategory;
 import com.ngis.core.model.occurence.StaticOccurrenceClass;
 import com.ngis.core.model.occurence.StaticOccurrenceStatus;
+import com.ngis.core.services.MessageService;
 
 @ManagedBean
 @SessionScoped
-public class AnalyseService {
+public class AnalyseService implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private List<Analyse> analyses;
 
@@ -375,7 +381,7 @@ public class AnalyseService {
 			setAnalyseDetails(toInsert);
 			String daoResult = dao.insert(toInsert);
 			daoResult = dao.update(toInsert);
-			NGMessageService.addMessage(daoResult);
+			//MessageService.infoMessage(daoResult);
 			loadAnalyses();
 		}
 
@@ -389,7 +395,7 @@ public class AnalyseService {
 	public void updateAnalyse(Analyse toUpdate) {
 		setAnalyseDetails(toUpdate);
 		String daoResult = dao.update(toUpdate);
-		NGMessageService.addMessage(daoResult);
+		//MessageService.infoMessage(daoResult);
 		loadAnalyses();
 	}
 
@@ -400,7 +406,7 @@ public class AnalyseService {
 	 */
 	public void deleteAnalyse(Analyse toDelete) {
 		String daoResult = dao.delete(toDelete);
-		NGMessageService.addMessage(daoResult);
+		//MessageService.infoMessage(daoResult);
 		loadAnalyses();
 	}
 

@@ -23,7 +23,7 @@ public class NGUserDAO {
 					em.persist(entity);
 					
 					//remove all managed role from persistence context 
-					em.getEntityManagerFactory().getCache().evict(Role.class);
+					//em.getEntityManagerFactory().getCache().evict(Role.class);
 				} catch (Exception e) {
 					return NGConstants.DB_INSERT_FAILED;
 				}
@@ -45,7 +45,7 @@ public class NGUserDAO {
 				em.merge(entity);
 				
 				//remove all managed role from persistence context 
-				em.getEntityManagerFactory().getCache().evict(Role.class);
+				//em.getEntityManagerFactory().getCache().evict(Role.class);
 				return NGConstants.DB_UPDATE_OK;
 			} catch (Exception e) {
 				return NGConstants.DB_UPDATE_FAILED;
@@ -63,7 +63,7 @@ public class NGUserDAO {
 					em.remove(dbEntity);
 					
 					//remove all managed role from persistence context 
-					em.getEntityManagerFactory().getCache().evict(Role.class);
+					//em.getEntityManagerFactory().getCache().evict(Role.class);
 				}
 				entity = null;
 				return NGConstants.DB_DELETE_OK;

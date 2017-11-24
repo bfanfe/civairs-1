@@ -1,5 +1,6 @@
 package com.ngis.civairs.model.services;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,8 +18,12 @@ import com.ngis.core.model.User;
 
 @ManagedBean
 @SessionScoped
-public class NGUserService {
+public class NGUserService implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<User> users;
 	private List<Role> roles;
 	private Map<String, User> usersMap;
@@ -71,9 +76,9 @@ public class NGUserService {
 		users = dao.getList();
 		List<User> emptyRolesUsers = new ArrayList<User>();
 		for(User user: users){
-			if(user.getNgRoles() == null){
+			if(user.getRoles() == null){
 				emptyRolesUsers.add(user);
-			}else if(user.getNgRoles().isEmpty()){
+			}else if(user.getRoles().isEmpty()){
 				emptyRolesUsers.add(user);
 			}
 		}
@@ -86,7 +91,7 @@ public class NGUserService {
 		// fill roles list from users
 		if (users != null) {
 			for (User user : users) {
-				List<Role> userRoles = user.getNgRoles();
+				List<Role> userRoles = user.getRoles();
 				for (Role userRole : userRoles) {
 					// check userRole is in roles list
 					boolean isRoleinList = false;
@@ -104,7 +109,7 @@ public class NGUserService {
 		for (Role role : roles) {
 			for (User user : users) {
 				// check user is granted role
-				List<Role> userRoles = user.getNgRoles();
+				List<Role> userRoles = user.getRoles();
 
 				boolean isUserGrantedRole = false;
 				for (Role userRole : userRoles) {
@@ -117,24 +122,24 @@ public class NGUserService {
 				if (isUserGrantedRole) {
 					// add user to role if not exists
 					boolean isUserinList = false;
-					for (User roleUser : role.getNgUsers()) {
+					for (User roleUser : role.getUsers()) {
 						if (roleUser.getLogin().equals(user.getLogin()))
 							isUserinList = true;
 					}
 					if (!isUserinList) {
-						role.getNgUsers().add(user);
+						role.getUsers().add(user);
 					}
 				}else{
 					//remove user from role if exists
 					User removeUser = null;
-					for (int r = 0; r < role.getNgUsers().size(); r++) {
-						if (role.getNgUsers().get(r).getLogin().equals(user.getLogin())) {
-							removeUser = role.getNgUsers().get(r);
+					for (int r = 0; r < role.getUsers().size(); r++) {
+						if (role.getUsers().get(r).getLogin().equals(user.getLogin())) {
+							removeUser = role.getUsers().get(r);
 
 						}
 					}
 					if (removeUser != null){
-						role.getNgUsers().remove(removeUser);
+						role.getUsers().remove(removeUser);
 					}
 				}
 			}
@@ -193,7 +198,7 @@ public class NGUserService {
 			copy.setLastName(user.getLastName());
 			copy.setPassword(user.getPassword());
 			copy.setPhoneNumber(user.getPhoneNumber());
-			copy.setNgRoles(user.getNgRoles());
+			copy.setRoles(user.getRoles());
 
 		}
 		return copy;

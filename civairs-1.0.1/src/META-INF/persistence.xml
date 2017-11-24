@@ -32,7 +32,7 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 		<class>com.ngis.core.model.occurence.Propeller</class>
 		<class>com.ngis.core.model.occurence.ReportingHistory</class>
 		<class>com.ngis.core.model.occurence.ResourceLocator</class>
-		<class>com.ngis.core.model.occurence.ResponsibleEntity</class>
+		<class>com.ngis.core.model.ResponsibleEntity</class>
 		<class>com.ngis.core.model.occurence.RiskAssessment</class>
 		<class>com.ngis.core.model.occurence.Runway</class>
 		<class>com.ngis.core.model.occurence.RunwayIncursion</class>
